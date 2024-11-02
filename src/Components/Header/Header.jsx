@@ -17,7 +17,7 @@ const Header = () => {
                 <div className="max-w-xl text-center ltr:sm:text-left rtl:sm:text-right">
                     <h1 className="text-3xl font-extrabold text-white sm:text-5xl">
                         Book Appointment
-                        <strong className="block font-extrabold text-blue-600"> With Trusted Doctors </strong>
+                        <strong className="block font-extrabold text-primary"> With Trusted Doctors </strong>
                     </h1>
 
                     <p className="mt-4 max-w-lg text-white sm:text-xl/relaxed">
@@ -26,7 +26,7 @@ const Header = () => {
                     </p>
 
                     <div className="mt-8 flex flex-wrap justify-center gap-4 text-center">
-                        <a href="#" className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800">
+                        <a href="#" className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary hover:bg-blue-800">
                             Book Now
                             <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns={assets.arrow_icon} fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
