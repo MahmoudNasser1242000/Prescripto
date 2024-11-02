@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { assets } from "../../assets/assets_frontend/assets";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const NavBar = () => {
     const [showMenu, SetShowMenu] = useState(false);
@@ -8,9 +8,9 @@ const NavBar = () => {
     return <>
         <nav className="border-gray-200 bg-gray-200 dark:bg-gray-800 dark:border-gray-700">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <NavLink to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+                <Link to="/" className="flex items-center space-x-3">
                     <img src={assets.logo} className="h-8" alt="website Logo" />
-                </NavLink>
+                </Link>
                 <div className="flex items-center relative md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                     <button type="button" onClick={() => SetShowProfileInfo(!showProfileInfo)} className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span className="sr-only">Open user menu</span>
