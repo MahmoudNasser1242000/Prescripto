@@ -22,17 +22,17 @@ const DoctorCard = ({ doctor }) => {
                     <span className="inline-block ms-1">Available</span>
                 </p>
 
-                <Link to={`/doctors/${doctor._id}`} className="mt-2">
-                    <h3 className="text-start text-lg font-medium text-gray-900">
+                <h3 className="text-start text-lg font-medium text-gray-900">
+                    <Link to={`/appointment/${doctor._id}`} className="mt-2">
                         {doctor.name}
-                    </h3>
-                </Link>
+                    </Link>
+                </h3>
 
                 <p className="text-start mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
                     {doctor.speciality}
                 </p>
 
-                <Link to={`/doctors/${doctor._id}`} className="group mt-4 w-full inline-flex items-center justify-start gap-1 text-sm font-medium text-blue-600">
+                <Link to={`/appointment/${doctor._id}`} className="group mt-4 w-full inline-flex items-center justify-start gap-1 text-sm font-medium text-blue-600">
                     Find out more
 
                     <span aria-hidden="true" className="block transition-all group-hover:ms-0.5 rtl:rotate-180">
