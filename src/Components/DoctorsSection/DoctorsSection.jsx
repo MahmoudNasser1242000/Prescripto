@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const DoctorsSection = () => {
     return <div className="mt-28">
         <SectionTitle title={"Top Doctors To Book"} description={"Simply browse through our extensive list of trusted doctors"} />
-        <div className="flex justify-evenly md:justify-between flex-wrap gap-4 mt-8">
+        <div className="flex justify-evenly md:justify-between flex-wrap gap-y-4 mt-8">
             {doctors?.slice(0, 10).map((doc) => <DoctorCard key={doc._id} doctor={doc} />)}
         </div>
 

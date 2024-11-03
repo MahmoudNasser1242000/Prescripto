@@ -12,8 +12,14 @@ const DoctorCard = ({ doctor }) => {
 
             <div className="p-4 sm:p-6">
                 <p className="line-clamp-3 text-sm/relaxed text-green-600 flex items-center">
-                    <span className="inline-block bg-green-600 w-[6px] h-[6px] rounded-full mx-1"></span>
-                    <span>Available</span>
+                    {/* <span className="inline-block bg-green-600 w-[6px] h-[6px] rounded-full mx-1"></span> */}
+                    <span className="relative flex size-2 mx-[2px]">
+                        <span
+                            className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-600 opacity-75"
+                        ></span>
+                        <span className="relative inline-flex size-2 rounded-full bg-green-600"></span>
+                    </span>
+                    <span className="inline-block ms-1">Available</span>
                 </p>
 
                 <Link to={`/doctors/${doctor._id}`} className="mt-2">

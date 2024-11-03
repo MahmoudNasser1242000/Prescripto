@@ -6,10 +6,12 @@ import AppointmentSection from "../../Components/AppointmentSection/AppointmentS
 
 const Home = () => {
   return <>
-    <Header/>
-    <SpecialitySection/>
-    <DoctorsSection/>
-    <AppointmentSection/>
+    <div className="max-w-[1280px] mx-auto px-8 sm:px-12">
+      <Header/>
+      <SpecialitySection/>
+      <DoctorsSection/>
+      <AppointmentSection/>
+    </div>
   </>;
 };
 
