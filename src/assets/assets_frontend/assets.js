@@ -1,4 +1,4 @@
-import appointment_img from './appointment_img.png'
+import appointment_img from './appointment.png'
 import header_img from './header-img.webp'
 import group_profiles from './group_profiles.png'
 import profile_pic from './profile_pic.png'
@@ -55,7 +55,8 @@ export const assets = {
     dropdown_icon,
     upload_icon,
     stripe_logo,
-    razorpay_logo
+    razorpay_logo,
+    doc8
 }
 
 export const specialityData = [
