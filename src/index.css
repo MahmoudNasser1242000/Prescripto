@@ -5,3 +5,11 @@
 .active {
     @apply text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500
 }
+
+.chooseDay {
+    @apply bg-primary text-white border-none
+}
+
+.chooseTime {
+    @apply bg-primary text-white border-transparent
+}
