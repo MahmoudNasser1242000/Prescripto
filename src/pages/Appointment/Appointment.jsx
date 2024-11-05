@@ -1,8 +1,11 @@
 import React from "react";
 import DoctorInfo from "../../Components/DoctorInfo/DoctorInfo";
 import AppointmentsDates from "../../Components/AppointmentsDates/AppointmentsDates";
+import RelatedDoctorsSection from "../../Components/RelatedDoctorsSection/RelatedDoctorsSection";
+import { useParams } from "react-router-dom";
 
 const Appointment = () => {
+  const {docId} = useParams()
   // ==================get days==================
   const getWeekdaysFromToday = () => {
     const weekdays = [];
@@ -18,7 +21,7 @@ const Appointment = () => {
         const dayName = weekdayNames[dayOfWeek];
         const dayNumber = currentDay.getDate();
 
-        weekdays.push({ dayName, dayNumber });
+        weekdays.push({ dayName, dayNumber, fullDate: new Date(currentDay) });
       }
 
       currentDay.setDate(currentDay.getDate() + 1);
@@ -27,6 +30,8 @@ const Appointment = () => {
     return weekdays;
   }
   const weekdaysFromToday = getWeekdaysFromToday();
+  console.log(weekdaysFromToday);
+  
 
   // ==================get hours==================
   const addThirtyMinutesSevenTimes = (startHour)=> {
@@ -45,19 +50,18 @@ const Appointment = () => {
     return intervals;
 }
 const timeIntervals = addThirtyMinutesSevenTimes(2);
-console.log(timeIntervals);
-
 
   return <div className="max-w-[1280px] mx-auto px-8 sm:px-12">
     <DoctorInfo />
     <div className="flex justify-end">
       <div className="flex flex-col items-end mt-12 w-full lg:w-[66%]">
-      <h3 className="text-[23px] text-center w-full lg:text-start">Booking slote</h3>
+      <h3 className="text-[23px] text-center w-full lg:text-start pl-0 lg:pl-2">Booking slote</h3>
       <div className="flex items-center justify-center lg:justify-start gap-y-5 flex-wrap mt-6 w-full">
-        {weekdaysFromToday.map((day, index) => <AppointmentsDates key={index} dayName={day.dayName} dayNumber={day.dayNumber} timeIntervals={timeIntervals} index={index} chooseDay={index === 0? "chooseDay": ""}/>)}
+        {weekdaysFromToday.map((day, index) => <AppointmentsDates key={index} dayName={day.dayName} dayNumber={day.dayNumber} fullDate={day.fullDate} timeIntervals={timeIntervals} index={index} chooseDay={index === 0? "chooseDay": ""}/>)}
       </div>
       </div>
     </div>
+    <RelatedDoctorsSection docId={docId}/>
   </div>;
 };
 
