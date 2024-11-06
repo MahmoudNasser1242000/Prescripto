@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { assets } from "../../assets/assets_frontend/assets";
+import UpdateProfileModal from "../../Components/UpdateProfileModal/UpdateProfileModal";
 
 const MyProfile = () => {
+  const [openModal, setOpenModal] = useState(false);
+  function onCloseModal() {
+    setOpenModal(false);
+  }
+
   return <div className="pt-14 max-w-[1280px] mx-auto px-8 sm:px-12">
     <div className="flex flex-col md:flex-row">
       <div className="md:w-[30%] text-center mb-8 md:mb-0 border border-y-0 border-gray-300 py-6">
-        <img src={assets.profile_pic} alt="Profile Picture" className="rounded-full w-48 h-48 mx-auto mb-4 border-4 border-primary dark:border-blue-900 transition-transform duration-300 hover:scale-105" />
+        <img src={assets.profile_pic} alt="Profile Picture" className="rounded-full w-48 h-48 mx-auto mb-4 outline outline-4 outline-primary dark:outline-blue-900 transition-transform duration-300 hover:scale-105 hover:grayscale-[100%]" />
         <h1 className="text-2xl font-bold text-primary dark:text-white mb-2">John Doe</h1>
         <p className="text-gray-600 dark:text-gray-300">Software Developer</p>
-        <button className="mt-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-900 transition-colors duration-300">Edit Profile</button>
+        <button onClick={() => setOpenModal(true)} type="button" className="mt-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-900 transition-colors duration-300">Edit Profile</button>
       </div>
       <div className="md:w-2/3 md:pl-8 text-center md:text-start">
-        <h2 className="text-xl font-semibold text-primary dark:text-white mb-4">About Me</h2>
+        <h2 className="text-xl font-semibold text-primary dark:text-white mb-4">Bio</h2>
         <p className="text-gray-700 dark:text-gray-300 mb-6">
           Passionate software developer with 5 years of experience in web technologies.
           I love creating user-friendly applications and solving complex problems.
@@ -46,7 +52,7 @@ const MyProfile = () => {
         </ul>
       </div>
     </div>
-
+    <UpdateProfileModal openModal={openModal} onCloseModal={onCloseModal}/>
   </div>;
 };
 

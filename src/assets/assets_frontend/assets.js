@@ -3,6 +3,7 @@ import header_img from './header-img.webp'
 import group_profiles from './group_profiles.png'
 import profile_pic from './profile_pic.png'
 import contact_image from './contact_image.png'
+import camera from './camera.svg'
 import about_image from './about_us.webp'
 import logo from './logo.svg'
 import dropdown_icon from './dropdown_icon.svg'
@@ -47,6 +48,7 @@ export const assets = {
     verified_icon,
     info_icon,
     profile_pic,
+    camera,
     arrow_icon,
     contact_image,
     about_image,

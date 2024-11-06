@@ -13,3 +13,7 @@
 .chooseTime {
     @apply bg-primary text-white border-transparent
 }
+
+#root {
+    overflow: hidden;
+}

@@ -1,15 +1,19 @@
+import { content as _content, plugin } from "flowbite-react/tailwind";
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
-  theme: {
-    extend: {
-      colors: {
-        "primary": "#1d4ed8"
-      }
-    },
+
+export const content = [
+  "./index.html",
+  "./src/**/*.{js,jsx,ts,tsx}",
+  _content(),
+];
+export const theme = {
+  extend: {
+    colors: {
+      "primary": "#1d4ed8"
+    }
   },
-  plugins: [],
-}
+};
+export const plugins = [
+  plugin(),
+];
