@@ -3,6 +3,7 @@ import header_img from './header-img.webp'
 import group_profiles from './group_profiles.png'
 import profile_pic from './profile_pic.png'
 import contact_image from './contact_image.png'
+import login_image from './login-image.webp'
 import camera from './camera.svg'
 import about_image from './about_us.webp'
 import logo from './logo.svg'
@@ -58,7 +59,8 @@ export const assets = {
     upload_icon,
     stripe_logo,
     razorpay_logo,
-    doc8
+    doc8,
+    login_image
 }
 
 export const specialityData = [
