@@ -6,7 +6,7 @@ const DoctorCard = ({ doctor }) => {
         <article className="overflow-hidden w-full sm:w-auto rounded-lg border-2 border-gray-100 bg-white hover:translate-y-[-5px] hover:shadow-lg duration-[0.5s]">
             <img
                 alt={`doctor ${doctor.name}`}
-                src={doctor.image}
+                src={doctor.profile}
                 className="h-56 w-full object-contain sm:object-cover bg-blue-50"
             />
 
@@ -15,11 +15,11 @@ const DoctorCard = ({ doctor }) => {
                     {/* <span className="inline-block bg-green-600 w-[6px] h-[6px] rounded-full mx-1"></span> */}
                     <span className="relative flex size-2 mx-[2px]">
                         <span
-                            className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-600 opacity-75"
+                            className={`absolute inline-flex h-full w-full animate-ping rounded-full bg-${doctor.available? "green" : "red"}-600 opacity-75`}
                         ></span>
-                        <span className="relative inline-flex size-2 rounded-full bg-green-600"></span>
+                        <span className={`relative inline-flex size-2 rounded-full bg-${doctor.available? "green" : "red"}-600`}></span>
                     </span>
-                    <span className="inline-block ms-1">Available</span>
+                    <span className="inline-block ms-1">{doctor.available? "available" : "not available"}</span>
                 </p>
 
                 <h3 className="text-start text-lg font-medium text-gray-900">

@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SectionTitle from "../SectionTitle/SectionTitle";
-import { doctors } from "../../assets/assets_frontend/assets";
 import DoctorCard from "../DoctorCard/DoctorCard";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllDoctors } from "../../Redux/reducers/doctors.reducer";
+import toast from "react-hot-toast";
+import DoctorCardSkeleton from "../DoctorCardSkeleton/DoctorCardSkeleton";
 
 const DoctorsSection = () => {
+    const { success, error, loading, doctors } = useSelector((state) => state.doctor)
+    const { token } = useSelector((state) => state.auth)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getAllDoctors(token));
+    }, [dispatch]);
+    useEffect(() => {
+        if (error) {
+            toast.error(error, { duration: Infinity })
+        }
+    }, [error]);
+
     return <div className="mt-28">
         <SectionTitle title={"Top Doctors To Book"} description={"Simply browse through our extensive list of trusted doctors"} />
-        <div className="flex justify-evenly md:justify-between flex-wrap gap-y-4 mt-8">
-            {doctors?.slice(0, 10).map((doc) => <DoctorCard key={doc._id} doctor={doc} />)}
+        <div className="flex justify-evenly md:justify-center flex-wrap gap-4 mt-8">
+            {
+                loading ? Array.from({ length: 4 }, (_, index) => <DoctorCardSkeleton key={index} />) :
+                    (!success ? <h1 className="text-3xl text-center w-full">No Doctors Wright Now!</h1> :
+                        doctors?.slice(0, 4).map((doc) => <DoctorCard key={doctors._id} doctor={doc} />))
+            }
         </div>
 
         <Link
