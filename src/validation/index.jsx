@@ -89,6 +89,30 @@ const signupSchema = Joi.object({
     profile: Joi.object().optional(),
 }).optional().options({ allowUnknown: false });
 
+
+const signinSchema = Joi.object({
+    email: Joi.string()
+        .email({ tlds: { allow: false } })
+        .required()
+        .messages({
+            "string.email": "Email must be valid"
+        }),
+
+    password: Joi.string()
+        .required()
+        .min(6)
+        .max(50)
+        .pattern(/^(?=.*\d{3,})(?=(.*[\W_])+)(?=.*[a-zA-Z]{2,})(?=.*[A-Z]+).{6,20}$/)
+        .messages({
+            "string.pattern.base": `Password must contains at least 3 numbers,
+            2 characters one of them must be uppercase 
+            and one special character`,
+            "string.min": "Password must be 6 to 50 characters",
+            "string.max": "Password must be 6 to 50 characters"
+        }),
+}).optional().options({ allowUnknown: false });
+
 export {
-    signupSchema
+    signupSchema,
+    signinSchema
 }

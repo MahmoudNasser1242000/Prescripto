@@ -11,25 +11,27 @@ import Appointment from './pages/Appointment/Appointment'
 import MyAppointments from './pages/MyAppointments/MyAppointments'
 import AuthLayOut from './pages/auth/AuthLayOut/AuthLayOut'
 import Register from './pages/auth/Register/Register'
+import ProtectRoutes from './pages/ProtectRoutes/ProtectRoutes'
+import ProtectAuth from './pages/ProtectAuth/ProtectAuth'
 
 function App() {
   const routes = createBrowserRouter([
     {
       path: "", element: <LayOut />, children: [
-        { index: true, element: <Home /> },
-        { path: "doctors/:speciality", element: <Doctors /> },
-        { path: "doctors", element: <Doctors /> },
-        { path: "about", element: <About /> },
-        { path: "concat", element: <Concat /> },
-        { path: "my-profile", element: <MyProfile /> },
-        { path: "my-appointments", element: <MyAppointments /> },
-        { path: "appointment/:docId", element: <Appointment /> },
+        { index: true, element: <ProtectRoutes> <Home /> </ProtectRoutes> },
+        { path: "doctors/:speciality", element: <ProtectRoutes> <Doctors /> </ProtectRoutes> },
+        { path: "doctors", element: <ProtectRoutes> <Doctors /> </ProtectRoutes> },
+        { path: "about", element: <ProtectRoutes> <About /> </ProtectRoutes> },
+        { path: "concat", element: <ProtectRoutes> <Concat /> </ProtectRoutes> },
+        { path: "my-profile", element: <ProtectRoutes> <MyProfile /> </ProtectRoutes> },
+        { path: "my-appointments", element: <ProtectRoutes> <MyAppointments /> </ProtectRoutes> },
+        { path: "appointment/:docId", element: <ProtectRoutes> <Appointment /> </ProtectRoutes> },
       ]
     },
     {
       path: "auth", element: <AuthLayOut />, children: [
-        { index: true, element: <Register /> },
-        { path: "login", element: <Login /> },
+        { index: true, element: <ProtectAuth> <Register /> </ProtectAuth> },
+        { path: "login", element: <ProtectAuth> <Login /> </ProtectAuth> },
       ]
     }
   ])

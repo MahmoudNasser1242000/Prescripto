@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { assets } from "../../../assets/assets_frontend/assets";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signinSchema } from "../../../validation";
+import joiResolver from "../../../utils/joiResolver";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { signin } from "../../../Redux/reducers/auth.reducer";
+import { Spinner } from "flowbite-react";
 
 const Login = () => {
+  const navigate = useNavigate()
+  const { loading, error, success } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: joiResolver(signinSchema),
+  })
+  const onSubmit = (data) => dispatch(signin(data));
+  
+  useEffect(() => {
+    if (success) {
+      toast.success(success.message);
+      setTimeout(() => navigate("/"), 4000)
+    } else if (error) {
+      toast.error(error.message)
+    }
+  }, [success, error]);
   return <>
     <section className="relative flex flex-wrap h-screen items-center">
       <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
@@ -15,14 +42,15 @@ const Login = () => {
           </p>
         </div>
 
-        <form action="#" className="mx-auto mb-0 mt-8 max-w-md space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="mx-auto mb-0 mt-8 max-w-md space-y-4">
           <div>
             <label htmlFor="email" className="sr-only">Email</label>
 
             <div className="relative">
               <div>
                 <label className="block mb-2 text-start text-sm text-gray-600 dark:text-gray-200">Email address</label>
-                <input type="email" placeholder="johnsnow@example.com" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                <input {...register("email")} type="email" placeholder="johnsnow@example.com" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                <p className="text-red-600 text-start mt-2">{errors.email?.message}</p>
               </div>
 
             </div>
@@ -34,7 +62,8 @@ const Login = () => {
             <div className="relative">
               <div>
                 <label className="block mb-2 text-start text-sm text-gray-600 dark:text-gray-200">Password</label>
-                <input type="password" placeholder="Enter your password" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                <input {...register("password")} type="password" placeholder="Enter your password" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                <p className="text-red-600 text-start mt-2">{errors.password?.message}</p>
               </div>
             </div>
           </div>
@@ -46,7 +75,7 @@ const Login = () => {
             </p>
 
             <button className="py-3 px-6 rounded-[4px] w-fit text-sm text-white capitalize transition-colors duration-300 transform bg-primary hover:bg-primary/80 focus:outline-none focus:ring focus:ring-opacity-50">
-              <span>Sign Up </span>
+              <span>{loading ? <Spinner color="info" aria-label="Default status example" /> : "Sign Up"} </span>
             </button>
           </div>
         </form>
