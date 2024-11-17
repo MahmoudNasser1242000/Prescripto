@@ -1,30 +1,27 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import { assets, doctors } from "../../assets/assets_frontend/assets";
+import { assets } from "../../assets/assets_frontend/assets";
 
-const DoctorInfo = () => {
-    const { docId } = useParams();
-    const doctor = doctors.find((doc) => doc._id === docId)
+const DoctorInfo = ({doctor}) => {
     return <>
         <section className="mt-16 mx-auto">
             <div className="mx-auto  px-4 ">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-3 lg:gap-10">
                     <div className="relative h-64 md:h-full rounded-md w-full col-span-1 shadow-sm">
                         <img
-                            alt={`${doctor.name} profile`}
-                            src={doctor.image}
+                            alt={`${doctor?.name} profile`}
+                            src={doctor?.profile}
                             className="absolute inset-0 h-full w-full rounded-lg shadow-sm object-contain md:object-cover bg-primary/40"
                         />
                     </div>
 
                     <div className="py-10 lg:py-12 rounded-md md:col-span-2 border border-1 text-start px-6 shadow-sm">
                         <h2 className="font-bold text-3xl inline-flex items-center">
-                            <span>{doctor.name}</span>
+                            <span>{doctor?.name}</span>
                             <img src={assets.verified_icon} className="mx-3" alt="verified icon" />
                         </h2>
 
                         <p className="text-gray-500 flex items-center">
-                            <span>{doctor.degree} - {doctor.speciality}</span>
+                            <span>{doctor?.degree} - {doctor?.speciality}</span>
                             <span
                                 className="inline-flex items-center justify-center mx-2 rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700"
                             >
@@ -42,7 +39,7 @@ const DoctorInfo = () => {
                                         d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                                     />
                                 </svg>
-                                {doctor.experience}
+                                {doctor?.experience}
                             </span>
                         </p>
 
@@ -52,7 +49,7 @@ const DoctorInfo = () => {
                                 <span>About</span>
                             </p>
                             <p className="mt-2 text-gray-600">
-                                {doctor.about}
+                                {doctor?.about}
                             </p>
                         </div>
 
@@ -60,7 +57,7 @@ const DoctorInfo = () => {
                             className="font-semibold mt-4"
                         >
                             <span className="text-gray-500">Appointment free: </span>
-                            <span className="text-xl">${doctor.fees}</span>
+                            <span className="text-xl">${doctor?.fees}</span>
                         </p>
                     </div>
                 </div>
