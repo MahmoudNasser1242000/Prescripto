@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { doctors } from "../../assets/assets_frontend/assets";
 
-const SpecialityMenu = ({param}) => {
+const SpecialityMenu = ({speciality, doctors}) => {
     return <>
         <ul className="space-y-1">
             <li>
                 <Link
                     to="/doctors"
-                    className={`${!param && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 hover:bg-gray-100 hover:text-gray-700`}
+                    className={`${!speciality && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 hover:bg-gray-100 hover:text-gray-700`}
                 >
                     <span className="text-sm font-medium"> All Doctors </span>
 
@@ -23,7 +22,7 @@ const SpecialityMenu = ({param}) => {
             <li>
                 <Link
                     to="/doctors/General physician"
-                    className={`${param === "General physician" && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700`}
+                    className={`${speciality === "General physician" && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700`}
                 >
                     <span className="text-sm font-medium"> General physician </span>
 
@@ -38,7 +37,7 @@ const SpecialityMenu = ({param}) => {
             <li>
                 <Link
                     to="/doctors/Gynecologist"
-                    className={`${param === "Gynecologist" && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700`}
+                    className={`${speciality === "Gynecologist" && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700`}
                 >
                     <span className="text-sm font-medium"> Gynecologist </span>
 
@@ -53,7 +52,7 @@ const SpecialityMenu = ({param}) => {
             <li>
                 <Link
                     to="/doctors/Dermatologist"
-                    className={`${param === "Dermatologist" && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700`}
+                    className={`${speciality === "Dermatologist" && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700`}
                 >
                     <span className="text-sm font-medium"> Dermatologist </span>
 
@@ -68,7 +67,7 @@ const SpecialityMenu = ({param}) => {
             <li>
                 <Link
                     to="/doctors/Pediatricians"
-                    className={`${param === "Pediatricians" && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700`}
+                    className={`${speciality === "Pediatricians" && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700`}
                 >
                     <span className="text-sm font-medium"> Pediatricians </span>
 
@@ -83,7 +82,7 @@ const SpecialityMenu = ({param}) => {
             <li>
                 <Link
                     to="/doctors/Neurologist"
-                    className={`${param === "Neurologist" && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700`}
+                    className={`${speciality === "Neurologist" && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700`}
                 >
                     <span className="text-sm font-medium"> Neurologist </span>
 
@@ -98,7 +97,7 @@ const SpecialityMenu = ({param}) => {
             <li>
                 <Link
                     to="/doctors/Gastroenterologist"
-                    className={`${param === "Gastroenterologist" && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700`}
+                    className={`${speciality === "Gastroenterologist" && "bg-gray-100 text-gray-700"} group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700`}
                 >
                     <span className="text-sm font-medium"> Gastroenterologist </span>
 
