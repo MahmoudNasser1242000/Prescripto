@@ -9,5 +9,8 @@ export default defineConfig({
     postcss: {
       plugins: [tailwindcss()],
     },
-  }
+  },
+  optimizeDeps: {
+    include: ['moment-timezone', 'moment', 'date-fns-tz'],
+  },
 })

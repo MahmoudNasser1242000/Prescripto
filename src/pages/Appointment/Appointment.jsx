@@ -8,6 +8,9 @@ import { getOneDoctor } from "../../Redux/reducers/doctors.reducer";
 import toast from "react-hot-toast";
 import DoctorInfoSkeleton from "../../Components/DoctorInfoSkeleton/DoctorInfoSkeleton";
 import AppoinmentsTime from "../../Components/AppoinmentsTime/AppoinmentsTime";
+import { addAppointment } from "../../Redux/reducers/appointments.reducer";
+import { jwtDecode } from "jwt-decode";
+import { Spinner } from "flowbite-react";
 
 const Appointment = () => {
   const { docId } = useParams();
@@ -15,11 +18,11 @@ const Appointment = () => {
   const [getTime, setGetTime] = useState("");
 
   const getDateFunc = (date) => {
-    setGetDate(date)
-  }
+    setGetDate(date);
+  };
   const getTimeFunc = (time) => {
-    setGetTime(time)
-  }
+    setGetTime(time);
+  };
 
   // ==================get days==================
   const getWeekdaysFromToday = () => {
@@ -75,7 +78,14 @@ const Appointment = () => {
   const { success, error, loading, doctor } = useSelector(
     (state) => state.doctor
   );
+
+  const {
+    loading: appointmentLoading,
+  } = useSelector((state) => state.appointment);
+
   const { token } = useSelector((state) => state.auth);
+  const logged = jwtDecode(token);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getOneDoctor({ token, docId }));
@@ -98,18 +108,25 @@ const Appointment = () => {
 
     return [hours, minutes, 0, 0];
   }
+
   const getFulllDateWithTime = () => {
-    if (!getDate || !getTime)
-      return toast.error("You must enter a valid Date");
+    if (!getDate || !getTime) return toast.error("You must enter a valid Date");
 
-    const newTime = convertTo24HourFormat(getTime);
+    const [hours, minutes] = convertTo24HourFormat(getTime);
     const specialDate = new Date(getDate);
-    const year = specialDate.getFullYear()
-    const month = specialDate.getMonth()
-    const day = specialDate.getDate()
+    specialDate.setHours(hours+2, minutes, 0, 0);
 
-    const fullDate = new Date(year, month, day, newTime[0], newTime[1], newTime[2], newTime[3])
+    // Format the date in Cairo timezone
+    const fullDate = specialDate.toLocaleString('en-US', { timeZone: 'Africa/Cairo' });
+
+    return fullDate;
+  };
+
+  const addUserAppointment = () => {
+    const fullDate = getFulllDateWithTime();
     console.log(fullDate);
+
+    dispatch(addAppointment({ token, appointment: { date: fullDate, user: logged.userId, doctor: docId } }))
   }
   return (
     <div className="max-w-[1280px] mx-auto px-8 sm:px-12">
@@ -145,22 +162,27 @@ const Appointment = () => {
             <div className="flex flex-wrap gap-2 items-center justify-center lg:justify-start">
               {loading
                 ? Array.from({ length: 5 }, (_, index) => (
-                  <p key={index} className="cursor-pointer whitespace-nowrap px-2 mt-3 rounded-full border border-gray-300 bg-gray-200 animate-pulse py-0.5 w-20 h-6"></p>
+                  <p
+                    key={index}
+                    className="cursor-pointer whitespace-nowrap px-2 mt-3 rounded-full border border-gray-300 bg-gray-200 animate-pulse py-0.5 w-20 h-6"
+                  ></p>
                 ))
                 : doctor?.examination_dates.map((date) => (
-                  <AppoinmentsTime key={date.time} date={date} getTimeFunc={getTimeFunc} />
+                  <AppoinmentsTime
+                    key={date.time}
+                    date={date}
+                    getTimeFunc={getTimeFunc}
+                  />
                 ))}
             </div>
             <button
-            className={`inline-block disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-primary disabled:hover:text-white mt-8 rounded border border-primary bg-primary px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-primary`}
-            disabled={loading || error ? true : false}
-            onClick={() => getFulllDateWithTime()}
-          >
-            Book Here
-          </button>
+              className={`inline-block disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-primary disabled:hover:text-white mt-8 rounded border border-primary bg-primary px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-primary`}
+              disabled={loading || error ? true : false}
+              onClick={() => addUserAppointment()}
+            >
+              {appointmentLoading ? <Spinner color="info" aria-label="Default status example" /> : "Book Here"}
+            </button>
           </div>
-
-          
         </div>
       </div>
 
