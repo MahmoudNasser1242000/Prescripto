@@ -35,8 +35,20 @@ export const getAppointments = createAsyncThunk("appointment/getAppointments", a
                 "Authorization": `Bearer ${token}`,
             },
         })       
-                console.log(data);
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
 
+export const deleteAppointment = createAsyncThunk("appointment/deleteAppointment", async ({token, id}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.delete(`appointments/${id}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        }) 
         return data
     } catch (error) {        
         return rejectWithValue(error.response ? error.response.data : error.message)
@@ -86,6 +98,26 @@ const appointmentSlice = createSlice({
             state.error = action.payload.message;
             state.appointments = []
             toast.error(`${state.error}`, {duration: Infinity});
+        })
+
+        //delete appointments
+        builder.addCase(deleteAppointment.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(deleteAppointment.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            state.appointments = state.appointments.filter((app) => app._id !== action.payload.appointment._id)
+            toast.success(`${state.success}`);
+        })
+        builder.addCase(deleteAppointment.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(`${state.error}`);
         })
     }
 });

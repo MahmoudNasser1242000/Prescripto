@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { Table } from "flowbite-react";
-import { getAppointments } from "../../Redux/reducers/appointments.reducer";
+import { deleteAppointment, getAppointments } from "../../Redux/reducers/appointments.reducer";
 
 const MyAppointments = () => {
   const { token } = useSelector((state) => state.auth);
@@ -21,9 +21,9 @@ const MyAppointments = () => {
 
     const formattedTime = `${String(hours).padStart(2, "0")}:${String(
       minutes
-    ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    ).padStart(2, "0")}:${String(seconds).padStart(2, "0")} ${hours >= 12? "PM" : "AM"}`;
     return formattedTime;
-  };
+  };  
 
   useEffect(() => {
     let query;
@@ -35,6 +35,9 @@ const MyAppointments = () => {
     dispatch(getAppointments({ token, query }));
   }, [dispatch, role, token]);
 
+  const removeAppointment = (id) => { 
+    dispatch(deleteAppointment({token, id}));
+  }
   return (
     <div className="max-w-[1280px] mx-auto px-8 sm:px-12">
       <h2 className="mt-12 mb-8 text-2xl text-center sm:text-start font-bold">
@@ -255,7 +258,7 @@ const MyAppointments = () => {
                   {/* Actions */}
                   <Table.Cell className="px-4 py-2">
                     <div className="flex flex-nowrap gap-2 justify-center sm:justify-start">
-                      <button className="rounded bg-red-600 px-3 py-2 text-xs font-medium text-white hover:bg-red-700">
+                      <button onClick={() => { removeAppointment(appointment._id) }} className="rounded bg-red-600 px-3 py-2 text-xs font-medium text-white hover:bg-red-700">
                         Delete
                       </button>
                       <button className="rounded bg-indigo-600 px-3 py-2 text-xs font-medium text-white hover:bg-indigo-700">
