@@ -89,7 +89,7 @@ const Appointment = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getOneDoctor({ token, docId }));
-  }, [dispatch]);
+  }, [dispatch, docId]);
   useEffect(() => {
     if (error) {
       toast.error(error, { duration: Infinity });
@@ -114,12 +114,9 @@ const Appointment = () => {
 
     const [hours, minutes] = convertTo24HourFormat(getTime);
     const specialDate = new Date(getDate);
-    specialDate.setHours(hours+2, minutes, 0, 0);
+    specialDate.setHours(hours + 2, minutes, 0, 0);
 
-    // Format the date in Cairo timezone
-    const fullDate = specialDate.toLocaleString('en-US', { timeZone: 'Africa/Cairo' });
-
-    return fullDate;
+    return specialDate;
   };
 
   const addUserAppointment = () => {

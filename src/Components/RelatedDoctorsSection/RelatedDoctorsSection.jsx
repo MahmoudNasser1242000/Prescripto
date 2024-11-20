@@ -40,11 +40,11 @@ const RelatedDoctorsSection = ({ doctor, doctorLoading, doctorSuccess }) => {
                     </h1>
                 ) : (
                     doctors
-                        ?.filter((doc) => doctor?.speciality === doc.speciality && doc._id !== doctor._id)
+                        ?.filter((doc) => (doctor?.speciality === doc.speciality) && (doc._id !== doctor._id))
                         .slice(0, 3)
                         .map((doc) => (
                             <div className="mx-1 w-full sm:w-auto" key={doc._id}>
-                                <DoctorCard key={doc._id} doctor={doc} />
+                                <DoctorCard doctor={doc} />
                             </div>
                         ))
                 )}

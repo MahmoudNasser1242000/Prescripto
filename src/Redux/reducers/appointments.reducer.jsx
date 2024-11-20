@@ -6,7 +6,8 @@ const initialState = {
     error: null,
     loading: false,
     success: null,
-    appointment: null
+    appointment: null,
+    appointments: [],
 }
 
 export const addAppointment = createAsyncThunk("appointment/addAppointment", async ({token, appointment}, thunkAPI) => {
@@ -17,6 +18,25 @@ export const addAppointment = createAsyncThunk("appointment/addAppointment", asy
                 "Authorization": `Bearer ${token}`,
             },
         })        
+
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
+export const getAppointments = createAsyncThunk("appointment/getAppointments", async ({token, query={}}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    const {user, doctor} = query
+    const endPoint = user && `appointments?userId=${user}` || doctor && `appointments?docId=${doctor}` || "appointments"
+    try {
+        const {data} = await axiosInstance.get(endPoint, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        })       
+                console.log(data);
+
         return data
     } catch (error) {        
         return rejectWithValue(error.response ? error.response.data : error.message)
@@ -46,6 +66,26 @@ const appointmentSlice = createSlice({
             state.error = action.payload.message;
             state.appointment = null
             toast.error(`${state.error}`);
+        })
+
+        //get appointments
+        builder.addCase(getAppointments.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(getAppointments.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = true;
+            state.appointments = [...action.payload.appointments]            
+        })
+        builder.addCase(getAppointments.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            state.appointments = []
+            toast.error(`${state.error}`, {duration: Infinity});
         })
     }
 });

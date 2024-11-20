@@ -11,6 +11,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['moment-timezone', 'moment', 'date-fns-tz'],
+    include: [],
   },
 })

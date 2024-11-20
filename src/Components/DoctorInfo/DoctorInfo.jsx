@@ -20,7 +20,7 @@ const DoctorInfo = ({doctor}) => {
                             <img src={assets.verified_icon} className="mx-3" alt="verified icon" />
                         </h2>
 
-                        <p className="text-gray-500 flex items-center">
+                        <p className="text-gray-500 flex items-center mt-2">
                             <span>{doctor?.degree} - {doctor?.speciality}</span>
                             <span
                                 className="inline-flex items-center justify-center mx-2 rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700"
