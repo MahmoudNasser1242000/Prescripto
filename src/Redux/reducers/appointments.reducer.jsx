@@ -55,6 +55,20 @@ export const deleteAppointment = createAsyncThunk("appointment/deleteAppointment
     }
 })
 
+export const updateAppointment = createAsyncThunk("appointment/updateAppointment", async ({token, appointment, id}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.patch(`appointments/${id}`, appointment, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        }) 
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
 const appointmentSlice = createSlice({
     name: "appointment",
     initialState,
@@ -114,6 +128,26 @@ const appointmentSlice = createSlice({
             toast.success(`${state.success}`);
         })
         builder.addCase(deleteAppointment.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(`${state.error}`);
+        })
+
+        //update appointments
+        builder.addCase(updateAppointment.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(updateAppointment.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            state.appointments = state.appointments.map((app) => app._id == action.payload.appointment._id? action.payload.appointment : app)
+            toast.success(`${state.success}`);
+        })
+        builder.addCase(updateAppointment.rejected, (state, action) => {
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;

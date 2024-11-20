@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { Table } from "flowbite-react";
 import { deleteAppointment, getAppointments } from "../../Redux/reducers/appointments.reducer";
+import { Link } from "react-router-dom";
+import TableRowSkeleton from "../../Components/TableRowSkeleton/TableRowSkeleton ";
 
 const MyAppointments = () => {
   const { token } = useSelector((state) => state.auth);
@@ -15,7 +17,7 @@ const MyAppointments = () => {
   const getTime = (date) => {
     const newDate = new Date(date);
 
-    const hours = newDate.getHours() - 2;
+    const hours = newDate.getHours();
     const minutes = newDate.getMinutes();
     const seconds = newDate.getSeconds();
 
@@ -62,7 +64,9 @@ const MyAppointments = () => {
           </Table.Head>
           <Table.Body className="divide-y">
             {loading ? (
-              <Table.Row></Table.Row>
+              <Table.Row>
+                <TableRowSkeleton/>
+              </Table.Row>
             ) : role === "doctor" ? (
               appointments.map((appointment) => (
                 <Table.Row
@@ -198,11 +202,11 @@ const MyAppointments = () => {
                     </p>
 
                     <p>
-                      {new Date(appointment.date) < new Date() && new Date(appointment.expireDate).toLocaleDateString("en-GB", {
+                      {new Date(appointment.date) < `${new Date() && new Date(appointment.expireDate).toLocaleDateString("en-GB", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
-                      })(Standby)}
+                      })} (Reserve)`} 
                     </p>
                   </Table.Cell>
 
@@ -261,9 +265,9 @@ const MyAppointments = () => {
                       <button onClick={() => { removeAppointment(appointment._id) }} className="rounded bg-red-600 px-3 py-2 text-xs font-medium text-white hover:bg-red-700">
                         Delete
                       </button>
-                      <button className="rounded bg-indigo-600 px-3 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                      <Link to={`/appointment/${appointment.doctor._id}?updateAppointment=${appointment._id}`} className="rounded bg-indigo-600 px-3 py-2 text-xs font-medium text-white hover:bg-indigo-700">
                         Update
-                      </button>
+                      </Link>
                       <button className="rounded bg-orange-600 px-3 py-2 text-xs font-medium text-white hover:bg-orange-700">
                         Pay
                       </button>

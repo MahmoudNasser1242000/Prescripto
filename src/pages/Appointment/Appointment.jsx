@@ -2,18 +2,21 @@ import React, { useEffect, useState } from "react";
 import DoctorInfo from "../../Components/DoctorInfo/DoctorInfo";
 import AppointmentsDates from "../../Components/AppointmentsDates/AppointmentsDates";
 import RelatedDoctorsSection from "../../Components/RelatedDoctorsSection/RelatedDoctorsSection";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOneDoctor } from "../../Redux/reducers/doctors.reducer";
 import toast from "react-hot-toast";
 import DoctorInfoSkeleton from "../../Components/DoctorInfoSkeleton/DoctorInfoSkeleton";
 import AppoinmentsTime from "../../Components/AppoinmentsTime/AppoinmentsTime";
-import { addAppointment } from "../../Redux/reducers/appointments.reducer";
+import { addAppointment, updateAppointment } from "../../Redux/reducers/appointments.reducer";
 import { jwtDecode } from "jwt-decode";
 import { Spinner } from "flowbite-react";
 
 const Appointment = () => {
   const { docId } = useParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();  
+
   const [getDate, setGetDate] = useState("");
   const [getTime, setGetTime] = useState("");
 
@@ -81,6 +84,7 @@ const Appointment = () => {
 
   const {
     loading: appointmentLoading,
+    success: appointmentSuccess
   } = useSelector((state) => state.appointment);
 
   const { token } = useSelector((state) => state.auth);
@@ -110,20 +114,28 @@ const Appointment = () => {
   }
 
   const getFulllDateWithTime = () => {
-    if (!getDate || !getTime) return toast.error("You must enter a valid Date");
-
     const [hours, minutes] = convertTo24HourFormat(getTime);
     const specialDate = new Date(getDate);
-    specialDate.setHours(hours + 2, minutes, 0, 0);
+    specialDate.setHours(hours, minutes, 0, 0);
 
     return specialDate;
   };
 
   const addUserAppointment = () => {
+    if (!getDate || !getTime) return toast.error("You must enter a valid Date");
     const fullDate = getFulllDateWithTime();
-    console.log(fullDate);
 
     dispatch(addAppointment({ token, appointment: { date: fullDate, user: logged.userId, doctor: docId } }))
+  }
+
+  const updateUserAppointment = (id) => {
+    if (!getDate || !getTime) return toast.error("You must enter a valid Date");
+    const fullDate = getFulllDateWithTime();
+
+    dispatch(updateAppointment({token, appointment: { date: fullDate }, id: searchParams.get("updateAppointment")}));
+    if (appointmentSuccess) {
+      navigate("/my-appointments")
+    }
   }
   return (
     <div className="max-w-[1280px] mx-auto px-8 sm:px-12">
@@ -172,13 +184,26 @@ const Appointment = () => {
                   />
                 ))}
             </div>
-            <button
-              className={`inline-block disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-primary disabled:hover:text-white mt-8 rounded border border-primary bg-primary px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-primary`}
-              disabled={loading || error ? true : false}
-              onClick={() => addUserAppointment()}
-            >
-              {appointmentLoading ? <Spinner color="info" aria-label="Default status example" /> : "Book Here"}
-            </button>
+            {
+              searchParams.get("updateAppointment") ? (
+                <button
+                  className={`inline-block disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-indigo-600 disabled:hover:text-white mt-8 rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600`}
+                  disabled={loading || error ? true : false}
+                  onClick={() => {updateUserAppointment()}}
+                >
+                  {appointmentLoading ? <Spinner color="info" aria-label="Default status example" /> : "Update Appointment"}
+                </button>
+              ) :
+                (
+                  <button
+                    className={`inline-block disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-primary disabled:hover:text-white mt-8 rounded border border-primary bg-primary px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-primary`}
+                    disabled={loading || error ? true : false}
+                    onClick={() => addUserAppointment()}
+                  >
+                    {appointmentLoading ? <Spinner color="info" aria-label="Default status example" /> : "Book Here"}
+                  </button>
+                )
+            }
           </div>
         </div>
       </div>
