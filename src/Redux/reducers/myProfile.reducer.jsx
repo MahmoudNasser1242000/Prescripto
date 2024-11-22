@@ -23,6 +23,21 @@ export const getMyProfile = createAsyncThunk("myProfile/getMyProfile", async (to
     }
 })
 
+export const updateUserProfile = createAsyncThunk("myProfile/updateUserProfile", async ({token, body}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.patch(`myProfile/updateUserProfile`, body, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+            },
+        })        
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
 const myProfileSlice = createSlice({
     name: "myProfile",
     initialState,
@@ -40,6 +55,27 @@ const myProfileSlice = createSlice({
             state.myProfile = action.payload.profile
         })
         builder.addCase(getMyProfile.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            state.myProfile = null
+            toast.error(`${state.error}`);
+        })
+
+        //update user profile
+        builder.addCase(updateUserProfile.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(updateUserProfile.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            state.myProfile = action.payload.user;
+            toast.success(`${state.success}`);
+        })
+        builder.addCase(updateUserProfile.rejected, (state, action) => {
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;

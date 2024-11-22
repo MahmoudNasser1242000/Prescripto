@@ -1,8 +1,9 @@
 import appointment_img from './appointment.png'
 import header_img from './header-img.webp'
 import group_profiles from './group_profiles.png'
-import profile_pic from './profile_pic.png'
+import default_profile_pic from './defaultProfile.png'
 import contact_image from './contact_image.png'
+import edit_profile_pic from './edit-profile-pic.png'
 import login_image from './login-image.webp'
 import register_image from './register-image.jpg'
 import camera from './camera.svg'
@@ -49,7 +50,6 @@ export const assets = {
     chats_icon,
     verified_icon,
     info_icon,
-    profile_pic,
     camera,
     arrow_icon,
     contact_image,
@@ -63,6 +63,8 @@ export const assets = {
     doc8,
     login_image,
     register_image,
+    default_profile_pic,
+    edit_profile_pic
 }
 
 export const specialityData = [

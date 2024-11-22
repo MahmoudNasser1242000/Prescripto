@@ -73,6 +73,7 @@ const signupSchema = Joi.object({
         .min(3)
         .max(100)
         .optional()
+        .allow(null, "")
         .messages({
             "string.min": "Job field must be at least 3 characters",
             "string.max": "Job field must be at most 100 characters"
@@ -87,7 +88,7 @@ const signupSchema = Joi.object({
         .optional(),
 
     profile: Joi.object().optional(),
-}).optional().options({ allowUnknown: false });
+}).options({ allowUnknown: false });
 
 
 const signinSchema = Joi.object({
@@ -110,9 +111,64 @@ const signinSchema = Joi.object({
             "string.min": "Password must be 6 to 50 characters",
             "string.max": "Password must be 6 to 50 characters"
         }),
-}).optional().options({ allowUnknown: false });
+}).options({ allowUnknown: false });
+
+const updateUserProfileSchema = Joi.object({
+    name: Joi.string()
+        .min(3)
+        .max(50)
+        .required()
+        .messages({
+            "string.min": "user name must be at least 3 characters",
+            "string.max": "user name must be at most 50 characters"
+        }),
+
+    email: Joi.string()
+        .email({ tlds: { allow: false } })
+        .required()
+        .messages({
+            "string.email": "Email must be valid"
+        }),
+
+    bio: Joi.string()
+        .min(3)
+        .max(1000)
+        .optional()
+        .allow(null, "")
+        .messages({
+            "string.min": "about field must be at least 3 characters",
+            "string.max": "about field must be at most 1000 characters"
+        }),
+
+    gender: Joi.string()
+        .required()
+        .valid("male", "female")
+        .default("male")
+        .messages({
+            "any.valid": "Gender must be one of male or female",
+        }),
+
+    phone: Joi.string()
+        .required()
+        .pattern(/^01([0-2]|5)[0-9]{8}$/),
+
+    birth_date: Joi.date()
+        .required(),
+
+    job: Joi.string()
+        .min(3)
+        .max(100)
+        .required()
+        .messages({
+            "string.min": "Job field must be at least 3 characters",
+            "string.max": "Job field must be at most 100 characters"
+        }),
+
+    profile: Joi.object().optional()
+}).options({ allowUnknown: false });
 
 export {
     signupSchema,
-    signinSchema
+    signinSchema,
+    updateUserProfileSchema
 }

@@ -36,6 +36,7 @@ const Register = () => {
     formData.append("job", data.job)
     formData.append("birth_date", data.birth_date)
     formData.append("phone", data.phone)
+    formData.append("gender", data.gender)
 
     //send data to database
     dispatch(signup(formData))

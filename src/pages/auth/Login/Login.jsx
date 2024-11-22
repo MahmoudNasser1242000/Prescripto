@@ -83,7 +83,7 @@ const Login = () => {
 
       <div className="relative h-64 w-full sm:h-96 lg:h-full lg:w-1/2 hidden lg:block">
         <img
-          alt=""
+          alt="login iamge"
           src={assets.login_image}
           className="absolute inset-0 h-full w-full object-cover"
         />
