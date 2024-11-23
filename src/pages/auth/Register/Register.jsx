@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { assets } from "../../../assets/assets_frontend/assets";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
@@ -7,11 +7,10 @@ import joiResolver from "../../../utils/joiResolver";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../../../Redux/reducers/auth.reducer";
 import { Spinner } from "flowbite-react";
-import toast from "react-hot-toast";
 
 const Register = () => {
   const navigate = useNavigate()
-  const { loading, error, success } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
   const {
     register,
@@ -40,6 +39,7 @@ const Register = () => {
 
     //send data to database
     dispatch(signup(formData))
+    navigate("/")
   }
 
   return <>

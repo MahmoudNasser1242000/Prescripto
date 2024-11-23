@@ -20,14 +20,16 @@ const MyProfile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getMyProfile(token));
+    if (token) {
+      dispatch(getMyProfile(token));
+    }
   }, [dispatch, token]);
 
   if (loading) return "loading .....";
   return (
     <div className="pt-14 max-w-[1280px] mx-auto px-8 sm:px-12">
       <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-[30%] text-center mb-8 lg:mb-0 border border-y-0 border-gray-300 py-6">
+        <div className="lg:w-[45%] text-center mb-8 lg:mb-0 border border-y-0 border-gray-300 py-6">
           <div className="relative">
             {
               myProfile?.profile && logged.role !== "doctor" && (
@@ -51,19 +53,40 @@ const MyProfile = () => {
             {logged.role === "doctor" ? myProfile?.speciality : myProfile?.job}
           </p>
           <div className="flex flex-col justify-center items-center text-center">
-            <button
-              onClick={() => setOpenUpdateInfoModal(true)}
-              type="button"
-              className="mt-4 w-fit bg-indigo-600 text-white px-12 py-2 rounded-[3px] hover:bg-indigo-900 transition-colors duration-300"
-            >
-              Edit Profile
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 mt-6">
+              <button
+                onClick={() => setOpenUpdateInfoModal(true)}
+                type="button"
+                className="group relative inline-block text-sm font-medium text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+              >
+                <span
+                  className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+                ></span>
+
+                <span className="relative block border border-current bg-white px-8 py-3"> Edit My Profile </span>
+              </button>
+              <Link
+                to={"/change-Password"}
+                type="button"
+                className="group relative inline-block text-sm font-medium text-indigo-600 focus:outline-none active:text-indigo-500"
+              >
+                <span
+                  className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+                ></span>
+
+                <span className="relative block border border-current bg-white px-8 py-3"> Change Password </span>
+              </Link>
+            </div>
             <button
               onClick={() => setOpenDeleteProfileModal(true)}
               type="button"
-              className="mt-4 w-fit bg-red-600 text-white px-12 py-2 rounded-[3px] hover:bg-red-900 transition-colors duration-300"
+              className="group relative mt-4 inline-block text-sm font-medium text-red-600 focus:outline-none active:text-red-500"
             >
-              delete Profile
+              <span
+                className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-red-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+              ></span>
+
+              <span className="relative block border border-current bg-white px-8 py-3"> Delete Acoount </span>
             </button>
           </div>
         </div>
@@ -121,8 +144,8 @@ const MyProfile = () => {
           </ul>
           <div className="flex justify-center lg:justify-start mt-7">
             <Link
-              className="group block relative w-fit items-center overflow-hidden rounded bg-primary px-8 py-3 text-white focus:outline-none focus:ring active:bg-primary"
-              t={"my-appointments"}
+              className="group flex relative w-fit items-center overflow-hidden rounded bg-primary px-8 py-3 text-white focus:outline-none focus:ring active:bg-primary"
+              to={"/my-appointments"}
             >
               <span className="absolute -end-full transition-all group-hover:end-4">
                 <svg
@@ -140,7 +163,7 @@ const MyProfile = () => {
                   />
                 </svg>
               </span>
-            
+
               <span className="text-sm font-medium transition-all group-hover:me-4"> My Appointments </span>
             </Link>
           </div>

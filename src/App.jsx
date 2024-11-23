@@ -13,6 +13,7 @@ import AuthLayOut from './pages/auth/AuthLayOut/AuthLayOut'
 import Register from './pages/auth/Register/Register'
 import ProtectRoutes from './pages/ProtectRoutes/ProtectRoutes'
 import ProtectAuth from './pages/ProtectAuth/ProtectAuth'
+import ChangePassword from './pages/ChangePassword/ChangePassword'
 
 function App() {
   const routes = createBrowserRouter([
@@ -26,6 +27,7 @@ function App() {
         { path: "my-profile", element: <ProtectRoutes> <MyProfile /> </ProtectRoutes> },
         { path: "my-appointments", element: <ProtectRoutes> <MyAppointments /> </ProtectRoutes> },
         { path: "appointment/:docId", element: <ProtectRoutes> <Appointment /> </ProtectRoutes> },
+        { path: "change-password", element: <ProtectRoutes> <ChangePassword /> </ProtectRoutes> },
       ]
     },
     {

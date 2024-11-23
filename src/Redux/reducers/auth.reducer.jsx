@@ -36,6 +36,12 @@ export const signin = createAsyncThunk("auth/signin", async (user, thunkAPI) => 
 const authSlice = createSlice({
     name: "auth",
     initialState,
+    reducers: {
+        logout: (state) => {
+            state.token = ""
+            localStorage.removeItem("Token")
+        }
+    },
     extraReducers: (builder) => { 
         //signup
         builder.addCase(signup.pending, (state) => {
@@ -83,3 +89,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+export const { logout } = authSlice.actions;

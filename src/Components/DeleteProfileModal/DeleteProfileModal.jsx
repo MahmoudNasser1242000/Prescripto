@@ -14,8 +14,7 @@ const DeleteProfileModal = ({ openModal, onCloseModal, token }) => {
     const deleteMyProfile = () => {
         dispatch(deleteProfile(token));
         setTimeout(() => {
-            localStorage.removeItem("Token");
-            navigate()
+            dispatch(logout())
         }, 3000);
     }
     return <>

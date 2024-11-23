@@ -11,7 +11,6 @@ const UpdateProfilePictureModal = ({ openModal, onCloseModal, token }) => {
     const deleteProfilePic = () => {
         const formData = new FormData();
         formData.append("profile", " ");
-        //send data to database
         dispatch(updateUserProfile({ token, body: formData }))
         // onCloseModal()
     }

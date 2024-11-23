@@ -9,9 +9,11 @@ import { signin } from "../../../Redux/reducers/auth.reducer";
 import { Spinner } from "flowbite-react";
 
 const Login = () => {
-  const navigate = useNavigate()
-  const { loading, token } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
+
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -19,13 +21,12 @@ const Login = () => {
   } = useForm({
     resolver: joiResolver(signinSchema),
   })
-  const onSubmit = (data) => dispatch(signin(data));
-
-  useEffect(() => {
-    if (token) {
+  const onSubmit = (data) => {
+    dispatch(signin(data));
+    setTimeout(() => {
       navigate("/")
-    }
-  }, [token]);
+    }, 500);
+  };
   
   return <>
     <section className="relative flex flex-wrap h-screen items-center">

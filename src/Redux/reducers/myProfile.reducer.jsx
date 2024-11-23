@@ -52,11 +52,25 @@ export const deleteProfile = createAsyncThunk("myProfile/deleteProfile", async (
     }
 })
 
+export const changeUserPassword = createAsyncThunk("myProfile/changeUserPassword", async ({token, body}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.patch(`myProfile/changeUserPassword`, body, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        })        
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
 const myProfileSlice = createSlice({
     name: "myProfile",
     initialState,
     extraReducers: (builder) => {
-        //add appointments
+        //get my profile
         builder.addCase(getMyProfile.pending, (state) => {
             state.loading = true;
             state.error = null;
@@ -73,7 +87,7 @@ const myProfileSlice = createSlice({
             state.success = null;
             state.error = action.payload.message;
             state.myProfile = null
-            toast.error(`${state.error}`);
+            toast.error(`${state.error}`, 3000);
         })
 
         //update user profile
@@ -109,6 +123,26 @@ const myProfileSlice = createSlice({
             toast.success(`${state.success}`);
         })
         builder.addCase(deleteProfile.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(`${state.error}`);
+        })
+
+        //change user password
+        builder.addCase(changeUserPassword.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(changeUserPassword.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            state.myProfile = action.payload.user;
+            toast.success(`${state.success}`);
+        })
+        builder.addCase(changeUserPassword.rejected, (state, action) => {
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;
