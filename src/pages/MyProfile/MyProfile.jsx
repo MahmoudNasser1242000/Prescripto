@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../../Redux/reducers/myProfile.reducer";
 import { jwtDecode } from "jwt-decode";
 import UpdateProfilePictureModal from "../../Components/updateProfilePictureModal/updateProfilePictureModal";
+import { Link } from "react-router-dom";
+import DeleteProfileModal from "../../Components/DeleteProfileModal/DeleteProfileModal";
 
 const MyProfile = () => {
   const [openUpdateInfoModal, setOpenUpdateInfoModal] = useState(false);
   const [openUpdateProfilePicModal, setOpenUpdateProfilePicModal] = useState(false);
+  const [openDeleteProfileModal, setOpenDeleteProfileModal] = useState(false);
 
   const { token } = useSelector((state) => state.auth);
   const logged = jwtDecode(token);
@@ -20,10 +23,6 @@ const MyProfile = () => {
     dispatch(getMyProfile(token));
   }, [dispatch, token]);
 
-  if (!loading) {
-    console.log(myProfile);
-    
-  }
   if (loading) return "loading .....";
   return (
     <div className="pt-14 max-w-[1280px] mx-auto px-8 sm:px-12">
@@ -55,14 +54,14 @@ const MyProfile = () => {
             <button
               onClick={() => setOpenUpdateInfoModal(true)}
               type="button"
-              className="mt-4 w-fit bg-indigo-600 text-white px-12 py-2 rounded-md hover:bg-indigo-900 transition-colors duration-300"
+              className="mt-4 w-fit bg-indigo-600 text-white px-12 py-2 rounded-[3px] hover:bg-indigo-900 transition-colors duration-300"
             >
               Edit Profile
             </button>
             <button
-              onClick={() => setOpenModal(true)}
+              onClick={() => setOpenDeleteProfileModal(true)}
               type="button"
-              className="mt-4 w-fit bg-red-600 text-white px-12 py-2 rounded-md hover:bg-red-900 transition-colors duration-300"
+              className="mt-4 w-fit bg-red-600 text-white px-12 py-2 rounded-[3px] hover:bg-red-900 transition-colors duration-300"
             >
               delete Profile
             </button>
@@ -119,26 +118,37 @@ const MyProfile = () => {
               </svg>
               +20 {myProfile?.phone}
             </li>
-            <li className="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 mr-2 text-primary dark:text-blue-900"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              San Francisco, CA
-            </li>
           </ul>
+          <div className="flex justify-center lg:justify-start mt-7">
+            <Link
+              className="group block relative w-fit items-center overflow-hidden rounded bg-primary px-8 py-3 text-white focus:outline-none focus:ring active:bg-primary"
+              t={"my-appointments"}
+            >
+              <span className="absolute -end-full transition-all group-hover:end-4">
+                <svg
+                  className="size-5 rtl:rotate-180"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </span>
+            
+              <span className="text-sm font-medium transition-all group-hover:me-4"> My Appointments </span>
+            </Link>
+          </div>
         </div>
       </div>
       <UpdateProfileModal openModal={openUpdateInfoModal} onCloseModal={() => setOpenUpdateInfoModal(false)} myProfileData={myProfile} token={token} />
       <UpdateProfilePictureModal openModal={openUpdateProfilePicModal} onCloseModal={() => setOpenUpdateProfilePicModal(false)} token={token} />
+      <DeleteProfileModal openModal={openDeleteProfileModal} onCloseModal={() => setOpenDeleteProfileModal(false)} token={token} />
     </div>
   );
 };

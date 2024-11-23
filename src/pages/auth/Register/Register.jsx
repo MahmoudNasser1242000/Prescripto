@@ -42,15 +42,6 @@ const Register = () => {
     dispatch(signup(formData))
   }
 
-  useEffect(() => {
-    if (success) {
-      toast.success(success.message);
-      setTimeout(() => navigate("/auth/login"), 4000)
-    } else if (error) {
-      toast.error(error.message)
-    }
-  }, [success, error]);
-
   return <>
     <section className="bg-white dark:bg-gray-900">
       <div className="flex justify-center h-full overflow-auto">

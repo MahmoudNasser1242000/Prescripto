@@ -5,13 +5,12 @@ import { signinSchema } from "../../../validation";
 import joiResolver from "../../../utils/joiResolver";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
 import { signin } from "../../../Redux/reducers/auth.reducer";
 import { Spinner } from "flowbite-react";
 
 const Login = () => {
   const navigate = useNavigate()
-  const { loading, error, success } = useSelector((state) => state.auth);
+  const { loading, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
   const {
     register,
@@ -21,15 +20,13 @@ const Login = () => {
     resolver: joiResolver(signinSchema),
   })
   const onSubmit = (data) => dispatch(signin(data));
-  
+
   useEffect(() => {
-    if (success) {
-      toast.success(success.message);
-      setTimeout(() => navigate("/"), 4000)
-    } else if (error) {
-      toast.error(error.message)
+    if (token) {
+      navigate("/")
     }
-  }, [success, error]);
+  }, [token]);
+  
   return <>
     <section className="relative flex flex-wrap h-screen items-center">
       <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">

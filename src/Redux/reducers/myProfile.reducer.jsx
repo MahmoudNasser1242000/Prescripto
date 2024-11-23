@@ -38,6 +38,20 @@ export const updateUserProfile = createAsyncThunk("myProfile/updateUserProfile",
     }
 })
 
+export const deleteProfile = createAsyncThunk("myProfile/deleteProfile", async (token, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.delete(`myProfile`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        })        
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
 const myProfileSlice = createSlice({
     name: "myProfile",
     initialState,
@@ -79,7 +93,25 @@ const myProfileSlice = createSlice({
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;
-            state.myProfile = null
+            toast.error(`${state.error}`);
+        })
+
+        //delete user profile
+        builder.addCase(deleteProfile.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(deleteProfile.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            toast.success(`${state.success}`);
+        })
+        builder.addCase(deleteProfile.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
             toast.error(`${state.error}`);
         })
     }

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance";
+import toast from "react-hot-toast";
 
 const initialState = {
     error: null,
@@ -46,11 +47,13 @@ const authSlice = createSlice({
             state.loading = false;
             state.error = null;
             state.success = action.payload;
+            toast.success(state.success.message);
         })
         builder.addCase(signup.rejected, (state, action) => {
             state.loading = false;
             state.success = null;
             state.error = action.payload;
+            toast.error(state.error.message);
         })
 
         //signin
@@ -65,6 +68,7 @@ const authSlice = createSlice({
             state.error = null;
             state.success = action.payload;
             state.token = action.payload.token;
+            toast.success(state.success.message);
 
             localStorage.setItem("Token", state.token)
         })
@@ -73,6 +77,7 @@ const authSlice = createSlice({
             state.success = null;
             state.error = action.payload;
             state.token = "";
+            toast.error(state.error.message);
         })
     }
 });

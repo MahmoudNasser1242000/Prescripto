@@ -26,13 +26,14 @@ const UpdateProfileModal = ({ openModal, onCloseModal, myProfileData, token }) =
             formData.append("image", data.profile[0]);
         }
         formData.append("job", data.job)
+        formData.append("bio", data.bio)
         formData.append("birth_date", data.birth_date)
         formData.append("phone", data.phone)
         formData.append("gender", data.gender)
 
         //send data to database
         dispatch(updateUserProfile({ token, body: formData }))
-        onCloseModal()
+        // onCloseModal()
     }
     return <>
         <Modal show={openModal} size="lg" onClose={onCloseModal}>

@@ -13,7 +13,7 @@ const UpdateProfilePictureModal = ({ openModal, onCloseModal, token }) => {
         formData.append("profile", " ");
         //send data to database
         dispatch(updateUserProfile({ token, body: formData }))
-        onCloseModal()
+        // onCloseModal()
     }
     return <>
         <Modal show={openModal} size="lg" onClose={() => onCloseModal()} popup>
