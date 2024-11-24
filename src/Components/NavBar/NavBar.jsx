@@ -3,6 +3,8 @@ import { assets } from "../../assets/assets_frontend/assets";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../../Redux/reducers/myProfile.reducer";
+import { logout } from "../../Redux/reducers/auth.reducer";
+import toast from "react-hot-toast";
 
 const NavBar = () => {
     const [showMenu, SetShowMenu] = useState(false);
@@ -12,6 +14,11 @@ const NavBar = () => {
 
     const { myProfile, loading } = useSelector((state) => state.myProfile);
     const dispatch = useDispatch();
+
+    const signOut = () => {
+        dispatch(logout());
+        toast.success("Logout Successfully")
+    }
 
     useEffect(() => {
         dispatch(getMyProfile(token));
@@ -23,7 +30,7 @@ const NavBar = () => {
                     <img src={assets.logo} className="h-8" alt="website Logo" />
                 </Link>
                 <div className="flex items-center relative md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                    <button type="button" onClick={() => SetshowProfileMenu(!showProfileMenu)} className={`flex text-sm border ${myProfile?.profile && !loading ? "" : "border-[#0C3860] p-[2px]"} rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600`} id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                    <button type="button" onClick={() => SetshowProfileMenu(!showProfileMenu)} className={`bg-slate-400 flex text-sm border ${myProfile?.profile && !loading ? "" : "border-[#0C3860] p-[2px]"} rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600`} id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span className="sr-only">Open user menu</span>
                         <img className="w-8 h-8 rounded-full" src={myProfile?.profile && !loading ? myProfile?.profile : assets.default_profile_pic} alt="user profile" />
                     </button>
@@ -41,7 +48,12 @@ const NavBar = () => {
                                 <Link to="/my-appointments" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">my appointments</Link>
                             </li>
                             <li>
-                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                                <Link
+                                    to={"/auth/login"}
+                                    onClick={() => signOut()}
+                                    className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    Sign out
+                                </Link>
                             </li>
                         </ul>
                     </div>)}

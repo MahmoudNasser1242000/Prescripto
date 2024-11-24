@@ -4,10 +4,10 @@ import { Modal } from "flowbite-react";
 import joiResolver from "../../utils/joiResolver";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUserProfileSchema } from "../../validation";
-import { updateUserProfile } from "../../Redux/reducers/myProfile.reducer";
+import { updateDoctorProfileSchema, updateUserProfileSchema } from "../../validation";
+import { updateDoctorProfile, updateUserProfile } from "../../Redux/reducers/myProfile.reducer";
 
-const UpdateProfileModal = ({ openModal, onCloseModal, myProfileData, token }) => {
+const UpdateProfileModal = ({ openModal, onCloseModal, myProfileData, token, role }) => {
     const { loading } = useSelector((state) => state.myProfile);
     const dispatch = useDispatch()
     const {
@@ -15,7 +15,7 @@ const UpdateProfileModal = ({ openModal, onCloseModal, myProfileData, token }) =
         handleSubmit,
         formState: { errors },
     } = useForm({
-        resolver: joiResolver(updateUserProfileSchema),
+        resolver: joiResolver(role === "doctor"? updateDoctorProfileSchema : updateUserProfileSchema),
     })
 
     const onSubmit = (data) => {
@@ -25,19 +25,31 @@ const UpdateProfileModal = ({ openModal, onCloseModal, myProfileData, token }) =
         if (data.profile[0]) {
             formData.append("image", data.profile[0]);
         }
-        formData.append("job", data.job)
-        formData.append("bio", data.bio)
         formData.append("birth_date", data.birth_date)
         formData.append("phone", data.phone)
         formData.append("gender", data.gender)
 
-        //send data to database
-        dispatch(updateUserProfile({ token, body: formData }))
-        // onCloseModal()
+        if (role === "doctor") {
+            formData.append("speciality", data.speciality)
+            formData.append("fees", data.fees)
+            formData.append("degree", data.degree)
+            formData.append("about", data.about)
+            formData.append("experience", data.experience)
+        } else {
+            formData.append("job", data.job)
+            formData.append("bio", data.bio)
+        }
+
+        if (role === "doctor") {
+            dispatch(updateDoctorProfile({ token, body: formData }))
+        } else {
+            dispatch(updateUserProfile({ token, body: formData }))
+        }
+        onCloseModal()
     }
     return <>
         <Modal show={openModal} size="lg" onClose={onCloseModal}>
-            <Modal.Header>Update User Profile</Modal.Header>
+            <Modal.Header>Update {role === "doctor"? "Doctor" : "User"} Profile</Modal.Header>
             <Modal.Body>
                 <form className="space-y-6" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
                     {/* name */}
@@ -64,12 +76,6 @@ const UpdateProfileModal = ({ openModal, onCloseModal, myProfileData, token }) =
                         <input {...register("birth_date")} defaultValue={myProfileData?.birth_date.split("T")[0].toString()} type="date" id="birth-date" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="user age" />
                         <p className="text-red-600">{errors.birth_date?.message}</p>
                     </div>
-                    {/* job */}
-                    <div className="col-span-2 sm:col-span-1">
-                        <label htmlFor="job" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Birth Date</label>
-                        <input {...register("job")} defaultValue={myProfileData?.job} type="text" id="job" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="user age" />
-                        <p className="text-red-600">{errors.job?.message}</p>
-                    </div>
                     {/* profile image */}
                     <div className="col-span-2">
                         <button
@@ -85,6 +91,45 @@ const UpdateProfileModal = ({ openModal, onCloseModal, myProfileData, token }) =
                         </button>
                         <p className="text-red-600">{errors.profile?.message}</p>
                     </div>
+                    {
+                        role === "doctor" ? (
+                            <>
+                                {/* speciality */}
+                                <div className="col-span-2 sm:col-span-1">
+                                    <label htmlFor="speciality" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">speciality</label>
+                                    <input {...register("speciality")} defaultValue={myProfileData?.speciality} type="text" id="speciality" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="user speciality" />
+                                    <p className="text-red-600">{errors.speciality?.message}</p>
+                                </div>
+                                {/* fees */}
+                                <div className="col-span-2 sm:col-span-1">
+                                    <label htmlFor="fees" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">fees</label>
+                                    <input {...register("fees")} defaultValue={myProfileData?.fees} type="number" id="fees" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="user fees" />
+                                    <p className="text-red-600">{errors.fees?.message}</p>
+                                </div>
+                                {/* degree */}
+                                <div className="col-span-2 sm:col-span-1">
+                                    <label htmlFor="degree" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">degree</label>
+                                    <input {...register("degree")} defaultValue={myProfileData?.degree} type="text" id="degree" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="user degree" />
+                                    <p className="text-red-600">{errors.degree?.message}</p>
+                                </div>
+                                {/* experience */}
+                                <div className="col-span-2 sm:col-span-1">
+                                    <label htmlFor="experience" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">experience</label>
+                                    <input {...register("experience")} defaultValue={myProfileData?.experience} type="number" id="experience" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="user experience" />
+                                    <p className="text-red-600">{errors.experience?.message}</p>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                {/* job */}
+                                <div className="col-span-2 sm:col-span-1">
+                                    <label htmlFor="job" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job</label>
+                                    <input {...register("job")} defaultValue={myProfileData?.job} type="text" id="job" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="user job" />
+                                    <p className="text-red-600">{errors.job?.message}</p>
+                                </div>
+                            </>
+                        )
+                    }
                     {/* gender */}
                     <div className="col-span-2 sm:col-span-1">
                         <label htmlFor="gender" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
@@ -94,12 +139,27 @@ const UpdateProfileModal = ({ openModal, onCloseModal, myProfileData, token }) =
                         </select>
                         <p className="text-red-600">{errors.gender?.message}</p>
                     </div>
-                    {/* bio */}
-                    <div className="col-span-2">
-                        <label htmlFor="bio" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bio</label>
-                        <textarea defaultValue={myProfileData?.bio} {...register("bio")} id="bio" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="somehting about use..." />
-                        <p className="text-red-600">{errors.bio?.message}</p>
-                    </div>
+                    {
+                        role === "doctor" ? (
+                            <>
+                                {/* about */}
+                                <div className="col-span-2">
+                                    <label htmlFor="about" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bio</label>
+                                    <textarea defaultValue={myProfileData?.about} {...register("about")} id="about" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="write somehting about doctor..." />
+                                    <p className="text-red-600">{errors.about?.message}</p>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                {/* bio */}
+                                <div className="col-span-2">
+                                    <label htmlFor="bio" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bio</label>
+                                    <textarea defaultValue={myProfileData?.bio} {...register("bio")} id="bio" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="write somehting about user..." />
+                                    <p className="text-red-600">{errors.bio?.message}</p>
+                                </div>
+                            </>
+                        )
+                    }
                     <Modal.Footer>
                         <button type="submit" className="text-white inline-flex items-center bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-sm text-sm px-8 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-indigo-800">
                             <span>{loading ? <Spinner color="info" aria-label="Default status example" /> : "Update Profile"} </span>
@@ -108,7 +168,7 @@ const UpdateProfileModal = ({ openModal, onCloseModal, myProfileData, token }) =
                 </form>
             </Modal.Body>
 
-        </Modal>
+        </Modal >
     </>;
 };
 

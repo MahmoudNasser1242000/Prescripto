@@ -202,9 +202,78 @@ const chanagePasswordSchema = Joi.object({
         }),
 }).options({ allowUnknown: false });
 
+const updateDoctorProfileSchema = Joi.object({
+    name: Joi.string()
+        .min(3)
+        .max(50)
+        .optional()
+        .messages({
+            "string.min": "Doctor name must be at least 3 characters",
+            "string.max": "Doctor name must be at most 50 characters"
+        }),
+
+    email: Joi.string()
+        .email({ tlds: { allow: false } })
+        .optional()
+        .messages({
+            "string.email": "Email must be valid"
+        }),
+
+    speciality: Joi.string()
+        .min(3)
+        .max(50)
+        .optional()
+        .messages({
+            "string.min": "Speciality must be at least 3 characters",
+            "string.max": "Speciality must be at most 50 characters"
+        }),
+
+    degree: Joi.string()
+        .min(3)
+        .max(50)
+        .optional()
+        .messages({
+            "string.min": "degree must be at least 3 characters",
+            "string.max": "degree must be at most 50 characters"
+        }),
+
+    experience: Joi.number()
+        .optional(),
+
+    about: Joi.string()
+        .min(3)
+        .max(1000)
+        .optional()
+        .messages({
+            "string.min": "about field must be at least 3 characters",
+            "string.max": "about field must be at most 1000 characters"
+        }),
+
+    gender: Joi.string()
+        .optional()
+        .valid("male", "female")
+        .messages({
+            "any.valid": "Gender must be one of male or female",
+        }),
+
+    phone: Joi.string()
+        .optional()
+        .pattern(/^01([0-2]|5)[0-9]{8}$/),
+
+    fees: Joi.number()
+        .optional(),
+
+    birth_date: Joi.date()
+        .optional(),
+
+    profile: Joi.object().optional()
+}).options({ allowUnknown: false });
+
+
 export {
     signupSchema,
     signinSchema,
     updateUserProfileSchema,
-    chanagePasswordSchema
+    updateDoctorProfileSchema,
+    chanagePasswordSchema,
 }

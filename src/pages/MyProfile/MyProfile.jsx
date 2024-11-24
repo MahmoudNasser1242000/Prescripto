@@ -7,6 +7,10 @@ import { jwtDecode } from "jwt-decode";
 import UpdateProfilePictureModal from "../../Components/updateProfilePictureModal/updateProfilePictureModal";
 import { Link } from "react-router-dom";
 import DeleteProfileModal from "../../Components/DeleteProfileModal/DeleteProfileModal";
+import { HiClock } from "react-icons/hi";
+import { Badge } from "flowbite-react";
+import { FcOvertime } from "react-icons/fc";
+import { TbCalendarTime } from "react-icons/tb";
 
 const MyProfile = () => {
   const [openUpdateInfoModal, setOpenUpdateInfoModal] = useState(false);
@@ -57,7 +61,7 @@ const MyProfile = () => {
               <button
                 onClick={() => setOpenUpdateInfoModal(true)}
                 type="button"
-                className="group relative inline-block text-sm font-medium text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+                className="group relative inline-block text-sm font-medium text-indigo-600 focus:outline-none active:text-indigo-500"
               >
                 <span
                   className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
@@ -93,7 +97,7 @@ const MyProfile = () => {
 
         <div className="lg:w-2/3 lg:pl-8 text-center lg:text-start">
           <h2 className="text-xl font-semibold text-primary dark:text-white mb-4">
-            Bio
+            {logged.role === "doctor"? "About" : "Bio"}
           </h2>
           <p className="text-gray-700 dark:text-gray-300 mb-6">
             {logged.role === "doctor"
@@ -113,11 +117,26 @@ const MyProfile = () => {
             <span className="bg-indigo-100 text-primary px-3 py-1 rounded-full text-sm">
               {myProfile?.gender}
             </span>
+            {
+              logged.role === "doctor" && (
+                <>
+                  <span className="bg-indigo-100 text-primary px-3 py-1 rounded-full text-sm">
+                    {myProfile?.fees} fees
+                  </span>
+                  <span className="bg-indigo-100 text-primary px-3 py-1 rounded-full text-sm">
+                    {myProfile?.degree}
+                  </span>
+                  <span className="bg-indigo-100 text-primary px-3 py-1 rounded-full text-sm">
+                    {myProfile?.experience} years experience
+                  </span>
+                </>
+              )
+            }
           </div>
           <h2 className="text-xl font-semibold text-primary dark:text-white mb-4">
             Contact Information
           </h2>
-          <ul className="lg:space-y-2 text-gray-700 dark:text-gray-300 inline-flex flex-wrap gap-y-3 items-center justify-center lg:block space-x-5 lg:space-x-0">
+          <ul className="lg:space-y-3 text-gray-700 dark:text-gray-300 inline-flex flex-wrap gap-y-3 items-center justify-center lg:block space-x-5 lg:space-x-0">
             <li className="flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -140,6 +159,15 @@ const MyProfile = () => {
                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
               </svg>
               +20 {myProfile?.phone}
+            </li>
+
+            <li className="flex items-center">
+              <TbCalendarTime className="h-5 w-5 mr-2 text-primary dark:text-blue-900" />
+              {
+                logged.role === "doctor" && myProfile?.examination_dates.map((date) => (
+                  <Badge key={date._id} icon={HiClock} className="mx-2">{date.time} {date.modifier}</Badge>
+                ))
+              }
             </li>
           </ul>
           <div className="flex justify-center lg:justify-start mt-7">
@@ -169,7 +197,7 @@ const MyProfile = () => {
           </div>
         </div>
       </div>
-      <UpdateProfileModal openModal={openUpdateInfoModal} onCloseModal={() => setOpenUpdateInfoModal(false)} myProfileData={myProfile} token={token} />
+      <UpdateProfileModal openModal={openUpdateInfoModal} onCloseModal={() => setOpenUpdateInfoModal(false)} myProfileData={myProfile} token={token} role={logged.role} />
       <UpdateProfilePictureModal openModal={openUpdateProfilePicModal} onCloseModal={() => setOpenUpdateProfilePicModal(false)} token={token} />
       <DeleteProfileModal openModal={openDeleteProfileModal} onCloseModal={() => setOpenDeleteProfileModal(false)} token={token} />
     </div>
