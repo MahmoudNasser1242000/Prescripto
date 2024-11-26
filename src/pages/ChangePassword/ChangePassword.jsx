@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import joiResolver from "../../utils/joiResolver";
 import { chanagePasswordSchema } from "../../validation";
-import { changeUserPassword } from "../../Redux/reducers/myProfile.reducer";
+import { changeDoctorPassword, changeUserPassword } from "../../Redux/reducers/myProfile.reducer";
 import { Spinner } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../Redux/reducers/auth.reducer";
+import { jwtDecode } from "jwt-decode";
 
 const ChangePassword = () => {
-    const { loading } = useSelector((state) => state.myProfile);
+    const { loading, success } = useSelector((state) => state.myProfile);
     const { token } = useSelector((state) => state.auth);
+    const logged = jwtDecode(token);
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
@@ -24,14 +26,24 @@ const ChangePassword = () => {
     })
 
     const onSubmit = (data) => {
-        dispatch(changeUserPassword({ token, body: data }))
-        dispatch(logout())
-        navigate("/auth/login")
+        if (logged.role === "doctor") {
+            dispatch(changeDoctorPassword({ token, body: data }))
+        } else {
+            dispatch(changeUserPassword({ token, body: data }))
+        }
     }
+
+    useEffect(() => {
+        if (success === "Password updated successfully") {
+            dispatch(logout())
+            navigate("/auth/login")
+        }
+    }, [success]);
+
     return <div className="max-w-[1280px] mx-auto px-8 sm:px-12">
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-lg text-center">
-                <h1 className="text-2xl font-bold sm:text-3xl">Change your Password!</h1>
+                <h1 className="text-2xl font-bold sm:text-3xl">Change Your Password!</h1>
 
                 <p className="mt-4 text-gray-500">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Et libero nulla eaque error neque
@@ -52,7 +64,7 @@ const ChangePassword = () => {
                                 {...register("password")}
                                 type="password"
                                 id="password"
-                                placeholder="Email"
+                                placeholder="password"
                                 className="peer h-9 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
                             />
 
@@ -78,7 +90,7 @@ const ChangePassword = () => {
                                 {...register("newPassword")}
                                 type="password"
                                 id="newPassword"
-                                placeholder="Email"
+                                placeholder="new password"
                                 className="peer h-9 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
                             />
 
@@ -104,7 +116,7 @@ const ChangePassword = () => {
                                 {...register("repassword")}
                                 type="password"
                                 id="repassword"
-                                placeholder="Email"
+                                placeholder="confirm new passowrd"
                                 className="peer h-9 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
                             />
 

@@ -38,6 +38,9 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
+            state.loading = false
+            state.success = null
+            state.error = false
             state.token = ""
             localStorage.removeItem("Token")
         }
@@ -72,18 +75,18 @@ const authSlice = createSlice({
         builder.addCase(signin.fulfilled, (state, action) => {
             state.loading = false;
             state.error = null;
-            state.success = action.payload;
+            state.success = action.payload.message;
             state.token = action.payload.token;
-            toast.success(state.success.message);
+            toast.success(state.success);
 
             localStorage.setItem("Token", state.token)
         })
         builder.addCase(signin.rejected, (state, action) => {
             state.loading = false;
             state.success = null;
-            state.error = action.payload;
+            state.error = action.payload.error;
             state.token = "";
-            toast.error(state.error.message);
+            toast.error(state.error);
         })
     }
 });

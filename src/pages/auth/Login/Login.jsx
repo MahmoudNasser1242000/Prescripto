@@ -9,7 +9,7 @@ import { signin } from "../../../Redux/reducers/auth.reducer";
 import { Spinner } from "flowbite-react";
 
 const Login = () => {
-  const { loading } = useSelector((state) => state.auth);
+  const { loading, success } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
@@ -23,10 +23,14 @@ const Login = () => {
   })
   const onSubmit = (data) => {
     dispatch(signin(data));
-    setTimeout(() => {
-      navigate("/")
-    }, 500);
   };
+
+  useEffect(() => {
+    if (success === "Signin successfully") {
+      navigate("/")
+    }
+  }, [success]);
+  
   
   return <>
     <section className="relative flex flex-wrap h-screen items-center">

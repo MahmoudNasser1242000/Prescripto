@@ -79,6 +79,19 @@ export const changeUserPassword = createAsyncThunk("myProfile/changeUserPassword
         return rejectWithValue(error.response ? error.response.data : error.message)
     }
 })
+export const changeDoctorPassword = createAsyncThunk("myProfile/changeDoctorPassword", async ({token, body}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.patch(`myProfile/changeDoctorPassword`, body, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        })        
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
 
 const myProfileSlice = createSlice({
     name: "myProfile",
@@ -101,7 +114,7 @@ const myProfileSlice = createSlice({
             state.success = null;
             state.error = action.payload.message;
             state.myProfile = null
-            toast.error(`${state.error}`, 3000);
+            toast.error(`${state.error}`);
         })
 
         //update user profile
@@ -176,6 +189,25 @@ const myProfileSlice = createSlice({
             toast.success(`${state.success}`);
         })
         builder.addCase(changeUserPassword.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(`${state.error}`);
+        })
+        //change doctor password
+        builder.addCase(changeDoctorPassword.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(changeDoctorPassword.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            state.myProfile = action.payload.doctor;
+            toast.success(`${state.success}`);
+        })
+        builder.addCase(changeDoctorPassword.rejected, (state, action) => {
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;

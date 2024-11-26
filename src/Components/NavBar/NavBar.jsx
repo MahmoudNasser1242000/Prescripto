@@ -30,7 +30,7 @@ const NavBar = () => {
                     <img src={assets.logo} className="h-8" alt="website Logo" />
                 </Link>
                 <div className="flex items-center relative md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                    <button type="button" onClick={() => SetshowProfileMenu(!showProfileMenu)} className={`bg-slate-400 flex text-sm border ${myProfile?.profile && !loading ? "" : "border-[#0C3860] p-[2px]"} rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600`} id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                    <button type="button" onClick={() => SetshowProfileMenu(!showProfileMenu)} className={`bg-slate-300 flex text-sm border ${myProfile?.profile && !loading ? "" : "border-[#0C3860] p-[2px]"} rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600`} id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span className="sr-only">Open user menu</span>
                         <img className="w-8 h-8 rounded-full" src={myProfile?.profile && !loading ? myProfile?.profile : assets.default_profile_pic} alt="user profile" />
                     </button>

@@ -1,22 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Modal } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProfile } from "../../Redux/reducers/myProfile.reducer";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineUserDelete } from "react-icons/ai";
+import { logout } from "../../Redux/reducers/auth.reducer";
 
 const DeleteProfileModal = ({ openModal, onCloseModal, token }) => {
-    const { loading } = useSelector((state) => state.myProfile);
+    const { loading, success } = useSelector((state) => state.myProfile);
     const dispatch = useDispatch();
 
     const navigate = useNavigate()
 
     const deleteMyProfile = () => {
         dispatch(deleteProfile(token));
-        setTimeout(() => {
-            dispatch(logout())
-        }, 3000);
     }
+
+    useEffect(() => {
+        if (success === "Profile deleted successfully") {
+            dispatch(logout())
+            navigate("/auth/login")
+        }
+    }, [success]);
     return <>
         <Modal show={openModal} size="lg" onClose={() => onCloseModal()} popup>
             <Modal.Header />

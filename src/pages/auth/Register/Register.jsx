@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { assets } from "../../../assets/assets_frontend/assets";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
@@ -10,7 +10,7 @@ import { Spinner } from "flowbite-react";
 
 const Register = () => {
   const navigate = useNavigate()
-  const { loading } = useSelector((state) => state.auth);
+  const { loading, success } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
   const {
     register,
@@ -39,8 +39,13 @@ const Register = () => {
 
     //send data to database
     dispatch(signup(formData))
-    navigate("/")
   }
+
+  useEffect(() => {
+    if (success === "User created successfully") {
+      navigate("/")
+    }
+  }, [success]);
 
   return <>
     <section className="bg-white dark:bg-gray-900">

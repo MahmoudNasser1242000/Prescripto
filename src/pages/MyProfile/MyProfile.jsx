@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import DeleteProfileModal from "../../Components/DeleteProfileModal/DeleteProfileModal";
 import { HiClock } from "react-icons/hi";
 import { Badge } from "flowbite-react";
-import { FcOvertime } from "react-icons/fc";
 import { TbCalendarTime } from "react-icons/tb";
 
 const MyProfile = () => {
@@ -17,17 +16,17 @@ const MyProfile = () => {
   const [openUpdateProfilePicModal, setOpenUpdateProfilePicModal] = useState(false);
   const [openDeleteProfileModal, setOpenDeleteProfileModal] = useState(false);
 
-  const { token } = useSelector((state) => state.auth);
+  const { token, success } = useSelector((state) => state.auth);
   const logged = jwtDecode(token);
 
   const { myProfile, loading } = useSelector((state) => state.myProfile);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (token) {
+  useEffect(() => {    
+    if (token && success === "Signin successfully") {
       dispatch(getMyProfile(token));
     }
-  }, [dispatch, token]);
+  }, [dispatch, token, success]);
 
   if (loading) return "loading .....";
   return (
@@ -81,23 +80,27 @@ const MyProfile = () => {
                 <span className="relative block border border-current bg-white px-8 py-3"> Change Password </span>
               </Link>
             </div>
-            <button
-              onClick={() => setOpenDeleteProfileModal(true)}
-              type="button"
-              className="group relative mt-4 inline-block text-sm font-medium text-red-600 focus:outline-none active:text-red-500"
-            >
-              <span
-                className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-red-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
-              ></span>
+            {
+              logged.role === "user" && (
+                <button
+                  onClick={() => setOpenDeleteProfileModal(true)}
+                  type="button"
+                  className="group relative mt-4 inline-block text-sm font-medium text-red-600 focus:outline-none active:text-red-500"
+                >
+                  <span
+                    className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-red-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+                  ></span>
 
-              <span className="relative block border border-current bg-white px-8 py-3"> Delete Acoount </span>
-            </button>
+                  <span className="relative block border border-current bg-white px-8 py-3"> Delete Acoount </span>
+                </button>
+              )
+            }
           </div>
         </div>
 
         <div className="lg:w-2/3 lg:pl-8 text-center lg:text-start">
           <h2 className="text-xl font-semibold text-primary dark:text-white mb-4">
-            {logged.role === "doctor"? "About" : "Bio"}
+            {logged.role === "doctor" ? "About" : "Bio"}
           </h2>
           <p className="text-gray-700 dark:text-gray-300 mb-6">
             {logged.role === "doctor"
