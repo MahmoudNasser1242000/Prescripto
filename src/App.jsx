@@ -14,11 +14,13 @@ import Register from './pages/auth/Register/Register'
 import ProtectRoutes from './pages/ProtectRoutes/ProtectRoutes'
 import ProtectAuth from './pages/ProtectAuth/ProtectAuth'
 import ChangePassword from './pages/ChangePassword/ChangePassword'
+import DashboardLayOut from './pages/dashboard/DashboardLayOut/DashboardLayOut'
+import Dashboard from './pages/dashboard/Dashboard/Dashboard'
 
 function App() {
   const routes = createBrowserRouter([
     {
-      path: "", element: <LayOut />, children: [
+      path: "", element: <ProtectRoutes> <LayOut /> </ProtectRoutes>, children: [
         { index: true, element: <ProtectRoutes> <Home /> </ProtectRoutes> },
         { path: "doctors/:speciality", element: <ProtectRoutes> <Doctors /> </ProtectRoutes> },
         { path: "doctors", element: <ProtectRoutes> <Doctors /> </ProtectRoutes> },
@@ -31,11 +33,16 @@ function App() {
       ]
     },
     {
+      path: "dashboard", element: <DashboardLayOut />, children: [
+        { index: true, element: <ProtectRoutes> <Dashboard /> </ProtectRoutes> },
+      ]
+    },
+    {
       path: "auth", element: <AuthLayOut />, children: [
         { index: true, element: <ProtectAuth> <Register /> </ProtectAuth> },
         { path: "login", element: <ProtectAuth> <Login /> </ProtectAuth> },
       ]
-    }
+    },
   ])
   return <RouterProvider router={routes} />
 }

@@ -7,10 +7,10 @@ import store from './Redux/store.jsx'
 import { Toaster } from 'react-hot-toast'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <Provider store={store}>
     <Toaster />
       <App />
     </Provider>
-  </StrictMode>,
+  // </StrictMode>,
 )

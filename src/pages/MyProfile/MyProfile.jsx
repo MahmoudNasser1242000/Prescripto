@@ -22,7 +22,7 @@ const MyProfile = () => {
   const { myProfile, loading } = useSelector((state) => state.myProfile);
   const dispatch = useDispatch();
 
-  useEffect(() => {    
+  useEffect(() => {
     if (token && success === "Signin successfully") {
       dispatch(getMyProfile(token));
     }
@@ -81,7 +81,7 @@ const MyProfile = () => {
               </Link>
             </div>
             {
-              logged.role === "user" && (
+              logged.role === "user" || logged.role === "manager" || logged.role === "super-manager" && (
                 <button
                   onClick={() => setOpenDeleteProfileModal(true)}
                   type="button"
@@ -165,11 +165,17 @@ const MyProfile = () => {
             </li>
 
             <li className="flex items-center">
-              <TbCalendarTime className="h-5 w-5 mr-2 text-primary dark:text-blue-900" />
               {
-                logged.role === "doctor" && myProfile?.examination_dates.map((date) => (
-                  <Badge key={date._id} icon={HiClock} className="mx-2">{date.time} {date.modifier}</Badge>
-                ))
+                logged.role === "doctor" && (
+                  <>
+                    <TbCalendarTime className="h-5 w-5 mr-2 text-primary dark:text-blue-900" />
+                    {
+                      myProfile?.examination_dates.map((date) => (
+                        <Badge key={date._id} icon={HiClock} className="mx-2">{date.time} {date.modifier}</Badge>
+                      ))
+                    }
+                  </>
+                )
               }
             </li>
           </ul>

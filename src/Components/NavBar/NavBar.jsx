@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../../Redux/reducers/myProfile.reducer";
 import { logout } from "../../Redux/reducers/auth.reducer";
 import toast from "react-hot-toast";
+import { jwtDecode } from "jwt-decode";
 
 const NavBar = () => {
     const [showMenu, SetShowMenu] = useState(false);
     const [showProfileMenu, SetshowProfileMenu] = useState(false);
 
     const { token } = useSelector((state) => state.auth);
+    const logged = jwtDecode(token);
 
     const { myProfile, loading } = useSelector((state) => state.myProfile);
     const dispatch = useDispatch();
@@ -45,8 +47,15 @@ const NavBar = () => {
                                 <Link to="/my-profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</Link>
                             </li>
                             <li>
-                                <Link to="/my-appointments" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">my appointments</Link>
+                                <Link to="/my-appointments" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">My appointments</Link>
                             </li>
+                            {
+                                logged.role === "manager" || logged.role === "super-manager" && (
+                                    <li>
+                                        <Link to="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
+                                    </li>
+                                )
+                            }
                             <li>
                                 <Link
                                     to={"/auth/login"}
@@ -59,7 +68,7 @@ const NavBar = () => {
                     </div>)}
                     <button data-collapse-toggle="navbar-user" onClick={() => SetShowMenu(!showMenu)} type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
                         <span className="sr-only">Open main menu</span>
-                        <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M1 1h15M1 7h15M1 13h15" />
                         </svg>
                     </button>

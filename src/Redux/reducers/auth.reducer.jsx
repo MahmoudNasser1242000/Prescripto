@@ -84,7 +84,7 @@ const authSlice = createSlice({
         builder.addCase(signin.rejected, (state, action) => {
             state.loading = false;
             state.success = null;
-            state.error = action.payload.error;
+            state.error = action.payload.message;
             state.token = "";
             toast.error(state.error);
         })

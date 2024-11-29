@@ -8,6 +8,10 @@ import login_image from './login-image.webp'
 import register_image from './register-image.jpg'
 import camera from './camera.svg'
 import about_image from './about_us.webp'
+import earning from './earning.png'
+import appointment_icon from './appointment_icon.png'
+import patient from './patient.png'
+import paper from './paper.png'
 import logo from './logo.svg'
 import dropdown_icon from './dropdown_icon.svg'
 import menu_icon from './menu_icon.svg'
@@ -64,7 +68,11 @@ export const assets = {
     login_image,
     register_image,
     default_profile_pic,
-    edit_profile_pic
+    edit_profile_pic,
+    patient,
+    appointment_icon,
+    earning,
+    paper
 }
 
 export const specialityData = [
