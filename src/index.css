@@ -22,6 +22,6 @@ nav div {
     border-radius: 0px !important;
 }
 
-.css-1dune0f-MuiInputBase-input-MuiOutlinedInput-input:focus {
+.css-1dune0f-MuiInputBase-input-MuiOutlinedInput-input:focus, input:focus {
     box-shadow: none !important;
 }

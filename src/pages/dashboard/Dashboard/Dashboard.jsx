@@ -12,13 +12,11 @@ const Dashboard = () => {
   const { doctors, loading: doctorLoading } = useSelector((state) => state.doctor);
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const logged = jwtDecode(token);
-
-  console.log(logged);
 
   useEffect(() => {
     if (token) {
-
+      dispatch(getAppointments({token}))
+      dispatch(getAllDoctors({token}))
     }
   }, [dispatch, token]);
 

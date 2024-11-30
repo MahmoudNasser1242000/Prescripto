@@ -6,6 +6,7 @@ import contact_image from './contact_image.png'
 import edit_profile_pic from './edit-profile-pic.png'
 import login_image from './login-image.webp'
 import register_image from './register-image.jpg'
+import add_doctor from './add-doctors.avif'
 import camera from './camera.svg'
 import about_image from './about_us.webp'
 import earning from './earning.png'
@@ -72,8 +73,59 @@ export const assets = {
     patient,
     appointment_icon,
     earning,
-    paper
+    paper,
+    add_doctor
 }
+
+export const times = [
+    { time: "01:00", modifier: "PM" }, 
+    { time: "01:30", modifier: "PM" }, 
+    { time: "02:00", modifier: "PM" }, 
+    { time: "02:30", modifier: "PM" }, 
+    { time: "03:00", modifier: "PM" },
+    { time: "03:30", modifier: "PM" },
+    { time: "04:00", modifier: "PM" },
+    { time: "04:30", modifier: "PM" },
+    { time: "05:00", modifier: "PM" },
+    { time: "05:30", modifier: "PM" },
+    { time: "06:00", modifier: "PM" },
+    { time: "06:30", modifier: "PM" },
+    { time: "07:00", modifier: "PM" },
+    { time: "07:30", modifier: "PM" },
+    { time: "08:00", modifier: "PM" },
+    { time: "08:30", modifier: "PM" },
+    { time: "09:00", modifier: "PM" },
+    { time: "09:30", modifier: "PM" },
+    { time: "10:00", modifier: "PM" },
+    { time: "10:30", modifier: "PM" },
+    { time: "11:00", modifier: "PM" },
+    { time: "11:30", modifier: "PM" },
+    { time: "00:00", modifier: "AM" },
+    { time: "00:30", modifier: "AM" },
+    { time: "01:00", modifier: "AM" },
+    { time: "01:30", modifier: "AM" },
+    { time: "02:00", modifier: "AM" },
+    { time: "02:30", modifier: "AM" },
+    { time: "03:00", modifier: "AM" },
+    { time: "03:30", modifier: "AM" },
+    { time: "04:00", modifier: "AM" },
+    { time: "04:30", modifier: "AM" },
+    { time: "05:00", modifier: "AM" },
+    { time: "05:30", modifier: "AM" },
+    { time: "06:00", modifier: "AM" },
+    { time: "06:30", modifier: "AM" },
+    { time: "07:00", modifier: "AM" },
+    { time: "07:30", modifier: "AM" },
+    { time: "08:00", modifier: "AM" },
+    { time: "08:30", modifier: "AM" },
+    { time: "09:00", modifier: "AM" },
+    { time: "09:30", modifier: "AM" },
+    { time: "10:00", modifier: "AM" },
+    { time: "10:30", modifier: "AM" },
+    { time: "11:00", modifier: "AM" },
+    { time: "11:30", modifier: "AM" },
+    { time: "12:00", modifier: "BM" },
+]
 
 export const specialityData = [
     {

@@ -22,7 +22,7 @@ function DashBoardSideBar() {
     const actions = [
         { icon: <HiChartPie />, name: 'Dashboard', to: "/" },
         { icon: <HiOutlineClipboardList />, name: 'Doctors List', to: "/dashboard" },
-        { icon: <HiOutlineDocumentAdd />, name: 'Add Doctors', to: "/dashboard" },
+        { icon: <HiOutlineDocumentAdd />, name: 'Add Doctors', to: "/dashboard/add-doctors" },
         { icon: <HiUsers />, name: 'Users List', to: "/dashboard" },
         { icon: <HiClock />, name: 'Appointments', to: "/dashboard" },
         { icon: <HiOutlineLogin />, name: 'Signout', to: "/dashboard" },
@@ -32,8 +32,9 @@ function DashBoardSideBar() {
             {/* <button className="rounded-full size-14 flex fixed right-8 bottom-8 justify-center items-center bg-blue-500 text-white hover:bg-blue-700 focus:ring-4 focus:ring-blue-500/50" onClick={() => setIsOpen(true)}>
                 <HiAdjustments className="text-2xl" />
             </button> */}
-            <Box onClick={() => setIsOpen(true)}>
+            <Box>
                 <SpeedDial
+                    onClick={() => setIsOpen(true)}
                     ariaLabel="SpeedDial basic example"
                     sx={{ position: 'fixed', bottom: 50, right: 40 }}
                     icon={<HiAdjustments className="text-2xl" />}
@@ -44,7 +45,7 @@ function DashBoardSideBar() {
                                 icon={action.icon}
                                 tooltipTitle={action.name}
                                 className="size-12"
-                                onClick={() => navigate(action.to)}
+                                onClick={(e) => {e.stopPropagation(), navigate(action.to)}}
                             />
                     ))}
                 </SpeedDial>

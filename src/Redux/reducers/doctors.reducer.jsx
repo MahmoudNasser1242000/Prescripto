@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance";
+import toast from "react-hot-toast";
 
 const initialState = {
     error: null,
@@ -27,6 +28,20 @@ export const getOneDoctor = createAsyncThunk("doctor/getOneDoctor", async ({toke
     const {rejectWithValue} = thunkAPI
     try {
         const {data} = await axiosInstance.get(`doctors/${docId}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        })        
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
+export const addDoctor = createAsyncThunk("doctor/addDoctor", async ({token, doctor}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.post(`doctors`, doctor, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
@@ -77,6 +92,25 @@ const doctorSlice = createSlice({
             state.success = null;
             state.error = action.payload.message;
             state.doctor = null
+        })
+
+        //add doctors
+        builder.addCase(addDoctor.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(addDoctor.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            toast.success(state.success)
+        })
+        builder.addCase(addDoctor.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(state.error)
         })
     }
 });
