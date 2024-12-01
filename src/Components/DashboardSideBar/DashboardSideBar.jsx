@@ -21,7 +21,7 @@ function DashBoardSideBar() {
 
     const actions = [
         { icon: <HiChartPie />, name: 'Dashboard', to: "/" },
-        { icon: <HiOutlineClipboardList />, name: 'Doctors List', to: "/dashboard" },
+        { icon: <HiOutlineClipboardList />, name: 'Doctors List', to: "/doctors" },
         { icon: <HiOutlineDocumentAdd />, name: 'Add Doctors', to: "/dashboard/add-doctors" },
         { icon: <HiUsers />, name: 'Users List', to: "/dashboard" },
         { icon: <HiClock />, name: 'Appointments', to: "/dashboard" },

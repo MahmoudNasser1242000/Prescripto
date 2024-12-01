@@ -30,7 +30,7 @@ const Doctors = () => {
           Array.from({ length: 8 }, (_, index) => (
             <DoctorCardSkeleton key={index} />
           ))
-        ) : !success ? (
+        ) : !doctors.length ? (
           <h1 className="text-3xl text-center w-full">
             No Doctors Wright Now!
           </h1>
@@ -47,7 +47,7 @@ const Doctors = () => {
           Array.from({ length: 8 }, (_, index) => (
             <DoctorCardSkeleton key={index} />
           ))
-        ) : !success ? (
+        ) : !doctors.length ? (
           <h1 className="text-3xl text-center w-full">
             No Doctors Wright Now!
           </h1>

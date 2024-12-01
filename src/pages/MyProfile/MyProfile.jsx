@@ -81,7 +81,7 @@ const MyProfile = () => {
               </Link>
             </div>
             {
-              logged.role === "user" || logged.role === "manager" || logged.role === "super-manager" && (
+              logged.role !== "doctor" && (
                 <button
                   onClick={() => setOpenDeleteProfileModal(true)}
                   type="button"

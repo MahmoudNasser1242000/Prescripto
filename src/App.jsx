@@ -17,6 +17,7 @@ import ChangePassword from './pages/ChangePassword/ChangePassword'
 import DashboardLayOut from './pages/dashboard/DashboardLayOut/DashboardLayOut'
 import Dashboard from './pages/dashboard/Dashboard/Dashboard'
 import AddDoctors from './pages/dashboard/AddDoctors/AddDoctors'
+import ViewProfile from './pages/dashboard/ViewProfile/ViewProfile'
 
 function App() {
   const routes = createBrowserRouter([
@@ -37,6 +38,7 @@ function App() {
       path: "dashboard", element: <DashboardLayOut />, children: [
         { index: true, element: <ProtectRoutes> <Dashboard /> </ProtectRoutes> },
         { path: "add-doctors", element: <ProtectRoutes> <AddDoctors /> </ProtectRoutes> },
+        { path: "view-profile/:id", element: <ProtectRoutes> <ViewProfile /> </ProtectRoutes> },
       ]
     },
     {
