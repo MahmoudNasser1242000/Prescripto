@@ -1,4 +1,7 @@
 const joiResolver = (schema) => (data) => {
+    if (data.activeExpire) {
+        data.activeExpire = new Date(data.activeExpire)
+    }
     const { error, value } = schema.validate(data, { abortEarly: false });
     return {
         values: error ? {} : value,

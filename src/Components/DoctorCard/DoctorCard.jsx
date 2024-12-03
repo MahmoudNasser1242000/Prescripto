@@ -11,15 +11,15 @@ const DoctorCard = ({ doctor }) => {
             />
 
             <div className="p-4 sm:p-6">
-                <p className="line-clamp-3 text-sm/relaxed text-green-600 flex items-center">
+                <p className={`line-clamp-3 text-sm/relaxed text-${doctor.active ? "green" : "red"}-600 flex items-center`}>
                     {/* <span className="inline-block bg-green-600 w-[6px] h-[6px] rounded-full mx-1"></span> */}
                     <span className="relative flex size-2 mx-[2px]">
                         <span
-                            className={`absolute inline-flex h-full w-full animate-ping rounded-full bg-${doctor.available ? "green" : "red"}-600 opacity-75`}
+                            className={`absolute inline-flex h-full w-full animate-ping rounded-full bg-${doctor.active ? "green" : "red"}-600 opacity-75`}
                         ></span>
-                        <span className={`relative inline-flex size-2 rounded-full bg-${doctor.available ? "green" : "red"}-600`}></span>
+                        <span className={`relative inline-flex size-2 rounded-full bg-${doctor.active ? "green" : "red"}-600`}></span>
                     </span>
-                    <span className="inline-block ms-1">{doctor.available ? "available" : "not available"}</span>
+                    <span className="inline-block ms-1">{doctor.active ? "available" : "not available"}</span>
                 </p>
 
                 <h3 className="text-start text-lg font-medium text-gray-900">

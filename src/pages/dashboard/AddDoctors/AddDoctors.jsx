@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { assets, times } from "../../../assets/assets_frontend/assets";
 import { Controller, useForm } from "react-hook-form";
 import joiResolver from "../../../utils/joiResolver";
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Spinner } from "flowbite-react";
 
 const AddDoctors = () => {
-    const { loading } = useSelector((state) => state.doctor)
+    const { loading, success } = useSelector((state) => state.doctor)
     const { token } = useSelector((state) => state.auth)    
     const dispatch = useDispatch()
 
@@ -44,8 +44,14 @@ const AddDoctors = () => {
 
         //send data to database
         dispatch(addDoctor({token, doctor: formData}));
-        navigate("/dashboard")
     }
+
+    useEffect(() => {
+        if (success === "Doctor created successfully") {
+            navigate("/dashboard")
+        }
+    }, [success]);
+    
     return <>
         <section className="bg-white dark:bg-gray-900">
             <div className="flex justify-center h-full overflow-auto">

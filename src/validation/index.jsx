@@ -1,5 +1,6 @@
 import Joi from "joi";
 
+
 const signupSchema = Joi.object({
     name: Joi.string()
         .min(3)
@@ -392,11 +393,21 @@ const addDoctorSchema = Joi.object({
     profile: Joi.object().required()
 })
 
+const updateUserAndDoctorSchema = Joi.object({
+    active: Joi.boolean()
+        .required(),
+
+    activeExpire: Joi.date()
+        .allow(null, "")
+        .optional(),
+}).options({ allowUnknown: false });
+
 export {
     signupSchema,
     signinSchema,
     updateUserProfileSchema,
     updateDoctorProfileSchema,
     chanagePasswordSchema,
-    addDoctorSchema
+    addDoctorSchema,
+    updateUserAndDoctorSchema
 }

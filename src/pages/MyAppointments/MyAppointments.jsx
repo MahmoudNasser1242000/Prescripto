@@ -55,7 +55,7 @@ const MyAppointments = () => {
             <Table.HeadCell>
               Date
             </Table.HeadCell>
-            <Table.HeadCell>doctor available</Table.HeadCell>
+            <Table.HeadCell>{role === "doctor"? "Patient" : "doctor"}</Table.HeadCell>
             <Table.HeadCell>
               Time
             </Table.HeadCell>
@@ -67,14 +67,14 @@ const MyAppointments = () => {
               <Table.Row>
                 <TableRowSkeleton/>
               </Table.Row>
-            ) 
-            : role === "doctor" ? (
+            ) : appointments.length?
+            role === "doctor" ? (
               appointments.map((appointment) => (
                 <Table.Row
                   key={appointment._id}
                   className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
-                  {/* Doctor Info */}
+                  {/* User Info */}
                   <Table.Cell className="whitespace-nowrap flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-3 px-4 py-2">
                     <img
                       className="w-14 h-14 rounded-full object-cover"
@@ -110,27 +110,11 @@ const MyAppointments = () => {
                     </p>
                   </Table.Cell>
 
-                  {/* Availability */}
+                  {/* Doctor */}
                   <Table.Cell className="px-4 lg:px-7 py-2 text-sm space-x-[6px]">
-                    <span className="relative inline-flex items-center h-2 w-2 mb-1">
-                      <span
-                        className={`absolute inline-flex h-full w-full animate-ping rounded-full ${appointment.doctor.available
-                          ? "bg-green-400"
-                          : "bg-red-400"
-                          } opacity-75`}
-                      ></span>
-                      <span
-                        className={`relative inline-flex h-2 w-2 rounded-full ${appointment.doctor.available
-                          ? "bg-green-600"
-                          : "bg-red-600"
-                          }`}
-                      ></span>
-                    </span>
-                    <span className="text-gray-700 dark:text-gray-300">
-                      {appointment.doctor.available
-                        ? "Available"
-                        : "Not Available"}
-                    </span>
+                    {
+                      appointment.doctor.name
+                    }
                   </Table.Cell>
 
                   {/* Time */}
@@ -169,7 +153,7 @@ const MyAppointments = () => {
                   </Table.Cell>
                 </Table.Row>
               ))
-            ) : appointments.length? (
+            ) : (
                 appointments?.map((appointment) => (
                   <Table.Row
                     key={appointment._id}
@@ -211,27 +195,9 @@ const MyAppointments = () => {
                       </p>
                     </Table.Cell>
   
-                    {/* Availability */}
+                    {/* patient */}
                     <Table.Cell className="px-4 lg:px-7 py-2 text-sm space-x-[6px]">
-                      <span className="relative inline-flex items-center h-2 w-2 mb-1">
-                        <span
-                          className={`absolute inline-flex h-full w-full animate-ping rounded-full ${appointment.doctor.available
-                            ? "bg-green-400"
-                            : "bg-red-400"
-                            } opacity-75`}
-                        ></span>
-                        <span
-                          className={`relative inline-flex h-2 w-2 rounded-full ${appointment.doctor.available
-                            ? "bg-green-600"
-                            : "bg-red-600"
-                            }`}
-                        ></span>
-                      </span>
-                      <span className="text-gray-700 dark:text-gray-300">
-                        {appointment.doctor.available
-                          ? "Available"
-                          : "Not Available"}
-                      </span>
+                      {appointment.user.name}
                     </Table.Cell>
   
                     {/* Time */}
@@ -266,15 +232,15 @@ const MyAppointments = () => {
                         <button onClick={() => { removeAppointment(appointment._id) }} className="rounded bg-red-600 px-3 py-2 text-xs font-medium text-white hover:bg-red-700">
                           Delete
                         </button>
-                        <button disabled={!appointment.doctor.active || !appointment.doctor.available} className={`disabled: opacity-50 disabled:cursor-not-allowed rounded bg-indigo-600 px-3 py-2 text-xs font-medium text-white hover:bg-indigo-700`}>
+                        <button disabled={!appointment.doctor.active} className={`disabled: opacity-50 disabled:cursor-not-allowed rounded bg-indigo-600 px-3 py-2 text-xs font-medium text-white hover:bg-indigo-700`}>
                           <Link to={`/appointment/${appointment.doctor._id}?updateAppointment=${appointment._id}`}>
                             Update
                           </Link>
                         </button>
-                        <button disabled={!appointment.doctor.active || !appointment.doctor.available} className={`disabled: opacity-50 disabled:cursor-not-allowedrounded bg-orange-600 px-3 py-2 text-xs font-medium text-white hover:bg-orange-700`}>
+                        <button disabled={!appointment.doctor.active} className={`disabled: opacity-50 disabled:cursor-not-allowedrounded bg-orange-600 px-3 py-2 text-xs font-medium text-white hover:bg-orange-700`}>
                           Pay
                         </button>
-                        <button disabled={!appointment.doctor.active || !appointment.doctor.available} className={`disabled: opacity-50 disabled:cursor-not-allowedrounded bg-yellow-500 px-3 py-2 text-xs font-medium text-white hover:bg-yellow-600`}>
+                        <button disabled={!appointment.doctor.active} className={`disabled: opacity-50 disabled:cursor-not-allowedrounded bg-yellow-500 px-3 py-2 text-xs font-medium text-white hover:bg-yellow-600`}>
                           View
                         </button>
                       </div>

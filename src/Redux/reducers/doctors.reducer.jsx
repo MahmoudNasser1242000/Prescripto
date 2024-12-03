@@ -52,6 +52,34 @@ export const addDoctor = createAsyncThunk("doctor/addDoctor", async ({token, doc
     }
 })
 
+export const deleteDoctor = createAsyncThunk("doctor/deleteDoctor", async ({token, docId}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.delete(`doctors/${docId}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        })        
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
+export const updateteDoctor = createAsyncThunk("doctor/updateteDoctor", async ({token, docId, body}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.patch(`doctors/${docId}`, body, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        })        
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
 const doctorSlice = createSlice({
     name: "doctor",
     initialState,
@@ -75,7 +103,7 @@ const doctorSlice = createSlice({
             state.doctors = []
         })
 
-        //get all doctors
+        //get one doctors
         builder.addCase(getOneDoctor.pending, (state) => {
             state.loading = true;
             state.error = null;
@@ -104,9 +132,49 @@ const doctorSlice = createSlice({
             state.loading = false;
             state.error = null;
             state.success = action.payload.message;
+            state.doctors = state.doctors.push(action.payload.doctor)
             toast.success(state.success)
         })
         builder.addCase(addDoctor.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(state.error)
+        })
+
+        //delete doctors
+        builder.addCase(deleteDoctor.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(deleteDoctor.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            toast.success(state.success)
+        })
+        builder.addCase(deleteDoctor.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(state.error)
+        })
+
+        //update doctor
+        builder.addCase(updateteDoctor.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(updateteDoctor.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            state.doctor = action.payload.doctor
+            toast.success(state.success)
+        })
+        builder.addCase(updateteDoctor.rejected, (state, action) => {
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;
