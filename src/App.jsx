@@ -18,6 +18,7 @@ import DashboardLayOut from './pages/dashboard/DashboardLayOut/DashboardLayOut'
 import Dashboard from './pages/dashboard/Dashboard/Dashboard'
 import AddDoctors from './pages/dashboard/AddDoctors/AddDoctors'
 import ViewProfile from './pages/dashboard/ViewProfile/ViewProfile'
+import AddUser from './pages/dashboard/AddUser/AddUser'
 
 function App() {
   const routes = createBrowserRouter([
@@ -39,6 +40,7 @@ function App() {
         { index: true, element: <ProtectRoutes> <Dashboard /> </ProtectRoutes> },
         { path: "add-doctors", element: <ProtectRoutes> <AddDoctors /> </ProtectRoutes> },
         { path: "view-profile/:id", element: <ProtectRoutes> <ViewProfile /> </ProtectRoutes> },
+        { path: "add-managers", element: <ProtectRoutes> <AddUser /> </ProtectRoutes> },
       ]
     },
     {

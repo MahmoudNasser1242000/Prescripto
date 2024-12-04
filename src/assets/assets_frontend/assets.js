@@ -7,6 +7,7 @@ import edit_profile_pic from './edit-profile-pic.png'
 import login_image from './login-image.webp'
 import register_image from './register-image.jpg'
 import add_doctor from './add-doctors.avif'
+import add_mangers from './add-managers.png'
 import camera from './camera.svg'
 import about_image from './about_us.webp'
 import earning from './earning.png'
@@ -74,7 +75,8 @@ export const assets = {
     appointment_icon,
     earning,
     paper,
-    add_doctor
+    add_doctor,
+    add_mangers
 }
 
 export const times = [

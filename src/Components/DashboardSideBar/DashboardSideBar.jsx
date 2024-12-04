@@ -1,6 +1,7 @@
 import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 import { Button, Drawer, Sidebar, TextInput } from "flowbite-react";
 import { useState } from "react";
+import { AiOutlineUserAdd } from "react-icons/ai";
 import {
     HiAdjustments,
     HiChartPie,
@@ -21,8 +22,9 @@ function DashBoardSideBar() {
 
     const actions = [
         { icon: <HiChartPie />, name: 'Dashboard', to: "/" },
-        { icon: <HiOutlineClipboardList />, name: 'Doctors List', to: "/doctors" },
         { icon: <HiOutlineDocumentAdd />, name: 'Add Doctors', to: "/dashboard/add-doctors" },
+        { icon: <HiOutlineClipboardList />, name: 'Doctors List', to: "/doctors" },
+        { icon: <AiOutlineUserAdd />, name: 'Add Managers', to: "/dashboard/add-managers" },
         { icon: <HiUsers />, name: 'Users List', to: "/dashboard" },
         { icon: <HiClock />, name: 'Appointments', to: "/dashboard" },
         { icon: <HiOutlineLogin />, name: 'Signout', to: "/dashboard" },
@@ -67,11 +69,14 @@ function DashBoardSideBar() {
                                         <Sidebar.Item icon={HiChartPie}>
                                             <Link to={"/dashboard"}>Dashboard</Link>
                                         </Sidebar.Item>
-                                        <Sidebar.Item icon={HiOutlineClipboardList}>
-                                            <Link to={"/dashboard"}>Doctors List</Link>
-                                        </Sidebar.Item>
                                         <Sidebar.Item icon={HiOutlineDocumentAdd}>
-                                            <Link to={"/dashboard"}>Add Doctors</Link>
+                                            <Link to={"/dashboard/add-doctors"}>Add Doctors</Link>
+                                        </Sidebar.Item>
+                                        <Sidebar.Item icon={HiOutlineClipboardList}>
+                                            <Link to={"/doctors"}>Doctors List</Link>
+                                        </Sidebar.Item>
+                                        <Sidebar.Item icon={AiOutlineUserAdd}>
+                                            <Link to={"/dashboard/add-managers"}>Add Managers</Link>
                                         </Sidebar.Item>
                                         <Sidebar.Item icon={HiUsers}>
                                             <Link to={"/dashboard"}>Users List</Link>

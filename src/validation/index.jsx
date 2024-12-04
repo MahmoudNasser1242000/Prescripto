@@ -80,17 +80,8 @@ const signupSchema = Joi.object({
             "string.max": "Job field must be at most 100 characters"
         }),
 
-    active: Joi.boolean()
-        .default(true)
-        .optional(),
-
-    activeExpire: Joi.date()
-        .default("0000-01-01T00:00:00Z")
-        .optional(),
-
     profile: Joi.object().optional(),
 }).options({ allowUnknown: false });
-
 
 const signinSchema = Joi.object({
     email: Joi.string()
