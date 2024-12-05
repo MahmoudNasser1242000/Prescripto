@@ -24,6 +24,20 @@ export const addUser = createAsyncThunk("user/addUser", async ({token, user}, th
     }
 })
 
+export const getAllUsers = createAsyncThunk("user/getAllUsers", async (token, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.get(`users`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        })        
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
 export const getOneUser = createAsyncThunk("user/getOneUser", async ({token, userId}, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
     try {
@@ -84,6 +98,25 @@ const myProfileSlice = createSlice({
             toast.success(`${state.success}`);
         })
         builder.addCase(addUser.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(`${state.error}`);
+        })
+
+        //get all users
+        builder.addCase(getAllUsers.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(getAllUsers.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = true;
+            state.users = [...action.payload.users]
+        })
+        builder.addCase(getAllUsers.rejected, (state, action) => {
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;

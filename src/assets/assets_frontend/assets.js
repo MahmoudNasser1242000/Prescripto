@@ -8,6 +8,7 @@ import login_image from './login-image.webp'
 import register_image from './register-image.jpg'
 import add_doctor from './add-doctors.avif'
 import add_mangers from './add-managers.png'
+import default_user from './default-user.png'
 import camera from './camera.svg'
 import about_image from './about_us.webp'
 import earning from './earning.png'
@@ -76,7 +77,8 @@ export const assets = {
     earning,
     paper,
     add_doctor,
-    add_mangers
+    add_mangers,
+    default_user
 }
 
 export const times = [

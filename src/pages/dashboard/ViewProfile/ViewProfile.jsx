@@ -49,7 +49,7 @@ const ViewProfile = () => {
                             <img
                                 src={
                                     role === "doctor" ? doctor?.profile :
-                                        (user.profile ? user?.profile : assets.default_profile_pic)
+                                        (user?.profile ? user?.profile : assets.default_profile_pic)
                                 }
                                 alt="profile picture"
                                 className="rounded-full object-cover w-48 h-48 mx-auto mb-4 p-1 outline outline-2 outline-[#0C3860] dark:outline-blue-900 transition-transform duration-300"
