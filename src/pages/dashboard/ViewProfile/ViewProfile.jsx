@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import { HiClock } from "react-icons/hi";
+import { HiClock, HiOutlinePlus } from "react-icons/hi";
 import { Badge } from "flowbite-react";
 import { TbCalendarTime } from "react-icons/tb";
 import { getOneDoctor } from "../../../Redux/reducers/doctors.reducer";
@@ -9,6 +9,7 @@ import { getOneUser } from "../../../Redux/reducers/users.reducer";
 import { assets } from "../../../assets/assets_frontend/assets";
 import AdminDeleteAccountModal from "../../../Components/AdminDeleteAccountModal/AdminDeleteAccountModal";
 import AdminUpdateAccount from "../../../Components/AdminUpdateAccount/AdminUpdateAccount";
+import { Fab } from "@mui/material";
 
 const ViewProfile = () => {
     const [openUpdateModal, setOpenUpdateModal] = useState(false);
@@ -63,7 +64,7 @@ const ViewProfile = () => {
                                 ></span>
                                 <span className={`relative inline-flex size-2 rounded-full bg-${doctor?.active || user?.active ? "green" : "red"}-600`}></span>
                             </span>
-                            <span className="inline-block ms-1 mb-1">{doctor?.active || user?.active ? "available" : "not available"}</span>
+                            <span className="inline-block ms-1 mb-[2px]">{doctor?.active || user?.active ? "available" : "not available"}</span>
                         </p>
                         <h1 className="text-2xl font-bold text-primary dark:text-white mb-2">
                             {doctor?.name || user?.name}
@@ -179,6 +180,11 @@ const ViewProfile = () => {
                                                     <Badge key={date._id} icon={HiClock} className="mx-2">{date.time} {date.modifier}</Badge>
                                                 ))
                                             }
+                                            <Link to={`/appointment/${doctor?._id}`} onClick={() => scrollTo(0, 0)}>
+                                                <Fab className="fab" aria-label="add">
+                                                    <HiOutlinePlus className="text-3xl font-thin" />
+                                                </Fab>
+                                            </Link>
                                         </>
                                     )
                                 }

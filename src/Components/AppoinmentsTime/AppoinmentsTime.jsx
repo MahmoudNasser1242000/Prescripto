@@ -1,6 +1,10 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import AppointmentsModal from "../AppointmentsModal/AppointmentsModal";
+import { useSelector } from "react-redux";
 
-const AppoinmentsTime = ({date, getTimeFunc}) => {
+const AppoinmentsTime = ({ date, getTimeFunc, role, docId, token }) => {
+    const [appointmentModal, setAppointmentModal] = useState(false);
+
     const parentTimeRef = useRef("");
     const chooseTimeFunc = () => {
         Array.from(parentTimeRef.current.parentNode.children)?.forEach((child) => {
@@ -9,8 +13,21 @@ const AppoinmentsTime = ({date, getTimeFunc}) => {
             }
         });
         parentTimeRef.current.children[0].classList.add("chooseTime");
-        getTimeFunc(parentTimeRef.current.children[0].innerText)
+        if (role === "manager" || role === "super-manager") {
+            setAppointmentModal(true)
+        } else if (role === "user") {
+            getTimeFunc(parentTimeRef.current.children[0].innerText)
+        } else {
+            return;
+        }
     };
+
+    const {success} = useSelector((state) => state.examination_date)
+    useEffect(() => {
+        if (success === "Date removed successfully") {
+            setAppointmentModal(false)
+        }
+    }, [success]);
     return <>
         <div ref={parentTimeRef}>
             <p
@@ -20,6 +37,11 @@ const AppoinmentsTime = ({date, getTimeFunc}) => {
                 {date.time} {date.modifier}
             </p>
         </div>
+        {
+            ((role === "manager" || role === "super-manager") && appointmentModal) && (
+                <AppointmentsModal openModal={appointmentModal} setOpenModal={setAppointmentModal} docId={docId} date={date} token={token} />
+            )
+        }
     </>;
 };
 

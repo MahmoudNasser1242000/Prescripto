@@ -83,6 +83,11 @@ export const updateteDoctor = createAsyncThunk("doctor/updateteDoctor", async ({
 const doctorSlice = createSlice({
     name: "doctor",
     initialState,
+    reducers: {
+        editDoctor: (state, action) => {
+            state.doctor = action.payload
+        }
+    },
     extraReducers: (builder) => { 
         //get all doctors
         builder.addCase(getAllDoctors.pending, (state) => {
@@ -184,3 +189,4 @@ const doctorSlice = createSlice({
 });
 
 export default doctorSlice.reducer;
+export const { editDoctor } = doctorSlice.actions;

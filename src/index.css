@@ -25,3 +25,8 @@ nav div {
 .css-1dune0f-MuiInputBase-input-MuiOutlinedInput-input:focus, input:focus {
     box-shadow: none !important;
 }
+
+.fab {
+    background-color: rgb(241, 240, 240) !important;
+    box-shadow: none !important;
+}
