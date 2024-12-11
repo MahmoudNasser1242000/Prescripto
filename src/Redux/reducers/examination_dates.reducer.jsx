@@ -9,6 +9,22 @@ const initialState = {
     success: null,
 }
 
+export const addExamination_date = createAsyncThunk("examination_date/addExamination_date", async ({token, docId, body}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.post(`examinationDates/${docId}`, body, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        })
+        
+        thunkAPI.dispatch(editDoctor(data.doctor))
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
 export const deleteExamination_date = createAsyncThunk("examination_date/deleteExamination_date", async ({token, docId, timeId}, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
     try {
@@ -45,6 +61,25 @@ const appointmentSlice = createSlice({
     name: "examination_date",
     initialState,
     extraReducers: (builder) => {
+        //add examination_date
+        builder.addCase(addExamination_date.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(addExamination_date.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            toast.success(`${state.success}`);
+        })
+        builder.addCase(addExamination_date.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(`${state.error}`);
+        })
+
         //delete examination_date
         builder.addCase(deleteExamination_date.pending, (state) => {
             state.loading = true;

@@ -29,6 +29,7 @@ nav div {
 .fab {
     background-color: rgb(241, 240, 240) !important;
     box-shadow: none !important;
+    z-index: 5 !important;
 }
 
 @media (min-width: 1200px) {

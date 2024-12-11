@@ -13,7 +13,7 @@ const AppointmentsModal = ({ openModal, setOpenModal, setUpdateAppointmentModal,
     }
 
     return <>
-        <Modal show={openModal} className="rounded-md z-[3000]" size="xl" onClose={() => setOpenModal(false)} popup>
+        <Modal show={openModal} className="rounded-md" size="xl" onClose={() => setOpenModal(false)} popup>
             <Modal.Header />
             <Modal.Body>
                 <div className="text-center">

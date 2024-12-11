@@ -13,6 +13,7 @@ import { jwtDecode } from "jwt-decode";
 import { Spinner } from "flowbite-react";
 import { Fab } from "@mui/material";
 import { HiOutlinePlus } from "react-icons/hi";
+import AddAppointmentModal from "../../Components/AddAppointmentModal/AddAppointmentModal";
 
 const Appointment = () => {
   const { docId } = useParams();
@@ -21,6 +22,7 @@ const Appointment = () => {
 
   const [getDate, setGetDate] = useState("");
   const [getTime, setGetTime] = useState("");
+  const [openModal, setOpenModal] = useState(false);
 
   const getDateFunc = (date) => {
     setGetDate(date);
@@ -208,7 +210,7 @@ const Appointment = () => {
                   ))}
                 {
                   (logged.role === "manager" || logged.role === "super-manager") && (
-                    <Fab className="fab" aria-label="add">
+                    <Fab onClick={() => setOpenModal(true)} className="fab" aria-label="add">
                       <HiOutlinePlus className="text-3xl font-thin" />
                     </Fab>
                   )
@@ -270,6 +272,7 @@ const Appointment = () => {
           doctorSuccess={success}
         />
       </div>
+      <AddAppointmentModal openModal={openModal} setOpenModal={setOpenModal} docId={docId} token={token} />
     </>
   );
 };
