@@ -5,7 +5,7 @@ import { MdMoreTime } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { deleteExamination_date } from "../../Redux/reducers/examination_dates.reducer";
 
-const AppointmentsModal = ({ openModal, setOpenModal, docId, date, token }) => {
+const AppointmentsModal = ({ openModal, setOpenModal, setUpdateAppointmentModal, docId, date, token }) => {
     const { loading } = useReducer((state) => state.examination_date);
     const dispatch = useDispatch();
     const deleteDate = () => {
@@ -25,7 +25,7 @@ const AppointmentsModal = ({ openModal, setOpenModal, docId, date, token }) => {
                         <Button variant="contained" color="error" onClick={() => deleteDate()}>
                             {loading ? <Spinner color="white" aria-label="Default status example" /> : "Delete"}
                         </Button>
-                        <Button variant="contained" color="info">
+                        <Button variant="contained" color="info" onClick={() => {setOpenModal(false), setUpdateAppointmentModal(true)} }>
                             Update
                         </Button>
                     </div>

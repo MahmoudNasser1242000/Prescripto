@@ -400,5 +400,5 @@ export {
     updateDoctorProfileSchema,
     chanagePasswordSchema,
     addDoctorSchema,
-    updateUserAndDoctorSchema
+    updateUserAndDoctorSchema,
 }

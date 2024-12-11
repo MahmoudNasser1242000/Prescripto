@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import AppointmentsModal from "../AppointmentsModal/AppointmentsModal";
 import { useSelector } from "react-redux";
+import UpdateAppointmentModal from "../UpdateAppointmentModal/UpdateAppointmentModal";
 
 const AppoinmentsTime = ({ date, getTimeFunc, role, docId, token }) => {
     const [appointmentModal, setAppointmentModal] = useState(false);
+    const [updateAppointmentModal, setUpdateAppointmentModal] = useState(false);
 
     const parentTimeRef = useRef("");
     const chooseTimeFunc = () => {
@@ -39,7 +41,12 @@ const AppoinmentsTime = ({ date, getTimeFunc, role, docId, token }) => {
         </div>
         {
             ((role === "manager" || role === "super-manager") && appointmentModal) && (
-                <AppointmentsModal openModal={appointmentModal} setOpenModal={setAppointmentModal} docId={docId} date={date} token={token} />
+                <AppointmentsModal openModal={appointmentModal} setOpenModal={setAppointmentModal} setUpdateAppointmentModal={setUpdateAppointmentModal} docId={docId} date={date} token={token} />
+            )
+        }
+        {
+            ((role === "manager" || role === "super-manager") && updateAppointmentModal) && (
+                <UpdateAppointmentModal openModal={updateAppointmentModal} setOpenModal={setUpdateAppointmentModal} docId={docId} date={date} token={token} />
             )
         }
     </>;
