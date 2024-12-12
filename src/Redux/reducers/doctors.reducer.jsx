@@ -80,6 +80,20 @@ export const updateteDoctor = createAsyncThunk("doctor/updateteDoctor", async ({
     }
 })
 
+export const updatetDoctorDates = createAsyncThunk("doctor/updatetDoctorDates", async ({token, docId, body}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.patch(`doctors/updateDates/${docId}`, body, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        })        
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
 const doctorSlice = createSlice({
     name: "doctor",
     initialState,
@@ -180,6 +194,26 @@ const doctorSlice = createSlice({
             toast.success(state.success)
         })
         builder.addCase(updateteDoctor.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(state.error)
+        })
+
+        //update doctor dates
+        builder.addCase(updatetDoctorDates .pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(updatetDoctorDates .fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            state.doctor = action.payload.doctor
+            toast.success(state.success)
+        })
+        builder.addCase(updatetDoctorDates .rejected, (state, action) => {
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;
