@@ -187,7 +187,7 @@ const MyAppointments = () => {
                       </p>
   
                       <p>
-                        {new Date(appointment.date) < `${new Date() && new Date(appointment.expireDate).toLocaleDateString("en-GB", {
+                        {new Date(appointment.date) < new Date() && `${new Date(appointment.expireDate).toLocaleDateString("en-GB", {
                           year: "numeric",
                           month: "short",
                           day: "numeric",
@@ -239,9 +239,6 @@ const MyAppointments = () => {
                         </button>
                         <button disabled={!appointment.doctor.active} className={`disabled: opacity-50 disabled:cursor-not-allowedrounded bg-orange-600 px-3 py-2 text-xs font-medium text-white hover:bg-orange-700`}>
                           Pay
-                        </button>
-                        <button disabled={!appointment.doctor.active} className={`disabled: opacity-50 disabled:cursor-not-allowedrounded bg-yellow-500 px-3 py-2 text-xs font-medium text-white hover:bg-yellow-600`}>
-                          View
                         </button>
                       </div>
                     </Table.Cell>

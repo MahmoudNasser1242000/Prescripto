@@ -19,7 +19,6 @@ const NavBar = () => {
 
     const signOut = () => {
         dispatch(logout());
-        toast.success("Logout Successfully")
     }
 
     useEffect(() => {

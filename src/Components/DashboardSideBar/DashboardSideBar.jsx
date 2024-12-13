@@ -26,9 +26,13 @@ function DashBoardSideBar() {
         { icon: <HiOutlineClipboardList />, name: 'Doctors List', to: "/doctors" },
         { icon: <AiOutlineUserAdd />, name: 'Add Managers', to: "/dashboard/add-managers" },
         { icon: <HiUsers />, name: 'Users List', to: "/dashboard/all-users/managers" },
-        { icon: <HiClock />, name: 'Appointments', to: "/dashboard" },
+        { icon: <HiClock />, name: 'Appointments', to: "/dashboard/all-appoinmrnts" },
         { icon: <HiOutlineLogin />, name: 'Signout', to: "/dashboard" },
     ];
+
+    const signOut = () => {
+        dispatch(logout());
+    }
     return (
         <>
             {/* <button className="rounded-full size-14 flex fixed right-8 bottom-8 justify-center items-center bg-blue-500 text-white hover:bg-blue-700 focus:ring-4 focus:ring-blue-500/50" onClick={() => setIsOpen(true)}>
@@ -82,9 +86,9 @@ function DashBoardSideBar() {
                                             <Link to={"/dashboard/all-users/managers"}>Users List</Link>
                                         </Sidebar.Item>
                                         <Sidebar.Item icon={HiClock}>
-                                            <Link to={"/dashboard"}>Appointments</Link>
+                                            <Link to={"/dashboard/all-appoinmrnts"}>Appointments</Link>
                                         </Sidebar.Item>
-                                        <Sidebar.Item icon={HiOutlineLogin}>
+                                        <Sidebar.Item icon={HiOutlineLogin} onClick={() => signOut()}>
                                             Signout
                                         </Sidebar.Item>
                                     </Sidebar.ItemGroup>

@@ -43,6 +43,7 @@ const authSlice = createSlice({
             state.error = false
             state.token = ""
             localStorage.removeItem("Token")
+            toast.success("Logout Successfully")
         }
     },
     extraReducers: (builder) => { 
