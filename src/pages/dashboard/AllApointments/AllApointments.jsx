@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAppointment, getAppointments } from "../../../Redux/reducers/appointments.reducer";
+import { deleteAppointment, getAppointments, getDoctorAppointments, getUserAppointments } from "../../../Redux/reducers/appointments.reducer";
 import { Table } from "flowbite-react";
 import TableRowSkeleton from "../../../Components/TableRowSkeleton/TableRowSkeleton ";
+import { useSearchParams } from "react-router-dom";
 
 const AllApointments = () => {
+    const [searchParams] = useSearchParams()
+
     const { token } = useSelector((state) => state.auth);
     const { loading, appointments } = useSelector((state) => state.appointment);
     const dispatch = useDispatch();
@@ -23,15 +26,21 @@ const AllApointments = () => {
     };
 
     useEffect(() => {
-        dispatch(getAppointments({ token }));
-    }, [dispatch, token]);
+        if (searchParams.get("docId")) {
+            dispatch(getDoctorAppointments({ token, docId: searchParams.get("docId") }));
+        } else if (searchParams.get("userId")) {
+            dispatch(getUserAppointments({ token, userId: searchParams.get("userId") }));
+        } else {
+            dispatch(getAppointments({ token }));
+        }
+    }, [dispatch, token, searchParams]);
 
     const removeAppointment = (id) => {
         dispatch(deleteAppointment({ token, id }));
     }
     return <div className="max-w-[1280px] mx-auto px-8 sm:px-12">
         <h2 className="mt-12 mb-8 text-2xl text-center sm:text-start font-bold">
-            All Appointments ({appointments?.length})
+            {searchParams.get("docId")? "Doctor" : searchParams.get("userId")? "User" : "All"} Appointments ({appointments?.length})
         </h2>
 
         <div className="overflow-x-auto">
@@ -56,7 +65,11 @@ const AllApointments = () => {
                             <Table.Row>
                                 <TableRowSkeleton />
                             </Table.Row>
-                        ) : appointments.length ?
+                            // .filter((app) => {
+                            //     return searchParams.get("docId")? app.doctor._id === searchParams.get("docId") :
+                            //     searchParams.get("userId") ? app.user._id === searchParams.get("userId") : app
+                            // })
+                        ) : appointments?.length ?
                             (appointments?.map((appointment) => (
                                 <Table.Row
                                     key={appointment._id}

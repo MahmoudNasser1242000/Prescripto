@@ -69,6 +69,34 @@ export const updateAppointment = createAsyncThunk("appointment/updateAppointment
     }
 })
 
+export const getDoctorAppointments = createAsyncThunk("appointment/getDoctorAppointments", async ({token, docId}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.get(`doctors/${docId}/appointments`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        }) 
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
+export const getUserAppointments = createAsyncThunk("appointment/getUserAppointments", async ({token, userId}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.get(`users/${userId}/appointments`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        }) 
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
+
 const appointmentSlice = createSlice({
     name: "appointment",
     initialState,
@@ -148,6 +176,44 @@ const appointmentSlice = createSlice({
             toast.success(`${state.success}`);
         })
         builder.addCase(updateAppointment.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(`${state.error}`);
+        })
+
+        //get doctor appointments
+        builder.addCase(getDoctorAppointments.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(getDoctorAppointments.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            state.appointments = [...action.payload.appointments]
+        })
+        builder.addCase(getDoctorAppointments.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(`${state.error}`);
+        })
+
+        //get user appointments
+        builder.addCase(getUserAppointments.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(getUserAppointments.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            state.appointments = [...action.payload.appointments]
+        })
+        builder.addCase(getUserAppointments.rejected, (state, action) => {
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;

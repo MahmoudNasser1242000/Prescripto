@@ -193,7 +193,7 @@ const ViewProfile = () => {
                         <div className="flex justify-center lg:justify-start mt-7">
                             <Link
                                 className="group flex relative w-fit items-center overflow-hidden rounded bg-primary px-8 py-3 text-white focus:outline-none focus:ring active:bg-primary"
-                                to={"/my-appointments"}
+                                to={`/dashboard/all-appoinments?${role === "doctor"? `docId=${doctor?._id}` : `userId=${user?._id}`}`}
                             >
                                 <span className="absolute -end-full transition-all group-hover:end-4">
                                     <svg

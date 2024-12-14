@@ -26,7 +26,7 @@ function DashBoardSideBar() {
         { icon: <HiOutlineClipboardList />, name: 'Doctors List', to: "/doctors" },
         { icon: <AiOutlineUserAdd />, name: 'Add Managers', to: "/dashboard/add-managers" },
         { icon: <HiUsers />, name: 'Users List', to: "/dashboard/all-users/managers" },
-        { icon: <HiClock />, name: 'Appointments', to: "/dashboard/all-appoinmrnts" },
+        { icon: <HiClock />, name: 'Appointments', to: "/dashboard/all-appoinments" },
         { icon: <HiOutlineLogin />, name: 'Signout', to: "/dashboard" },
     ];
 
@@ -86,7 +86,7 @@ function DashBoardSideBar() {
                                             <Link to={"/dashboard/all-users/managers"}>Users List</Link>
                                         </Sidebar.Item>
                                         <Sidebar.Item icon={HiClock}>
-                                            <Link to={"/dashboard/all-appoinmrnts"}>Appointments</Link>
+                                            <Link to={"/dashboard/all-appoinments"}>Appointments</Link>
                                         </Sidebar.Item>
                                         <Sidebar.Item icon={HiOutlineLogin} onClick={() => signOut()}>
                                             Signout

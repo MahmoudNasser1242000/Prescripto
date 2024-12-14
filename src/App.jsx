@@ -19,8 +19,8 @@ import Dashboard from './pages/dashboard/Dashboard/Dashboard'
 import AddDoctors from './pages/dashboard/AddDoctors/AddDoctors'
 import ViewProfile from './pages/dashboard/ViewProfile/ViewProfile'
 import AddUser from './pages/dashboard/AddUser/AddUser'
-import GetAllUsers from './pages/dashboard/getAllUsers/getAllUsers'
 import AllApointments from './pages/dashboard/AllApointments/AllApointments'
+import GetAllUsers from './pages/dashboard/GetAllUsers/GetAllUsers'
 
 function App() {
   const routes = createBrowserRouter([
@@ -44,7 +44,7 @@ function App() {
         { path: "view-profile/:id", element: <ProtectRoutes> <ViewProfile /> </ProtectRoutes> },
         { path: "add-managers", element: <ProtectRoutes> <AddUser /> </ProtectRoutes> },
         { path: "all-users/:type", element: <ProtectRoutes> <GetAllUsers /> </ProtectRoutes> },
-        { path: "all-appoinmrnts", element: <ProtectRoutes> <AllApointments /> </ProtectRoutes> },
+        { path: "all-appoinments", element: <ProtectRoutes> <AllApointments /> </ProtectRoutes> },
       ]
     },
     {
