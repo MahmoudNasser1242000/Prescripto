@@ -14,6 +14,7 @@ import about_image from './about_us.webp'
 import earning from './earning.png'
 import appointment_icon from './appointment_icon.png'
 import patient from './patient.png'
+import patient_user from './patient-user.png'
 import paper from './paper.png'
 import logo from './logo.svg'
 import dropdown_icon from './dropdown_icon.svg'
@@ -78,7 +79,8 @@ export const assets = {
     paper,
     add_doctor,
     add_mangers,
-    default_user
+    default_user,
+    patient_user
 }
 
 export const times = [

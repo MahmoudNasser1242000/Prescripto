@@ -232,12 +232,12 @@ const MyAppointments = () => {
                         <button onClick={() => { removeAppointment(appointment._id) }} className="rounded bg-red-600 px-3 py-2 text-xs font-medium text-white hover:bg-red-700">
                           Delete
                         </button>
-                        <button disabled={!appointment.doctor.active} className={`disabled: opacity-50 disabled:cursor-not-allowed rounded bg-indigo-600 px-3 py-2 text-xs font-medium text-white hover:bg-indigo-700`}>
+                        <button disabled={!appointment.doctor.active} className={`${!appointment.doctor.active && "disabled:cursor-not-allowed disabled:opacity-50"} rounded bg-indigo-600 px-3 py-2 text-xs font-medium text-white hover:bg-indigo-700`}>
                           <Link to={`/appointment/${appointment.doctor._id}?updateAppointment=${appointment._id}`}>
                             Update
                           </Link>
                         </button>
-                        <button disabled={!appointment.doctor.active} className={`disabled: opacity-50 disabled:cursor-not-allowedrounded bg-orange-600 px-3 py-2 text-xs font-medium text-white hover:bg-orange-700`}>
+                        <button disabled={!appointment.doctor.active} className={`${!appointment.doctor.active && "disabled:cursor-not-allowed disabled:opacity-50"} rounded bg-orange-600 px-3 py-2 text-xs font-medium text-white hover:bg-orange-700`}>
                           Pay
                         </button>
                       </div>

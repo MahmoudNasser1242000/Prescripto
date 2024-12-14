@@ -4,45 +4,30 @@ import { Button, Spinner, Table } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAppointments } from "../../../Redux/reducers/appointments.reducer";
 import { getAllDoctors } from "../../../Redux/reducers/doctors.reducer";
-import { jwtDecode } from "jwt-decode";
-import dayjs from "dayjs";
+import { getAllUsers } from "../../../Redux/reducers/users.reducer";
+import { ResponsiveTimeRange } from "@nivo/calendar";
+import { Calendar, CalendarX } from "lucide-react";
 
 const Dashboard = () => {
   const { appointments, loading: apppointmentLoading } = useSelector((state) => state.appointment);
   const { doctors, loading: doctorLoading } = useSelector((state) => state.doctor);
+  const { users, loading: userLoading } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (token) {
-      dispatch(getAppointments({token}))
-      dispatch(getAllDoctors({token}))
+      dispatch(getAppointments({ token }))
+      dispatch(getAllDoctors({ token }))
+      dispatch(getAllUsers(token))
     }
   }, [dispatch, token]);
 
-  // const times = [{ time: "02:00", modifier: "PM" }, { time: "03:00", modifier: "PM" }, { time: "04:00", modifier: "PM" }]
+  const dateNow = new Date();
+  dateNow.setDate(dateNow.getDate() + 365)
+
   return <div className='pt-14 max-w-[1280px] mx-auto px-8 sm:px-12'>
     <div className="flex justify-center items-center flex-wrap gap-4">
-      {/* <div className='my-52'>
-        <Autocomplete
-          multiple
-          id="tags-outlined"
-          options={times}
-          getOptionLabel={(option) => option.time}
-          defaultValue={[times[0]]}
-          filterSelectedOptions
-          onChange={(e, value) => setx(value)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="filterSelectedOptions"
-            />
-          )}
-        />
-        <p className="text-red-600 text-start">{errors.examination_dates?.message}</p>
-        <button onClick={() => { console.log(x.map((time) => { return { date: time.split(":")[0], modifier: time.split(":")[1] } })) }} type="submit">dddddddddddd</button>
-      </div> */}
-
       <div className='bg-gray-100 text-primary px-16 py-12 rounded-[4px] flex justify-center items-center flex-wrap gap-5'>
         <img className='size-20' src={assets.earning} alt="icon" />
         <div>
@@ -50,6 +35,7 @@ const Dashboard = () => {
           <p className='text-gray-400 font-semibold text-lg'>Earning</p>
         </div>
       </div>
+
       <div className='bg-gray-100 text-primary px-16 py-12 rounded-[4px] flex justify-center items-center flex-wrap gap-5'>
         <img className='size-20' src={assets.appointment_icon} alt="icon" />
         <div>
@@ -61,6 +47,7 @@ const Dashboard = () => {
           <p className='text-gray-400 font-semibold text-lg'>Appointments</p>
         </div>
       </div>
+
       <div className='bg-gray-100 text-primary px-16 py-12 rounded-[4px] flex justify-center items-center flex-wrap gap-5'>
         <img className='size-20' src={assets.patient} alt="icon" />
         <div>
@@ -72,9 +59,64 @@ const Dashboard = () => {
           <p className='text-gray-400 font-semibold text-lg'>Doctors</p>
         </div>
       </div>
+
+      <div className='bg-gray-100 text-primary px-16 py-12 rounded-[4px] flex justify-center items-center flex-wrap gap-5'>
+        <img className='size-20' src={assets.patient_user} alt="icon" />
+        <div>
+          <p className='text-5xl font-bold text-start'>
+            {
+              userLoading ? <Spinner color="info" aria-label="Default status example" /> : users?.filter((user) => user.role === "user").length
+            }
+          </p>
+          <p className='text-gray-400 font-semibold text-lg'>Patients</p>
+        </div>
+      </div>
     </div>
 
-    <div className="mt-20 w-full md:w-[60%] mx-auto">
+    <div className="w-[90%] h-[300px] mx-auto mt-16">
+      <ResponsiveTimeRange
+        data={appointments?.map((app) => { return { "day": new Date(app.date).toISOString().split('T')[0], "value": JSON.stringify({doctor: app.doctor.name, user: app.user.name, dateExpire: app.expireDate}) } })}
+        from={`2024-12-12`}
+        to={dateNow.toISOString().split('T')[0]}
+        emptyColor="#eeeeee"
+        colors={['#61cdbb', '#97e3d5', '#e8c1a0', '#f47560']}
+        margin={{ top: 40, right: 40, bottom: 100, left: 40 }}
+        dayBorderWidth={2}
+        dayBorderColor="#ffffff"
+        tooltip={e => {
+          return (
+              <div className='bg-blue-400 px-12 py-2 w-fit h-auto rounded-md'>
+                  <div className='flex flex-col items-center justify-center w-full h-full'>
+                      <span className="inline-flex items-center gap-x-2">
+                          <Calendar size={"18px"} /> {e.day}
+                      </span>
+                      <span className="inline-flex items-center gap-x-1">
+                          <CalendarX size={"18px"} /> {JSON.parse(e.value).dateExpire.split(".000Z")[0]}
+                      </span>
+                      <span className='block px-1'><strong>Doctor:</strong> {JSON.parse(e.value).doctor}</span>
+                      <span className='block px-1'><strong>Patient:</strong> {JSON.parse(e.value).user}</span>
+                  </div>
+              </div>
+          )
+      }}
+        legends={[
+          {
+            anchor: 'bottom-right',
+            direction: 'row',
+            justify: false,
+            itemCount: 4,
+            itemWidth: 42,
+            itemHeight: 36,
+            itemsSpacing: 14,
+            itemDirection: 'right-to-left',
+            translateX: -60,
+            translateY: -60,
+            symbolSize: 20
+          }
+        ]}
+      />
+    </div>
+    <div className="w-full md:w-[60%] mx-auto">
       <Table>
         <Table.Head>
           <Table.HeadCell className="flex items-center gap-x-3 text-black">
@@ -101,8 +143,8 @@ const Dashboard = () => {
                 </div>
               </div>
             ) :
-              appointments.length? (
-                appointments.filter((app) => app.doctor.availble).reverse().slice(10).map((app) => (
+              appointments.length ? (
+                appointments?.filter((app) => app.doctor.active === true).slice(0, 10).reverse().map((app) => (
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell className="whitespace-nowrap flex flex-row items-center justify-start gap-3 px-4 py-2">
                       <img
@@ -120,15 +162,15 @@ const Dashboard = () => {
                       </div>
                     </Table.Cell>
                     <Table.Cell>
-                      <Button color="blue" className="font-medium text-white bg-primary rounded-[4px] hover:bg-primary">
-                        cancel
-                      </Button>
+                      <button className="font-medium px-4 py-3 text-white bg-red-500 rounded-[4px] hover:bg-red-700">
+                        Delete
+                      </button>
                     </Table.Cell>
                   </Table.Row>
                 ))
               ) : <tr className="p-3 text-2xl block">
-                  There are no appointments right now!
-                </tr>
+                There are no appointments right now!
+              </tr>
           }
         </Table.Body>
       </Table>
