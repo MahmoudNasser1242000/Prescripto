@@ -7,7 +7,8 @@ const initialState = {
     loading: false,
     success: null,
     users: [],
-    user: null
+    user: null,
+    metaData: {}
 }
 
 export const addUser = createAsyncThunk("user/addUser", async ({token, user}, thunkAPI) => {
@@ -24,10 +25,10 @@ export const addUser = createAsyncThunk("user/addUser", async ({token, user}, th
     }
 })
 
-export const getAllUsers = createAsyncThunk("user/getAllUsers", async (token, thunkAPI) => {
+export const getAllUsers = createAsyncThunk("user/getAllUsers", async ({token, keyword, page}, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
     try {
-        const {data} = await axiosInstance.get(`users`, {
+        const {data} = await axiosInstance.get(`users${keyword && `?keyword=${keyword}`}${page && `?page=${page}`}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
@@ -115,6 +116,7 @@ const myProfileSlice = createSlice({
             state.error = null;
             state.success = true;
             state.users = [...action.payload.users]
+            state.metaData = {...action.payload.metadata}
         })
         builder.addCase(getAllUsers.rejected, (state, action) => {
             state.loading = false;

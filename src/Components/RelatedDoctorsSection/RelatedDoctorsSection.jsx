@@ -14,7 +14,7 @@ const RelatedDoctorsSection = ({ doctor, doctorLoading, doctorSuccess }) => {
     const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getAllDoctors({token}));
+        dispatch(getAllDoctors({token, keyword: "", page: ""}));
     }, [dispatch]);
     useEffect(() => {
         if (error) {

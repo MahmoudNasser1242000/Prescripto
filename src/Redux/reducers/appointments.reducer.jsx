@@ -8,6 +8,7 @@ const initialState = {
     success: null,
     appointment: null,
     appointments: [],
+    metaData: {}
 }
 
 export const addAppointment = createAsyncThunk("appointment/addAppointment", async ({token, appointment}, thunkAPI) => {
@@ -25,16 +26,17 @@ export const addAppointment = createAsyncThunk("appointment/addAppointment", asy
     }
 })
 
-export const getAppointments = createAsyncThunk("appointment/getAppointments", async ({token, query={}}, thunkAPI) => {
+export const getAppointments = createAsyncThunk("appointment/getAppointments", async ({token, keyword, page}, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
-    const {user, doctor} = query
-    const endPoint = user && `appointments?userId=${user}` || doctor && `appointments?docId=${doctor}` || "appointments"
+    // const {user, doctor} = query
+    // const endPoint = user && `appointments?userId=${user}` || doctor && `appointments?docId=${doctor}` || "appointments"
     try {
-        const {data} = await axiosInstance.get(endPoint, {
+        const {data} = await axiosInstance.get(`appointments${keyword && `?keyword=${keyword}`}${page && `?page=${page}`}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
-        })       
+        })    
+        
         return data
     } catch (error) {        
         return rejectWithValue(error.response ? error.response.data : error.message)
@@ -69,10 +71,10 @@ export const updateAppointment = createAsyncThunk("appointment/updateAppointment
     }
 })
 
-export const getDoctorAppointments = createAsyncThunk("appointment/getDoctorAppointments", async ({token, docId}, thunkAPI) => {
+export const getDoctorAppointments = createAsyncThunk("appointment/getDoctorAppointments", async ({token, docId, keyword, page}, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
     try {
-        const {data} = await axiosInstance.get(`doctors/${docId}/appointments`, {
+        const {data} = await axiosInstance.get(`doctors/${docId}/appointments${keyword && `?keyword=${keyword}`}${page && `?page=${page}`}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
@@ -83,10 +85,10 @@ export const getDoctorAppointments = createAsyncThunk("appointment/getDoctorAppo
     }
 })
 
-export const getUserAppointments = createAsyncThunk("appointment/getUserAppointments", async ({token, userId}, thunkAPI) => {
+export const getUserAppointments = createAsyncThunk("appointment/getUserAppointments", async ({token, userId, keyword, page}, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
     try {
-        const {data} = await axiosInstance.get(`users/${userId}/appointments`, {
+        const {data} = await axiosInstance.get(`users/${userId}/appointments${keyword && `?keyword=${keyword}`}${page && `?page=${page}`}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
@@ -132,7 +134,8 @@ const appointmentSlice = createSlice({
             state.loading = false;
             state.error = null;
             state.success = true;
-            state.appointments = [...action.payload.appointments]            
+            state.appointments = [...action.payload.appointments]
+            state.metaData = {...action.payload.metadata}        
         })
         builder.addCase(getAppointments.rejected, (state, action) => {
             state.loading = false;
@@ -193,6 +196,7 @@ const appointmentSlice = createSlice({
             state.error = null;
             state.success = action.payload.message;
             state.appointments = [...action.payload.appointments]
+            state.metaData = {...action.payload.metadata}
         })
         builder.addCase(getDoctorAppointments.rejected, (state, action) => {
             state.loading = false;
@@ -212,6 +216,7 @@ const appointmentSlice = createSlice({
             state.error = null;
             state.success = action.payload.message;
             state.appointments = [...action.payload.appointments]
+            state.metaData = {...action.payload.metadata}
         })
         builder.addCase(getUserAppointments.rejected, (state, action) => {
             state.loading = false;

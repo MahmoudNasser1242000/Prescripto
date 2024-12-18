@@ -99,7 +99,7 @@ const Appointment = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getOneDoctor({ token, docId }));
-  }, [dispatch, docId]);
+  }, [dispatch, token, docId]);
   useEffect(() => {
     if (error) {
       toast.error(error, { duration: Infinity });

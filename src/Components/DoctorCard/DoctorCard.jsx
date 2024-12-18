@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const DoctorCard = ({ doctor }) => {
+const DoctorCard = ({ doctor, role }) => {
     return <>
         <article className="overflow-hidden w-full sm:w-auto rounded-lg border-2 border-gray-100 bg-white hover:translate-y-[-5px] hover:shadow-lg duration-[0.5s]">
             <img
@@ -39,29 +39,33 @@ const DoctorCard = ({ doctor }) => {
                         &rarr;
                     </span>
                 </Link>
-                <Link
-                    className="group flex relative items-center overflow-hidden rounded bg-primary px-8 py-3 mt-2 w-full text-white focus:outline-none focus:ring active:bg-primary"
-                    to={`/dashboard/view-profile/${doctor._id}?role=doctor`}
-                >
-                    <span className="absolute -end-full transition-all group-hover:end-4">
-                        <svg
-                            className="size-5 rtl:rotate-180"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+                {
+                    (role === "manager" || role === "super-manager") && (
+                        <Link
+                            className="group flex relative items-center overflow-hidden rounded bg-primary px-8 py-3 mt-2 w-full text-white focus:outline-none focus:ring active:bg-primary"
+                            to={`/dashboard/view-profile/${doctor._id}?role=doctor`}
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                            />
-                        </svg>
-                    </span>
+                            <span className="absolute -end-full transition-all group-hover:end-4">
+                                <svg
+                                    className="size-5 rtl:rotate-180"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                    />
+                                </svg>
+                            </span>
 
-                    <span className="text-sm font-medium text-center block w-full transition-all group-hover:me-4"> Doctor Profile </span>
-                </Link>
+                            <span className="text-sm font-medium text-center block w-full transition-all group-hover:me-4"> Doctor Profile </span>
+                        </Link>
+                    )
+                }
             </div>
         </article>
     </>;

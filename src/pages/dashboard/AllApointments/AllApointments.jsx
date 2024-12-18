@@ -1,15 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAppointment, getAppointments, getDoctorAppointments, getUserAppointments } from "../../../Redux/reducers/appointments.reducer";
 import { Table } from "flowbite-react";
 import TableRowSkeleton from "../../../Components/TableRowSkeleton/TableRowSkeleton ";
 import { useSearchParams } from "react-router-dom";
+import { Button, IconButton, Pagination, TextField } from "@mui/material";
+import { LocalizationProvider, MobileDateTimePicker } from "@mui/x-date-pickers";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import { GrPowerReset } from "react-icons/gr";
 
 const AllApointments = () => {
     const [searchParams] = useSearchParams()
+    const [page, setPage] = useState("");
+    const [keyword, setKeyword] = useState(null);
 
     const { token } = useSelector((state) => state.auth);
-    const { loading, appointments } = useSelector((state) => state.appointment);
+    const { loading, appointments, metaData } = useSelector((state) => state.appointment);
     const dispatch = useDispatch();
 
     const getTime = (date) => {
@@ -27,20 +35,44 @@ const AllApointments = () => {
 
     useEffect(() => {
         if (searchParams.get("docId")) {
-            dispatch(getDoctorAppointments({ token, docId: searchParams.get("docId") }));
+            dispatch(getDoctorAppointments({ token, docId: searchParams.get("docId"), keyword: keyword? keyword.format('YYYY-MM-DD HH:mm:ss') : "", page }));
         } else if (searchParams.get("userId")) {
-            dispatch(getUserAppointments({ token, userId: searchParams.get("userId") }));
+            dispatch(getUserAppointments({ token, userId: searchParams.get("userId"), keyword: keyword? keyword.format('YYYY-MM-DD HH:mm:ss') : "", page }));
         } else {
-            dispatch(getAppointments({ token }));
+            dispatch(getAppointments({ token, keyword: keyword? keyword.format('YYYY-MM-DD HH:mm:ss') : "", page }));
         }
-    }, [dispatch, token, searchParams]);
+    }, [dispatch, token, keyword, searchParams]);
 
     const removeAppointment = (id) => {
         dispatch(deleteAppointment({ token, id }));
     }
+
+    const changePage = (e, value) => {
+        setPage(value)
+        scrollTo(0, 0)
+    }
     return <div className="max-w-[1280px] mx-auto px-8 sm:px-12">
+        <div className="my-12 flex justify-end items-center gap-x-2">
+            <IconButton color="primary" onClick={() => setKeyword(null)} aria-label="add an alarm">
+                <GrPowerReset />
+            </IconButton>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer
+                    components={[
+                        'DateTimePicker',
+                        'MobileDateTimePicker',
+                        'DesktopDateTimePicker',
+                        'StaticDateTimePicker',
+                    ]}
+                >
+                    <DemoItem>
+                        <MobileDateTimePicker value={keyword} clearable onChange={(value) => setKeyword(value)} />
+                    </DemoItem>
+                </DemoContainer>
+            </LocalizationProvider>
+        </div>
         <h2 className="mt-12 mb-8 text-2xl text-center sm:text-start font-bold">
-            {searchParams.get("docId")? "Doctor" : searchParams.get("userId")? "User" : "All"} Appointments ({appointments?.length})
+            {searchParams.get("docId") ? "Doctor" : searchParams.get("userId") ? "User" : "All"} Appointments ({appointments?.length})
         </h2>
 
         <div className="overflow-x-auto">
@@ -160,6 +192,9 @@ const AllApointments = () => {
                     }
                 </Table.Body>
             </Table>
+        </div>
+        <div className="mt-20 flex justify-center w-full">
+            <Pagination page={page || 1} count={metaData?.totalPages} onChange={changePage} color="primary" />
         </div>
     </div>;
 };

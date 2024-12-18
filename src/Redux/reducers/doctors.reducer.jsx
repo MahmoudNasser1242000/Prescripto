@@ -7,13 +7,14 @@ const initialState = {
     loading: false,
     success: null,
     doctors: [],
-    doctor: null
+    doctor: null,
+    metaData: {}
 }
 
-export const getAllDoctors = createAsyncThunk("doctor/getAllDoctors", async ({token, name=''}, thunkAPI) => {
+export const getAllDoctors = createAsyncThunk("doctor/getAllDoctors", async ({token, keyword, page}, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
     try {
-        const {data} = await axiosInstance.get(`doctors?name=${name}`, {
+        const {data} = await axiosInstance.get(`doctors${keyword && `?keyword=${keyword}`}${page && `?page=${page}`}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
@@ -114,6 +115,8 @@ const doctorSlice = createSlice({
             state.error = null;
             state.success = true;
             state.doctors = action.payload.doctors
+            state.metaData = {...action.payload.metadata}
+            
         })
         builder.addCase(getAllDoctors.rejected, (state, action) => {
             state.loading = false;

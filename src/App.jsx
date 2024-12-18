@@ -43,6 +43,7 @@ function App() {
         { path: "add-doctors", element: <ProtectRoutes> <AddDoctors /> </ProtectRoutes> },
         { path: "view-profile/:id", element: <ProtectRoutes> <ViewProfile /> </ProtectRoutes> },
         { path: "add-managers", element: <ProtectRoutes> <AddUser /> </ProtectRoutes> },
+        { path: "all-users", element: <ProtectRoutes> <GetAllUsers /> </ProtectRoutes> },
         { path: "all-users/:type", element: <ProtectRoutes> <GetAllUsers /> </ProtectRoutes> },
         { path: "all-appoinments", element: <ProtectRoutes> <AllApointments /> </ProtectRoutes> },
       ]

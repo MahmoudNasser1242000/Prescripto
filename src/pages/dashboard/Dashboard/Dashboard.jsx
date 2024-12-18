@@ -17,9 +17,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (token) {
-      dispatch(getAppointments({ token }))
-      dispatch(getAllDoctors({ token }))
-      dispatch(getAllUsers(token))
+      dispatch(getAppointments({ token, keyword: "", page: "" }))
+      dispatch(getAllDoctors({ token, keyword: "", page: "" }))
+      dispatch(getAllUsers({token, keyword: "", page: ""}))
     }
   }, [dispatch, token]);
 
