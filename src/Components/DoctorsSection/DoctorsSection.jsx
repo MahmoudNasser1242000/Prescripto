@@ -4,21 +4,16 @@ import DoctorCard from "../DoctorCard/DoctorCard";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllDoctors } from "../../Redux/reducers/doctors.reducer";
-import toast from "react-hot-toast";
 import DoctorCardSkeleton from "../DoctorCardSkeleton/DoctorCardSkeleton";
 
 const DoctorsSection = () => {
-    const { success, error, loading, doctors } = useSelector((state) => state.doctor)
+    const { loading, doctors } = useSelector((state) => state.doctor)
     const { token } = useSelector((state) => state.auth)
     const dispatch = useDispatch()
+    
     useEffect(() => {
         dispatch(getAllDoctors({token, keyword: "", page: ""}));
-    }, [dispatch]);
-    useEffect(() => {
-        if (error) {
-            toast.error(error, { duration: Infinity })
-        }
-    }, [error]);
+    }, [dispatch, token]);
 
     return <div className="mt-28">
         <SectionTitle title={"Top Doctors To Book"} description={"Simply browse through our extensive list of trusted doctors"} />

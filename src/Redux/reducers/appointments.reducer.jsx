@@ -43,6 +43,7 @@ export const getAppointments = createAsyncThunk("appointment/getAppointments", a
                 "Authorization": `Bearer ${token}`,
             },
         })    
+        console.log(data);
         
         return data
     } catch (error) {        
@@ -166,7 +167,6 @@ const appointmentSlice = createSlice({
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;
-            state.appointments = []
             toast.error(`${state.error}`, {duration: Infinity});
         })
 

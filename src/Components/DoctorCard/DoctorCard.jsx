@@ -6,7 +6,7 @@ const DoctorCard = ({ doctor, role }) => {
         <article className="overflow-hidden w-full sm:w-auto rounded-lg border-2 border-gray-100 bg-white hover:translate-y-[-5px] hover:shadow-lg duration-[0.5s]">
             <img
                 alt={`doctor ${doctor.name}`}
-                src={doctor.profile}
+                src={doctor.profile} // doctor.profile
                 className="h-56 w-full object-contain sm:object-cover bg-blue-50"
             />
 

@@ -17,7 +17,7 @@ const GetAllUsers = () => {
 
     useEffect(() => {
         dispatch(getAllUsers({ token, keyword, page }))
-    }, [token, page, keyword]);
+    }, [dispatch, token, page, keyword]);
 
     const changePage = (e, value) => {
         setPage(value)
