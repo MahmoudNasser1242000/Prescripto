@@ -5,8 +5,9 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllDoctors } from "../../Redux/reducers/doctors.reducer";
 import DoctorCardSkeleton from "../../Components/DoctorCardSkeleton/DoctorCardSkeleton";
-import { Pagination, TextField } from "@mui/material";
+import { IconButton, Pagination, TextField } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
+import { GrPowerReset } from "react-icons/gr";
 
 const Doctors = () => {
   const [page, setPage] = useState("");
@@ -35,8 +36,11 @@ const Doctors = () => {
         <div className="md:col-span-3 mt-8 md:mt-0">
           {
             !speciality && (
-              <div className="mb-12 flex justify-end">
-                <TextField label="Search" className="w-[40%]" variant="filled" onChange={(e) => setKeyword(e.target.value)} />
+              <div className="mb-12 flex justify-end items-center gap-x-2">
+                <IconButton color="primary" onClick={() => setKeyword("")} aria-label="add an alarm">
+                  <GrPowerReset />
+                </IconButton>
+                <TextField label="Search" className="w-[40%]" variant="filled" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
               </div>
             )
           }

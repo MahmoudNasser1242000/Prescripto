@@ -4,7 +4,8 @@ import DoctorCardSkeleton from "../../../Components/DoctorCardSkeleton/DoctorCar
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../../../Redux/reducers/users.reducer";
 import UserCard from "../../../Components/UserCard/UserCard";
-import { Pagination, TextField } from "@mui/material";
+import { IconButton, Pagination, TextField } from "@mui/material";
+import { GrPowerReset } from "react-icons/gr";
 
 const GetAllUsers = () => {
     const [page, setPage] = useState("");
@@ -74,8 +75,11 @@ const GetAllUsers = () => {
                 </ul>
                 <div className="md:col-span-3">
                     {!type && (
-                        <div className="mb-12 flex justify-end">
-                            <TextField label="Search" className="w-[40%]" variant="filled" onChange={(e) => setKeyword(e.target.value)} />
+                        <div className="mb-12 flex justify-end items-center gap-x-2">
+                            <IconButton color="primary" onClick={() => setKeyword("")} aria-label="add an alarm">
+                                <GrPowerReset />
+                            </IconButton>
+                            <TextField label="Search" className="w-[40%]" variant="filled" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
                         </div>
                     )}
                     <div className="flex flex-wrap justify-evenly lg:justify-start gap-y-4 mt-8 md:mt-0">
