@@ -4,7 +4,7 @@ import { assets } from "../../assets/assets_frontend/assets";
 const DoctorInfo = ({doctor}) => {
     return <>
         <section className="mt-16 mx-auto">
-            <div className="mx-auto  px-4 ">
+            <div className="mx-auto px-4">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-3 lg:gap-10">
                     <div className="relative h-64 md:h-full rounded-md w-full col-span-1 shadow-sm">
                         <img
@@ -21,9 +21,9 @@ const DoctorInfo = ({doctor}) => {
                         </h2>
 
                         <p className="text-gray-500 flex items-center mt-2">
-                            <span>{doctor?.degree} - {doctor?.speciality}</span>
+                            <span className="w-fit">{doctor?.degree} - {doctor?.speciality}</span>
                             <span
-                                className="inline-flex items-center justify-center mx-2 rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700"
+                                className="inline-flex items-center justify-center w-full sm:w-auto md:w-full lg:w-auto mx-2 rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

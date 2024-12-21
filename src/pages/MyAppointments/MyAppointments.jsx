@@ -148,7 +148,7 @@ const MyAppointments = () => {
                     </Table.Cell>
 
                     {/* Time */}
-                    <Table.Cell className="px-4 py-2 lg:px-6 text-sm text-gray-600 dark:text-gray-400">
+                    <Table.Cell className="px-4 py-2 lg:px-6 text-center text-sm text-gray-600 dark:text-gray-400">
                       {getTime(appointment.date)}
                     </Table.Cell>
 

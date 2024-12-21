@@ -73,14 +73,14 @@ const Dashboard = () => {
       </div>
     </div>
 
-    <div className="w-[90%] h-[300px] mx-auto mt-16">
+    <div className="hidden sm:block h-[300px] mx-auto mt-16">
       <ResponsiveTimeRange
         data={appointments?.map((app) => { return { "day": new Date(app.date).toISOString().split('T')[0], "value": JSON.stringify({doctor: app.doctor.name, user: app.user.name, dateExpire: app.expireDate}) } })}
         from={`2024-12-12`}
         to={dateNow.toISOString().split('T')[0]}
         emptyColor="#eeeeee"
         colors={['#61cdbb', '#97e3d5', '#e8c1a0', '#f47560']}
-        margin={{ top: 40, right: 40, bottom: 100, left: 40 }}
+        margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
         dayBorderWidth={2}
         dayBorderColor="#ffffff"
         tooltip={e => {
@@ -116,7 +116,7 @@ const Dashboard = () => {
         ]}
       />
     </div>
-    <div className="w-full md:w-[60%] mx-auto">
+    <div className="w-full md:w-[60%] mx-auto mt-20 sm:mt-0">
       <Table>
         <Table.Head>
           <Table.HeadCell className="flex items-center gap-x-3 text-black">

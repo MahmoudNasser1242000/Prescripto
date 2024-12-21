@@ -36,11 +36,11 @@ const Doctors = () => {
         <div className="md:col-span-3 mt-8 md:mt-0">
           {
             !speciality && (
-              <div className="mb-12 flex justify-end items-center gap-x-2">
+              <div className="mb-12 flex justify-end items-center gap-x-2 mt-16 md:mt-0">
                 <IconButton color="primary" onClick={() => setKeyword("")} aria-label="add an alarm">
                   <GrPowerReset />
                 </IconButton>
-                <TextField label="Search" className="w-[40%]" variant="filled" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                <TextField label="Search" className="w-[90%] md:w-[40%]" variant="filled" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
               </div>
             )
           }

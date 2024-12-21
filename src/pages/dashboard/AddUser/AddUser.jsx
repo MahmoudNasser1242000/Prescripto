@@ -66,7 +66,7 @@ const AddUser = () => {
 
                         <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 text-start">
                             {/* profile image */}
-                            <div className="col-span-1 md:col-span-2 text-center my-2">
+                            <div className="col-span-2 text-center my-2">
                                 <button
                                     type="button"
                                     className="group relative inline-flex items-center overflow-hidden rounded bg-primary px-8 py-3 text-white focus:outline-none focus:ring"
@@ -81,49 +81,49 @@ const AddUser = () => {
                                 <p className="text-red-600">{errors.profile?.message}</p>
                             </div>
                             {/* name */}
-                            <div>
+                            <div className="col-span-2 md:col-span-1">
                                 <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Name</label>
                                 <input {...register("name")} type="text" placeholder="John" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
                                 <p className="text-red-600">{errors.name?.message}</p>
                             </div>
                             {/* email */}
-                            <div>
+                            <div className="col-span-2 md:col-span-1">
                                 <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Email address</label>
                                 <input {...register("email")} type="email" placeholder="johnsnow@example.com" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
                                 <p className="text-red-600">{errors.email?.message}</p>
                             </div>
                             {/* password */}
-                            <div>
+                            <div className="col-span-2 md:col-span-1">
                                 <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Password</label>
                                 <input {...register("password")} type="password" placeholder="Enter your password" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
                                 <p className="text-red-600">{errors.password?.message}</p>
                             </div>
                             {/* confirm password */}
-                            <div>
+                            <div className="col-span-2 md:col-span-1">
                                 <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Confirm password</label>
                                 <input {...register("repassword")} type="password" placeholder="Enter your password" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
                                 <p className="text-red-600">{errors.repassword?.message}</p>
                             </div>
                             {/* phone number */}
-                            <div>
+                            <div className="col-span-2 md:col-span-1">
                                 <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Phone number</label>
                                 <input {...register("phone")} type="text" placeholder="XXX-XX-XXXX-XXX" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
                                 <p className="text-red-600">{errors.phone?.message}</p>
                             </div>
                             {/* birth_date */}
-                            <div>
+                            <div className="col-span-2 md:col-span-1">
                                 <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Birth Date</label>
                                 <input {...register("birth_date")} type="date" placeholder="Enter your birth date" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
                                 <p className="text-red-600">{errors.birth_date?.message}</p>
                             </div>
                             {/* job */}
-                            <div>
+                            <div className="col-span-2 md:col-span-1">
                                 <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Job</label>
                                 <input {...register("job")} type="text" placeholder="Enter your job" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
                                 <p className="text-red-600">{errors.job?.message}</p>
                             </div>
                             {/* bio */}
-                            <div>
+                            <div className="col-span-2 md:col-span-1">
                                 <label htmlFor="OrderNotes" className="block text-sm font-medium text-gray-700"> Bio </label>
                                 <textarea
                                     {...register("bio")}
@@ -135,7 +135,7 @@ const AddUser = () => {
                                 <p className="text-red-600">{errors.bio?.message}</p>
                             </div>
                             {/* gender */}
-                            <div className="col-span-1 md:col-span-2 ">
+                            <div className="col-span-2">
                                 <fieldset {...register("gender")} className="gap-4 flex justify-center">
                                     <div className="w-[50%]">
                                         <label
