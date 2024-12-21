@@ -11,6 +11,7 @@ import add_mangers from './add-managers.png'
 import default_user from './default-user.png'
 import camera from './camera.svg'
 import about_image from './about_us.webp'
+import not_found from './not-found.png'
 import earning from './earning.png'
 import appointment_icon from './appointment_icon.png'
 import patient from './patient.png'
@@ -80,7 +81,8 @@ export const assets = {
     add_doctor,
     add_mangers,
     default_user,
-    patient_user
+    patient_user,
+    not_found
 }
 
 export const times = [

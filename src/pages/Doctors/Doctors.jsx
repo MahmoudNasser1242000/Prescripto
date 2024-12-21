@@ -11,7 +11,7 @@ import { jwtDecode } from "jwt-decode";
 const Doctors = () => {
   const [page, setPage] = useState("");
   const [keyword, setKeyword] = useState("");
-  
+
   const { speciality } = useParams();
   const { loading, doctors, metaData } = useSelector(
     (state) => state.doctor
@@ -21,16 +21,10 @@ const Doctors = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllDoctors({ token, keyword, page }));    
-  }, [dispatch, page, keyword]);
+    dispatch(getAllDoctors({ token, keyword, page }));
+  }, [dispatch, token, page, keyword]);
 
-  // useEffect(() => {
-  //   if (error) {
-  //     toast.error(error, { duration: Infinity });
-  //   }
-  // }, [error]);
-  
-  const changePage = (e, value) => {    
+  const changePage = (e, value) => {
     setPage(value)
     scrollTo(0, 0)
   }
@@ -39,9 +33,13 @@ const Doctors = () => {
       <div className="mt-14 grid grid-cols-1 md:grid-cols-4 gap-x-0 sm:gap-x-4 gap-y-5 sm:gap-y-0 max-w-[1280px] mx-auto px-2 xl:px-0">
         <SpecialityMenu speciality={speciality} doctors={doctors} />
         <div className="md:col-span-3 mt-8 md:mt-0">
-          <div className="mb-12 flex justify-end">
-            <TextField label="Search" className="w-[40%]" variant="filled" onChange={(e) => setKeyword(e.target.value)} />
-          </div>
+          {
+            !speciality && (
+              <div className="mb-12 flex justify-end">
+                <TextField label="Search" className="w-[40%]" variant="filled" onChange={(e) => setKeyword(e.target.value)} />
+              </div>
+            )
+          }
           <div className="flex flex-wrap justify-evenly lg:justify-start gap-y-4">
             {loading ? (
               Array.from({ length: 8 }, (_, index) => (
@@ -59,7 +57,7 @@ const Doctors = () => {
                 </div>
               ))
             )}
-            
+
             {loading ? (
               Array.from({ length: 8 }, (_, index) => (
                 <DoctorCardSkeleton key={index} />
@@ -82,7 +80,7 @@ const Doctors = () => {
         </div>
       </div>
       <div className="mt-20 flex justify-center w-full">
-        <Pagination page={page} count={metaData?.totalPages} onChange={changePage} color="primary" />
+        <Pagination page={page || 1} count={metaData?.totalPages} onChange={changePage} color="primary" />
       </div>
     </>
   );

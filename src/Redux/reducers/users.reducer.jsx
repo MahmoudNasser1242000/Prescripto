@@ -27,8 +27,17 @@ export const addUser = createAsyncThunk("user/addUser", async ({token, user}, th
 
 export const getAllUsers = createAsyncThunk("user/getAllUsers", async ({token, keyword, page}, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
+
+    let query;
+    if (keyword) {
+        query = `?keyword=${keyword}`
+    } else if (page) {
+        query = `?page=${page}`
+    } else {
+        query = ""
+    }
     try {
-        const {data} = await axiosInstance.get(`users${keyword && `?keyword=${keyword}`}${page && `?page=${page}`}`, {
+        const {data} = await axiosInstance.get(`users${query}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
@@ -122,7 +131,7 @@ const myProfileSlice = createSlice({
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;
-            toast.error(`${state.error}`);
+            toast.error(`${state.error}`, { duration: Infinity });
         })
 
         //get one user
@@ -141,7 +150,7 @@ const myProfileSlice = createSlice({
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;
-            toast.error(`${state.error}`);
+            toast.error(`${state.error}`, { duration: Infinity });
         })
 
         //delete user

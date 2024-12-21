@@ -145,7 +145,7 @@ const Dashboard = () => {
             ) :
               appointments.length ? (
                 appointments?.filter((app) => app.doctor.active === true).slice(0, 10).reverse().map((app) => (
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Row key={app._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell className="whitespace-nowrap flex flex-row items-center justify-start gap-3 px-4 py-2">
                       <img
                         className="w-14 h-14 rounded-full object-cover"

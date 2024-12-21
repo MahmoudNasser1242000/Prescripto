@@ -114,7 +114,7 @@ const myProfileSlice = createSlice({
             state.success = null;
             state.error = action.payload.message;
             state.myProfile = null
-            toast.error(`${state.error}`);
+            toast.error(`${state.error}`, { duration: Infinity });
         })
 
         //update user profile

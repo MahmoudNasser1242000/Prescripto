@@ -10,6 +10,8 @@ import { assets } from "../../../assets/assets_frontend/assets";
 import AdminDeleteAccountModal from "../../../Components/AdminDeleteAccountModal/AdminDeleteAccountModal";
 import AdminUpdateAccount from "../../../Components/AdminUpdateAccount/AdminUpdateAccount";
 import { Fab } from "@mui/material";
+import { jwtDecode } from "jwt-decode";
+import ClockLoader from "react-spinners/ClockLoader";
 
 const ViewProfile = () => {
     const [openUpdateModal, setOpenUpdateModal] = useState(false);
@@ -20,6 +22,7 @@ const ViewProfile = () => {
     const { id } = useParams()
 
     const { token } = useSelector((state) => state.auth);
+    const logged = jwtDecode(token);
 
     const { doctor, loading: doctorLoading } = useSelector((state) => state.doctor);
     const { user, loading: userLoading } = useSelector((state) => state.user);
@@ -33,20 +36,21 @@ const ViewProfile = () => {
         }
     }, [dispatch, token]);
 
-    if (doctorLoading || userLoading) return "loading .....";
+    if (doctorLoading || userLoading) return (
+        <div className="h-full flex justify-center items-center mt-28">
+            <ClockLoader
+                color="#1d4ed8"
+                loading
+                size={90}
+            />;
+        </div>
+    )
     return (
         <>
             <div className="pt-14 max-w-[1280px] mx-auto px-8 sm:px-12">
                 <div className="flex flex-col lg:flex-row">
                     <div className="lg:w-[45%] text-center mb-8 lg:mb-0 border border-y-0 border-gray-300 py-6">
                         <div className="relative">
-                            {
-                                user?.profile && role !== "doctor" && (
-                                    <button className="absolute top-[80%] left-[55%] lg:left-[60%]" onClick={() => setOpenUpdateProfilePicModal(true)}>
-                                        <img className="size-[36px] hover:scale-[1.2] duration-300 cursor-pointer" src={assets.edit_profile_pic} alt={"edit profile picture"} />
-                                    </button>
-                                )
-                            }
                             <img
                                 src={
                                     role === "doctor" ? doctor?.profile :
@@ -74,29 +78,33 @@ const ViewProfile = () => {
                         </p>
                         <div className="flex flex-col justify-center items-center text-center">
                             <div className="flex flex-col sm:flex-row gap-4 mt-6">
-                                <button
-                                    onClick={() => setOpenUpdateModal(true)}
-                                    type="button"
-                                    className="group relative mt-4 inline-block text-sm font-medium text-indigo-600 focus:outline-none active:indigo-red-500"
-                                >
-                                    <span
-                                        className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
-                                    ></span>
+                                {
+                                    (user?.role === "super-manager") ? "" : (((user?.role === "manager" && logged.role === "super-manager") || doctor || (user?.role === "user")) && (<button
+                                        onClick={() => setOpenUpdateModal(true)}
+                                        type="button"
+                                        className="group relative mt-4 inline-block text-sm font-medium text-indigo-600 focus:outline-none active:indigo-red-500"
+                                    >
+                                        <span
+                                            className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+                                        ></span>
 
-                                    <span className="relative block border border-current bg-white px-8 py-3"> Edit Profile </span>
-                                </button>
+                                        <span className="relative block border border-current bg-white px-8 py-3"> Edit Profile </span>
+                                    </button>))
+                                }
 
-                                <button
-                                    onClick={() => setOpenDeleteAccountModal(true)}
-                                    type="button"
-                                    className="group relative mt-4 inline-block text-sm font-medium text-red-600 focus:outline-none active:text-red-500"
-                                >
-                                    <span
-                                        className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-red-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
-                                    ></span>
+                                {
+                                    (user?.role === "super-manager") ? "" : (((user?.role === "manager" && logged.role === "super-manager") || doctor || (user?.role === "user")) && (<button
+                                        onClick={() => setOpenDeleteAccountModal(true)}
+                                        type="button"
+                                        className="group relative mt-4 inline-block text-sm font-medium text-red-600 focus:outline-none active:text-red-500"
+                                    >
+                                        <span
+                                            className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-red-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+                                        ></span>
 
-                                    <span className="relative block border border-current bg-white px-8 py-3"> Delete Acoount </span>
-                                </button>
+                                        <span className="relative block border border-current bg-white px-8 py-3"> Delete Acoount </span>
+                                    </button>))
+                                }
                             </div>
 
                         </div>
@@ -193,7 +201,7 @@ const ViewProfile = () => {
                         <div className="flex justify-center lg:justify-start mt-7">
                             <Link
                                 className="group flex relative w-fit items-center overflow-hidden rounded bg-primary px-8 py-3 text-white focus:outline-none focus:ring active:bg-primary"
-                                to={`/dashboard/all-appoinments?${role === "doctor"? `docId=${doctor?._id}` : `userId=${user?._id}`}`}
+                                to={`/dashboard/all-appoinments?${role === "doctor" ? `docId=${doctor?._id}` : `userId=${user?._id}`}`}
                             >
                                 <span className="absolute -end-full transition-all group-hover:end-4">
                                     <svg

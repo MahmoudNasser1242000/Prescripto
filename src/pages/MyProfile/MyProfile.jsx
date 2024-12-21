@@ -10,6 +10,7 @@ import DeleteProfileModal from "../../Components/DeleteProfileModal/DeleteProfil
 import { HiClock } from "react-icons/hi";
 import { Badge } from "flowbite-react";
 import { TbCalendarTime } from "react-icons/tb";
+import ClockLoader from "react-spinners/ClockLoader";
 
 const MyProfile = () => {
   const [openUpdateInfoModal, setOpenUpdateInfoModal] = useState(false);
@@ -28,7 +29,15 @@ const MyProfile = () => {
     }
   }, [dispatch, token, success]);
 
-  if (loading) return "loading .....";
+  if (loading) return (
+    <div className="h-full flex justify-center items-center mt-28">
+      <ClockLoader
+        color="#1d4ed8"
+        loading
+        size={90}
+      />;
+    </div>
+  )
   return (
     <div className="pt-14 max-w-[1280px] mx-auto px-8 sm:px-12">
       <div className="flex flex-col lg:flex-row">
@@ -81,7 +90,7 @@ const MyProfile = () => {
               </Link>
             </div>
             {
-              logged.role !== "doctor" && (
+              logged.role === "user" || logged.role === "super-manager" && (
                 <button
                   onClick={() => setOpenDeleteProfileModal(true)}
                   type="button"

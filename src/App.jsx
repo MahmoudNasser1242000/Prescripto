@@ -21,6 +21,7 @@ import ViewProfile from './pages/dashboard/ViewProfile/ViewProfile'
 import AddUser from './pages/dashboard/AddUser/AddUser'
 import AllApointments from './pages/dashboard/AllApointments/AllApointments'
 import GetAllUsers from './pages/dashboard/GetAllUsers/GetAllUsers'
+import NotFound from './pages/NotFound/NotFound'
 
 function App() {
   const routes = createBrowserRouter([
@@ -35,6 +36,7 @@ function App() {
         { path: "my-appointments", element: <ProtectRoutes> <MyAppointments /> </ProtectRoutes> },
         { path: "appointment/:docId", element: <ProtectRoutes> <Appointment /> </ProtectRoutes> },
         { path: "change-password", element: <ProtectRoutes> <ChangePassword /> </ProtectRoutes> },
+        { path: "*", element: <NotFound route={"Home"} />},
       ]
     },
     {
@@ -46,12 +48,14 @@ function App() {
         { path: "all-users", element: <ProtectRoutes> <GetAllUsers /> </ProtectRoutes> },
         { path: "all-users/:type", element: <ProtectRoutes> <GetAllUsers /> </ProtectRoutes> },
         { path: "all-appoinments", element: <ProtectRoutes> <AllApointments /> </ProtectRoutes> },
+        { path: "*", element: <NotFound route={"Dashboard"} />},
       ]
     },
     {
       path: "auth", element: <AuthLayOut />, children: [
         { index: true, element: <ProtectAuth> <Register /> </ProtectAuth> },
         { path: "login", element: <ProtectAuth> <Login /> </ProtectAuth> },
+        { path: "*", element: <NotFound route={"Auth"} />},
       ]
     },
   ])

@@ -21,7 +21,7 @@ function DashBoardSideBar() {
     const navigate = useNavigate()
 
     const actions = [
-        { icon: <HiChartPie />, name: 'Dashboard', to: "/" },
+        { icon: <HiChartPie />, name: 'Dashboard', to: "/dashboard" },
         { icon: <HiOutlineDocumentAdd />, name: 'Add Doctors', to: "/dashboard/add-doctors" },
         { icon: <HiOutlineClipboardList />, name: 'Doctors List', to: "/doctors" },
         { icon: <AiOutlineUserAdd />, name: 'Add Managers', to: "/dashboard/add-managers" },
@@ -56,7 +56,7 @@ function DashBoardSideBar() {
                     ))}
                 </SpeedDial>
             </Box>
-            <Drawer open={isOpen} onClose={handleClose}>
+            <Drawer open={isOpen} onClose={handleClose} className="overflow-hidden">
                 <Drawer.Header className="text-start" title="Admin Dashboard" titleIcon={() => <></>} />
                 <Drawer.Items>
                     <Sidebar

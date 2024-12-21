@@ -100,11 +100,6 @@ const Appointment = () => {
   useEffect(() => {
     dispatch(getOneDoctor({ token, docId }));
   }, [dispatch, token, docId]);
-  useEffect(() => {
-    if (error) {
-      toast.error(error, { duration: Infinity });
-    }
-  }, []);
 
   function convertTo24HourFormat(timeString) {
     const [time, modifier] = timeString.split(" ");

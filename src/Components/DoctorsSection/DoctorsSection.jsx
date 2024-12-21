@@ -12,7 +12,7 @@ const DoctorsSection = () => {
     const { token } = useSelector((state) => state.auth)
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getAllDoctors({token}));
+        dispatch(getAllDoctors({token, keyword: "", page: ""}));
     }, [dispatch]);
     useEffect(() => {
         if (error) {
@@ -25,8 +25,8 @@ const DoctorsSection = () => {
         <div className="flex justify-evenly md:justify-center flex-wrap gap-4 mt-8">
             {
                 loading ? Array.from({ length: 4 }, (_, index) => <DoctorCardSkeleton key={index} />) :
-                    (!success ? <h1 className="text-3xl text-center w-full">No Doctors Wright Now!</h1> :
-                        doctors?.slice(0, 4).map((doc) => <DoctorCard key={doctors._id} doctor={doc} />))
+                    (!doctors?.length ? <h1 className="text-3xl text-center w-full">No Doctors Wright Now!</h1> :
+                        doctors?.slice(0, 4).map((doc) => <DoctorCard key={doc._id} doctor={doc} />))
             }
         </div>
 

@@ -13,8 +13,17 @@ const initialState = {
 
 export const getAllDoctors = createAsyncThunk("doctor/getAllDoctors", async ({token, keyword, page}, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
+
+    let query;
+    if (keyword) {
+        query = `?keyword=${keyword}`
+    } else if (page) {
+        query = `?page=${page}`
+    } else {
+        query = ""
+    }
     try {
-        const {data} = await axiosInstance.get(`doctors${keyword && `?keyword=${keyword}`}${page && `?page=${page}`}`, {
+        const {data} = await axiosInstance.get(`doctors${query}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
@@ -122,7 +131,7 @@ const doctorSlice = createSlice({
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;
-            state.doctors = []
+            toast.error(state.error, { duration: Infinity })
         })
 
         //get one doctors
@@ -141,7 +150,7 @@ const doctorSlice = createSlice({
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;
-            state.doctor = null
+            toast.error(state.error, { duration: Infinity })
         })
 
         //add doctors

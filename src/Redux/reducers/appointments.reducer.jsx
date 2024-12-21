@@ -28,10 +28,17 @@ export const addAppointment = createAsyncThunk("appointment/addAppointment", asy
 
 export const getAppointments = createAsyncThunk("appointment/getAppointments", async ({token, keyword, page}, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
-    // const {user, doctor} = query
-    // const endPoint = user && `appointments?userId=${user}` || doctor && `appointments?docId=${doctor}` || "appointments"
+
+    let query;
+    if (keyword) {
+        query = `?keyword=${keyword}`
+    } else if (page) {
+        query = `?page=${page}`
+    } else {
+        query = ""
+    }
     try {
-        const {data} = await axiosInstance.get(`appointments${keyword && `?keyword=${keyword}`}${page && `?page=${page}`}`, {
+        const {data} = await axiosInstance.get(`appointments${query}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
@@ -73,8 +80,17 @@ export const updateAppointment = createAsyncThunk("appointment/updateAppointment
 
 export const getDoctorAppointments = createAsyncThunk("appointment/getDoctorAppointments", async ({token, docId, keyword, page}, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
+
+    let query;
+    if (keyword) {
+        query = `?keyword=${keyword}`
+    } else if (page) {
+        query = `?page=${page}`
+    } else {
+        query = ""
+    }
     try {
-        const {data} = await axiosInstance.get(`doctors/${docId}/appointments${keyword && `?keyword=${keyword}`}${page && `?page=${page}`}`, {
+        const {data} = await axiosInstance.get(`doctors/${docId}/appointments${query}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
@@ -87,8 +103,17 @@ export const getDoctorAppointments = createAsyncThunk("appointment/getDoctorAppo
 
 export const getUserAppointments = createAsyncThunk("appointment/getUserAppointments", async ({token, userId, keyword, page}, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
+
+    let query;
+    if (keyword) {
+        query = `?keyword=${keyword}`
+    } else if (page) {
+        query = `?page=${page}`
+    } else {
+        query = ""
+    }
     try {
-        const {data} = await axiosInstance.get(`users/${userId}/appointments${keyword && `?keyword=${keyword}`}${page && `?page=${page}`}`, {
+        const {data} = await axiosInstance.get(`users/${userId}/appointments${query}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             },
