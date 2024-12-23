@@ -51,7 +51,7 @@ const AddDoctors = () => {
         if (success === "Doctor created successfully") {
             navigate("/dashboard")
         }
-    }, [success]);
+    }, [success, navigate]);
 
     return <>
         <Helmet>

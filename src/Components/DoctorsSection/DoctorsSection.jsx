@@ -28,6 +28,7 @@ const DoctorsSection = () => {
         <Link
             className="inline-flex items-center gap-2 rounded border border-primary mt-8 px-8 py-3 text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring active:bg-primary"
             to="/doctors"
+            onClick={() => scrollTo(0, 0)}
         >
             <span className="text-sm font-medium"> More </span>
 

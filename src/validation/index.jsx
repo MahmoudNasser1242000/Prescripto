@@ -386,7 +386,7 @@ const addDoctorSchema = Joi.object({
 
 const updateUserAndDoctorSchema = Joi.object({
     active: Joi.boolean()
-        .required(),
+        .optional(),
 
     activeExpire: Joi.date()
         .allow(null, "")

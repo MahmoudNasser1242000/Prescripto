@@ -82,7 +82,8 @@ export const assets = {
     add_mangers,
     default_user,
     patient_user,
-    not_found
+    not_found,
+    doc1
 }
 
 export const times = [

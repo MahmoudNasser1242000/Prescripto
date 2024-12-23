@@ -60,7 +60,7 @@ const Doctors = () => {
             ) : (
               !speciality &&
               doctors?.map((doc) => (
-                <div className="mx-1 w-full sm:w-auto" key={doc._id}>
+                <div className="mx-[3px] w-full sm:w-auto" key={doc._id}>
                   <DoctorCard key={doc._id} doctor={doc} role={role} />
                 </div>
               ))

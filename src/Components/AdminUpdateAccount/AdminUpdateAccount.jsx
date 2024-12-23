@@ -31,13 +31,15 @@ const AdminUpdateAccount = ({ openModal, onCloseModal, token, role, id, active, 
     });
 
     const onSubmit = (data) => {
-        console.log(data);
-
         const updateBody = {active: data.active};
 
         if (data.active === true && active === true) {
             onCloseModal()
             return;
+        }
+
+        if (data.active === undefined) {
+            updateBody.activeExpire = data.activeExpire
         }
 
         if (data.active !== true) {
@@ -108,7 +110,7 @@ const AdminUpdateAccount = ({ openModal, onCloseModal, token, role, id, active, 
                                             <MobileDateTimePicker
                                                 {...field}
                                                 value={field.value || null}
-                                                onChange={(date) => field.onChange(date)}
+                                                onChange={(date) => {field.onChange(date)}}
                                                 slots={{
                                                     textField: React.forwardRef((params, ref) => (
                                                         <TextField {...params} ref={ref} label="Expire Date" />
