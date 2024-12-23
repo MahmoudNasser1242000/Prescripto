@@ -7,6 +7,7 @@ import { Spinner } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
 import { signupSchema } from "../../../validation";
 import { addUser } from "../../../Redux/reducers/users.reducer";
+import { Helmet } from "react-helmet";
 
 const AddUser = () => {
     const navigate = useNavigate()
@@ -41,7 +42,7 @@ const AddUser = () => {
         formData.append("gender", data.gender)
 
         //send data to database
-        dispatch(addUser({token, user: formData}))
+        dispatch(addUser({ token, user: formData }))
     }
 
     useEffect(() => {
@@ -51,6 +52,9 @@ const AddUser = () => {
     }, [success]);
 
     return <>
+        <Helmet>
+            <title>Add Managers</title>
+        </Helmet>
         <section className="bg-white dark:bg-gray-900">
             <div className="flex justify-center h-full overflow-auto">
                 <div className="hidden bg-contain bg-center bg-no-repeat lg:block lg:w-2/5" style={{ backgroundImage: `url(${assets.add_mangers})` }}>

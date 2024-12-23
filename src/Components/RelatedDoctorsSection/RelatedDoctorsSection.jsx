@@ -4,23 +4,17 @@ import DoctorCard from "../DoctorCard/DoctorCard";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllDoctors } from "../../Redux/reducers/doctors.reducer";
-import toast from "react-hot-toast";
 import DoctorCardSkeleton from "../DoctorCardSkeleton/DoctorCardSkeleton";
 
-const RelatedDoctorsSection = ({ doctor, doctorLoading, doctorSuccess }) => {
-    const { success, error, loading, doctors } = useSelector(
+const RelatedDoctorsSection = ({ doctor, doctorLoading }) => {
+    const { loading, doctors } = useSelector(
         (state) => state.doctor
     );
     const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getAllDoctors({token, keyword: "", page: ""}));
-    }, [dispatch]);
-    useEffect(() => {
-        if (error) {
-            toast.error(error, { duration: Infinity });
-        }
-    }, [error]);
+        dispatch(getAllDoctors({ token, keyword: "", page: "" }));
+    }, [dispatch, token]);
     return (
         <div className="mt-28">
             <SectionTitle
@@ -34,13 +28,13 @@ const RelatedDoctorsSection = ({ doctor, doctorLoading, doctorSuccess }) => {
                     Array.from({ length: 3 }, (_, index) => (
                         <DoctorCardSkeleton key={index} />
                     ))
-                ) : !success || !doctorSuccess ? (
-                    <h1 className="text-3xl text-center w-full">
+                ) : (!doctors?.length || !(doctors?.filter((doc) => (doctor?.speciality === doc.speciality) && (doc._id !== doctor?._id)))?.length) ? (
+                    <h1 className="text-3xl text-center w-full text-gray-400">
                         No Doctors Wright Now!
                     </h1>
                 ) : (
                     doctors
-                        ?.filter((doc) => (doctor?.speciality === doc.speciality) && (doc._id !== doctor._id))
+                        ?.filter((doc) => (doctor?.speciality === doc.speciality) && (doc._id !== doctor?._id))
                         .slice(0, 3)
                         .map((doc) => (
                             <div className="mx-1 w-full sm:w-auto" key={doc._id}>

@@ -15,6 +15,7 @@ import { Fab } from "@mui/material";
 import { HiOutlinePlus } from "react-icons/hi";
 import AddAppointmentModal from "../../Components/AddAppointmentModal/AddAppointmentModal";
 import UpdateAllAppointments from "../../Components/UpdateAllAppointments/UpdateAllAppointments";
+import { Helmet } from "react-helmet";
 
 const Appointment = () => {
   const { docId } = useParams();
@@ -140,24 +141,10 @@ const Appointment = () => {
   }
   return (
     <>
+      <Helmet>
+        <title>Doctor Appointments</title>
+      </Helmet>
       <div className="max-w-[1280px] mx-auto px-8 sm:px-12">
-      
-        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={[
-            'TimePicker',
-          ]}>
-            <TimePicker
-              label="With Time Clock"
-              viewRenderers={{
-                hours: renderTimeViewClock,
-                minutes: renderTimeViewClock,
-                seconds: renderTimeViewClock,
-                
-              }}
-            />
-          </DemoContainer>
-        </LocalizationProvider> */}
-      
         {loading ? (
           <DoctorInfoSkeleton />
         ) : !success ? (
@@ -165,13 +152,13 @@ const Appointment = () => {
         ) : (
           <DoctorInfo doctor={doctor} />
         )}
-      
+
         <div className="flex justify-end">
           <div className="flex flex-col items-start mt-12 w-full lg:w-[66%]">
             <h3 className="text-[23px] text-center w-full lg:text-start pl-0 lg:pl-2">
               Booking slote
             </h3>
-      
+
             <div className="flex flex-col justify-center items-center lg:items-start gap-y-5 flex-wrap mt-6 w-full">
               <div className="flex flex-wrap gap-2 items-center justify-center lg:justify-start">
                 {weekdaysFromToday.map((day, index) => (
@@ -186,7 +173,7 @@ const Appointment = () => {
                   />
                 ))}
               </div>
-      
+
               <div className="flex flex-wrap gap-2 items-center justify-center lg:justify-start">
                 {loading
                   ? Array.from({ length: 5 }, (_, index) => (
@@ -245,7 +232,7 @@ const Appointment = () => {
                             />
                           </svg>
                         </span>
-      
+
                         <span className="text-sm font-medium transition-all group-hover:me-4"> My Appointments </span>
                       </Link>
                     ) : logged.role === "manager" || logged.role === "super-manager" ? (
@@ -269,7 +256,7 @@ const Appointment = () => {
                             />
                           </svg>
                         </span>
-      
+
                         <span className="text-sm font-medium transition-all group-hover:me-4"> Update Appointments </span>
                       </button>
                     ) : (
@@ -286,11 +273,10 @@ const Appointment = () => {
             </div>
           </div>
         </div>
-      
+
         <RelatedDoctorsSection
           doctor={doctor}
           doctorLoading={loading}
-          doctorSuccess={success}
         />
       </div>
       <AddAppointmentModal openModal={openModal} setOpenModal={setOpenModal} docId={docId} token={token} />

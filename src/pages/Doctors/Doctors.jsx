@@ -8,6 +8,7 @@ import DoctorCardSkeleton from "../../Components/DoctorCardSkeleton/DoctorCardSk
 import { IconButton, Pagination, TextField } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { GrPowerReset } from "react-icons/gr";
+import { Helmet } from "react-helmet";
 
 const Doctors = () => {
   const [page, setPage] = useState("");
@@ -31,6 +32,9 @@ const Doctors = () => {
   }
   return (
     <>
+      <Helmet>
+        <title>All Doctors</title>
+      </Helmet>
       <div className="mt-14 grid grid-cols-1 md:grid-cols-4 gap-x-0 sm:gap-x-4 gap-y-5 sm:gap-y-0 max-w-[1280px] mx-auto px-2 xl:px-0">
         <SpecialityMenu speciality={speciality} doctors={doctors} />
         <div className="md:col-span-3 mt-8 md:mt-0">

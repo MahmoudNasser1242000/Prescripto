@@ -7,6 +7,7 @@ import joiResolver from "../../../utils/joiResolver";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../../../Redux/reducers/auth.reducer";
 import { Spinner } from "flowbite-react";
+import { Helmet } from "react-helmet";
 
 const Register = () => {
   const navigate = useNavigate()
@@ -48,6 +49,9 @@ const Register = () => {
   }, [success]);
 
   return <>
+    <Helmet>
+      <title>Sign Up</title>
+    </Helmet>
     <section className="bg-white dark:bg-gray-900">
       <div className="flex justify-center h-full overflow-auto">
         <div className="hidden bg-cover bg-no-repeat lg:block lg:w-2/5" style={{ backgroundImage: `url(${assets.register_image})` }}>

@@ -12,6 +12,7 @@ import AdminUpdateAccount from "../../../Components/AdminUpdateAccount/AdminUpda
 import { Fab } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import ClockLoader from "react-spinners/ClockLoader";
+import { Helmet } from "react-helmet";
 
 const ViewProfile = () => {
     const [openUpdateModal, setOpenUpdateModal] = useState(false);
@@ -47,6 +48,17 @@ const ViewProfile = () => {
     )
     return (
         <>
+            {
+                role === "doctor" ? (
+                    <Helmet>
+                        <title>Doctor Profile</title>
+                    </Helmet>
+                ) : (
+                    <Helmet>
+                        <title>User Appointments</title>
+                    </Helmet>
+                )
+            }
             <div className="pt-14 max-w-[1280px] mx-auto px-8 sm:px-12">
                 <div className="flex flex-col lg:flex-row">
                     <div className="lg:w-[45%] text-center mb-8 lg:mb-0 border border-y-0 border-gray-300 py-6">

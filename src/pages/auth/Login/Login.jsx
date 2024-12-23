@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { signin } from "../../../Redux/reducers/auth.reducer";
 import { Spinner } from "flowbite-react";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
   const { loading, success } = useSelector((state) => state.auth);
@@ -30,9 +31,12 @@ const Login = () => {
       navigate("/")
     }
   }, [success]);
-  
-  
+
+
   return <>
+    <Helmet>
+      <title>Sign In</title>
+    </Helmet>
     <section className="relative flex flex-wrap h-screen items-center">
       <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-lg text-center">

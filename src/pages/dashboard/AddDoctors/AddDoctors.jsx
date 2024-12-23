@@ -8,10 +8,11 @@ import { Autocomplete, TextField } from "@mui/material";
 import { addDoctor } from "../../../Redux/reducers/doctors.reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { Spinner } from "flowbite-react";
+import { Helmet } from "react-helmet";
 
 const AddDoctors = () => {
     const { loading, success } = useSelector((state) => state.doctor)
-    const { token } = useSelector((state) => state.auth)    
+    const { token } = useSelector((state) => state.auth)
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
@@ -43,7 +44,7 @@ const AddDoctors = () => {
         data.examination_dates.forEach((date) => formData.append("examination_dates[]", JSON.stringify(date)))
 
         //send data to database
-        dispatch(addDoctor({token, doctor: formData}));
+        dispatch(addDoctor({ token, doctor: formData }));
     }
 
     useEffect(() => {
@@ -51,8 +52,11 @@ const AddDoctors = () => {
             navigate("/dashboard")
         }
     }, [success]);
-    
+
     return <>
+        <Helmet>
+            <title>Add Doctors</title>
+        </Helmet>
         <section className="bg-white dark:bg-gray-900">
             <div className="flex justify-center h-full overflow-auto">
                 <div className="hidden bg-contain bg-center bg-no-repeat lg:block lg:w-2/5" style={{ backgroundImage: `url(${assets.add_doctor})` }}>
@@ -178,7 +182,7 @@ const AddDoctors = () => {
                                         />
                                     )}
                                 />
-                            <p className="text-red-600 text-start mt-2">{errors.examination_dates?.message}</p>
+                                <p className="text-red-600 text-start mt-2">{errors.examination_dates?.message}</p>
                             </div>
                             {/* gender */}
                             <div className="col-span-2">

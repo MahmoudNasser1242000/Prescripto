@@ -6,6 +6,7 @@ import { getAllUsers } from "../../../Redux/reducers/users.reducer";
 import UserCard from "../../../Components/UserCard/UserCard";
 import { IconButton, Pagination, TextField } from "@mui/material";
 import { GrPowerReset } from "react-icons/gr";
+import { Helmet } from "react-helmet";
 
 const GetAllUsers = () => {
     const [page, setPage] = useState("");
@@ -26,6 +27,9 @@ const GetAllUsers = () => {
     }
     return (
         <>
+            <Helmet>
+                <title>All Users & Managers</title>
+            </Helmet>
             <div className="mt-14 grid grid-cols-1 md:grid-cols-4 gap-x-0 sm:gap-x-4 gap-y-5 sm:gap-y-0 max-w-[1280px] mx-auto px-2 xl:px-0">
                 <ul className="space-y-1">
                     <li>
