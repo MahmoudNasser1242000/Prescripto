@@ -52,6 +52,7 @@ const UpdateProfileModal = ({ openModal, onCloseModal, myProfileData, token, rol
     useEffect(() => {
         if (success === "Manager updated successfully" || success === "User updated successfully" || success === "Doctor updated successfully") {
             onCloseModal()
+            scrollTo(0, 0)
         }
     }, [success]);
     return <>

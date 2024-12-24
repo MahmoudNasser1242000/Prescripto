@@ -179,7 +179,7 @@ const myProfileSlice = createSlice({
             state.loading = false;
             state.error = null;
             state.success = action.payload.message;
-            state.myProfile = action.payload.doctor;
+            state.myProfile = action.payload.manager;
             toast.success(`${state.success}`);
         })
         builder.addCase(updateManagerProfile.rejected, (state, action) => {
