@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { assets } from "../../assets/assets_frontend/assets";
 import { Button, Modal } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUserProfile } from "../../Redux/reducers/myProfile.reducer";
+import { updateManagerProfile, updateUserProfile } from "../../Redux/reducers/myProfile.reducer";
 
-const UpdateProfilePictureModal = ({ openModal, onCloseModal, token }) => {
-    const { loading } = useSelector((state) => state.myProfile);
+const UpdateProfilePictureModal = ({ openModal, onCloseModal, token, role }) => {
+    const { loading, success } = useSelector((state) => state.myProfile);
     const dispatch = useDispatch();
 
     const deleteProfilePic = () => {
         const formData = new FormData();
         formData.append("profile", " ");
-        dispatch(updateUserProfile({ token, body: formData }))
-        onCloseModal()
+        if (role === "manager" || role === "super-manager") {
+            dispatch(updateManagerProfile({ token, body: formData }))
+        } else {
+            dispatch(updateUserProfile({ token, body: formData }))
+        }
     }
+
+    useEffect(() => {
+        if (success === "Manager updated successfully" || success === "User updated successfully") {
+            onCloseModal()
+        }
+    }, [success]);
     return <>
         <Modal show={openModal} size="lg" onClose={() => onCloseModal()} popup>
             <Modal.Header />

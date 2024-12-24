@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { assets } from "../../assets/assets_frontend/assets";
 import { Modal } from "flowbite-react";
 import joiResolver from "../../utils/joiResolver";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { updateDoctorProfileSchema, updateUserProfileSchema } from "../../validation";
-import { updateDoctorProfile, updateUserProfile } from "../../Redux/reducers/myProfile.reducer";
+import { updateDoctorProfile, updateManagerProfile, updateUserProfile } from "../../Redux/reducers/myProfile.reducer";
 
 const UpdateProfileModal = ({ openModal, onCloseModal, myProfileData, token, role }) => {
-    const { loading } = useSelector((state) => state.myProfile);
+    const { loading, success } = useSelector((state) => state.myProfile);
     const dispatch = useDispatch()
     const {
         register,
@@ -42,11 +42,18 @@ const UpdateProfileModal = ({ openModal, onCloseModal, myProfileData, token, rol
 
         if (role === "doctor") {
             dispatch(updateDoctorProfile({ token, body: formData }))
+        } else if (role === "manager" || role === "super-manager") {
+            dispatch(updateManagerProfile({ token, body: formData }))
         } else {
             dispatch(updateUserProfile({ token, body: formData }))
         }
-        onCloseModal()
     }
+
+    useEffect(() => {
+        if (success === "Manager updated successfully" || success === "User updated successfully" || success === "Doctor updated successfully") {
+            onCloseModal()
+        }
+    }, [success]);
     return <>
         <Modal show={openModal} size="lg" onClose={onCloseModal}>
             <Modal.Header>Update {role === "doctor"? "Doctor" : "User"} Profile</Modal.Header>

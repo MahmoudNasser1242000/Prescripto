@@ -8,7 +8,8 @@ const initialState = {
     success: null,
     doctors: [],
     doctor: null,
-    metaData: {}
+    metaData: {},
+    length: 0
 }
 
 export const getAllDoctors = createAsyncThunk("doctor/getAllDoctors", async ({token, keyword, page}, thunkAPI) => {
@@ -125,7 +126,7 @@ const doctorSlice = createSlice({
             state.success = true;
             state.doctors = action.payload.doctors
             state.metaData = {...action.payload.metadata}
-            
+            state.length = action.payload.results
         })
         builder.addCase(getAllDoctors.rejected, (state, action) => {
             state.loading = false;

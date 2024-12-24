@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SpecialityMenu = ({speciality, doctors}) => {
+const SpecialityMenu = ({speciality, doctors, length}) => {
     return <>
         <ul className="space-y-1">
             <li>
@@ -14,7 +14,7 @@ const SpecialityMenu = ({speciality, doctors}) => {
                     <span
                         className="shrink-0 rounded-full bg-gray-100 px-3 py-0.5 text-xs text-gray-700 group-hover:bg-gray-200 group-hover:text-gray-700"
                     >
-                        {doctors.length}
+                        {length}
                     </span>
                 </Link>
             </li>

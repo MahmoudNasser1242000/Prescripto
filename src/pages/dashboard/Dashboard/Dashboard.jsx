@@ -10,8 +10,8 @@ import { Calendar, CalendarX } from "lucide-react";
 import { Helmet } from "react-helmet";
 
 const Dashboard = () => {
-  const { appointments, loading: apppointmentLoading } = useSelector((state) => state.appointment);
-  const { doctors, loading: doctorLoading } = useSelector((state) => state.doctor);
+  const { appointments, loading: apppointmentLoading, length: appoinmentLength } = useSelector((state) => state.appointment);
+  const { loading: doctorLoading, length: doctorLength } = useSelector((state) => state.doctor);
   const { users, loading: userLoading } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const Dashboard = () => {
           <div>
             <p className='text-5xl font-bold text-start'>
               {
-                apppointmentLoading ? <Spinner color="info" aria-label="Default status example" /> : appointments.length
+                apppointmentLoading ? <Spinner color="info" aria-label="Default status example" /> : appoinmentLength
               }
             </p>
             <p className='text-gray-400 font-semibold text-lg'>Appointments</p>
@@ -58,7 +58,7 @@ const Dashboard = () => {
           <div>
             <p className='text-5xl font-bold text-start'>
               {
-                doctorLoading ? <Spinner color="info" aria-label="Default status example" /> : doctors?.length
+                doctorLoading ? <Spinner color="info" aria-label="Default status example" /> : doctorLength
               }
             </p>
             <p className='text-gray-400 font-semibold text-lg'>Doctors</p>
@@ -70,10 +70,22 @@ const Dashboard = () => {
           <div>
             <p className='text-5xl font-bold text-start'>
               {
-                userLoading ? <Spinner color="info" aria-label="Default status example" /> : users?.filter((user) => user.role === "user").length
+                userLoading ? <Spinner color="info" aria-label="Default status example" /> : (users?.filter((user) => user.role === "user")).length
               }
             </p>
             <p className='text-gray-400 font-semibold text-lg'>Patients</p>
+          </div>
+        </div>
+
+        <div className='bg-gray-100 text-primary px-16 py-12 rounded-[4px] flex justify-center items-center flex-wrap gap-5'>
+          <img className='size-20' src={assets.managers_icon} alt="icon" />
+          <div>
+            <p className='text-5xl font-bold text-start'>
+              {
+                userLoading ? <Spinner color="info" aria-label="Default status example" /> : (users?.filter((user) => user.role === "manager" || user.role === "super-manager")).length
+              }
+            </p>
+            <p className='text-gray-400 font-semibold text-lg'>Managers</p>
           </div>
         </div>
       </div>

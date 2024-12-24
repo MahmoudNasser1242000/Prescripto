@@ -44,6 +44,7 @@ const DoctorCard = ({ doctor, role }) => {
                         <Link
                             className="group flex relative items-center overflow-hidden rounded bg-primary px-8 py-3 mt-2 w-full text-white focus:outline-none focus:ring active:bg-primary"
                             to={`/dashboard/view-profile/${doctor._id}?role=doctor`}
+                            onClick={() => scrollTo(0, 0)}
                         >
                             <span className="absolute -end-full transition-all group-hover:end-4">
                                 <svg

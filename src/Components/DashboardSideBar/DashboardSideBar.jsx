@@ -35,9 +35,6 @@ function DashBoardSideBar() {
     }
     return (
         <>
-            {/* <button className="rounded-full size-14 flex fixed right-8 bottom-8 justify-center items-center bg-blue-500 text-white hover:bg-blue-700 focus:ring-4 focus:ring-blue-500/50" onClick={() => setIsOpen(true)}>
-                <HiAdjustments className="text-2xl" />
-            </button> */}
             <Box>
                 <SpeedDial
                     onClick={() => setIsOpen(true)}
@@ -51,7 +48,7 @@ function DashBoardSideBar() {
                                 icon={action.icon}
                                 tooltipTitle={action.name}
                                 className="size-12"
-                                onClick={(e) => {e.stopPropagation(), navigate(action.to)}}
+                                onClick={(e) => {e.stopPropagation(), navigate(action.to), scrollTo(0, 0)}}
                             />
                     ))}
                 </SpeedDial>
@@ -71,22 +68,22 @@ function DashBoardSideBar() {
                                 <Sidebar.Items className="h-full pb-60">
                                     <Sidebar.ItemGroup>
                                         <Sidebar.Item icon={HiChartPie}>
-                                            <Link to={"/dashboard"}>Dashboard</Link>
+                                            <Link to={"/dashboard"} onClick={() => scrollTo(0, 0)}>Dashboard</Link>
                                         </Sidebar.Item>
                                         <Sidebar.Item icon={HiOutlineDocumentAdd}>
-                                            <Link to={"/dashboard/add-doctors"}>Add Doctors</Link>
+                                            <Link to={"/dashboard/add-doctors"} onClick={() => scrollTo(0, 0)}>Add Doctors</Link>
                                         </Sidebar.Item>
                                         <Sidebar.Item icon={HiOutlineClipboardList}>
-                                            <Link to={"/doctors"}>Doctors List</Link>
+                                            <Link to={"/doctors"} onClick={() => scrollTo(0, 0)}>Doctors List</Link>
                                         </Sidebar.Item>
                                         <Sidebar.Item icon={AiOutlineUserAdd}>
-                                            <Link to={"/dashboard/add-managers"}>Add Managers</Link>
+                                            <Link to={"/dashboard/add-managers"} onClick={() => scrollTo(0, 0)}>Add Managers</Link>
                                         </Sidebar.Item>
                                         <Sidebar.Item icon={HiUsers}>
-                                            <Link to={"/dashboard/all-users"}>Users List</Link>
+                                            <Link to={"/dashboard/all-users"} onClick={() => scrollTo(0, 0)}>Users List</Link>
                                         </Sidebar.Item>
                                         <Sidebar.Item icon={HiClock}>
-                                            <Link to={"/dashboard/all-appoinments"}>Appointments</Link>
+                                            <Link to={"/dashboard/all-appoinments"} onClick={() => scrollTo(0, 0)}>Appointments</Link>
                                         </Sidebar.Item>
                                         <Sidebar.Item icon={HiOutlineLogin} onClick={() => signOut()}>
                                             Signout

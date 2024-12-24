@@ -8,7 +8,8 @@ const initialState = {
     success: null,
     users: [],
     user: null,
-    metaData: {}
+    metaData: {},
+    length: 0
 }
 
 export const addUser = createAsyncThunk("user/addUser", async ({token, user}, thunkAPI) => {
@@ -104,7 +105,6 @@ const myProfileSlice = createSlice({
             state.loading = false;
             state.error = null;
             state.success = action.payload.message;
-            state.users = state.users.push(action.payload.user)
             toast.success(`${state.success}`);
         })
         builder.addCase(addUser.rejected, (state, action) => {
@@ -126,6 +126,7 @@ const myProfileSlice = createSlice({
             state.success = true;
             state.users = [...action.payload.users]
             state.metaData = {...action.payload.metadata}
+            state.length = action.payload.results
         })
         builder.addCase(getAllUsers.rejected, (state, action) => {
             state.loading = false;

@@ -15,7 +15,7 @@ const Doctors = () => {
   const [keyword, setKeyword] = useState("");
 
   const { speciality } = useParams();
-  const { loading, doctors, metaData } = useSelector(
+  const { loading, doctors, metaData, length } = useSelector(
     (state) => state.doctor
   );
   const { token } = useSelector((state) => state.auth);
@@ -36,7 +36,7 @@ const Doctors = () => {
         <title>All Doctors</title>
       </Helmet>
       <div className="mt-14 grid grid-cols-1 md:grid-cols-4 gap-x-0 sm:gap-x-4 gap-y-5 sm:gap-y-0 max-w-[1280px] mx-auto px-2 xl:px-0">
-        <SpecialityMenu speciality={speciality} doctors={doctors} />
+        <SpecialityMenu speciality={speciality} doctors={doctors} length={length} />
         <div className="md:col-span-3 mt-8 md:mt-0">
           {
             !speciality && (
@@ -51,7 +51,9 @@ const Doctors = () => {
           <div className="flex flex-wrap justify-evenly lg:justify-start gap-y-4">
             {loading ? (
               Array.from({ length: 8 }, (_, index) => (
-                <DoctorCardSkeleton key={index} />
+                <div className="mx-[3px] w-full sm:w-auto" key={index}>
+                  <DoctorCardSkeleton />
+                </div>
               ))
             ) : !doctors.length ? (
               <h1 className="text-3xl text-center w-full">

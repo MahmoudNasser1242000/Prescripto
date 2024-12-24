@@ -190,22 +190,24 @@ const ViewProfile = () => {
                                 +20 {doctor?.phone || user?.phone}
                             </li>
 
-                            <li className="flex items-center">
+                            <li>
                                 {
                                     role === "doctor" && (
-                                        <>
+                                        <div className="inline-flex">
                                             <TbCalendarTime className="h-5 w-5 mr-2 text-primary dark:text-blue-900" />
-                                            {
-                                                doctor?.examination_dates.map((date) => (
-                                                    <Badge key={date._id} icon={HiClock} className="mx-2">{date.time} {date.modifier}</Badge>
-                                                ))
-                                            }
-                                            <Link to={`/appointment/${doctor?._id}`} onClick={() => scrollTo(0, 0)}>
-                                                <Fab className="fab" aria-label="add">
-                                                    <HiOutlinePlus className="text-3xl font-thin" />
-                                                </Fab>
-                                            </Link>
-                                        </>
+                                            <div className="flex flex-wrap justify-start gap-y-3 items-center">
+                                                {
+                                                    doctor?.examination_dates.map((date) => (
+                                                        <Badge key={date._id} icon={HiClock} className="mx-2">{date.time} {date.modifier}</Badge>
+                                                    ))
+                                                }
+                                                <Link to={`/appointment/${doctor?._id}`} onClick={() => scrollTo(0, 0)}>
+                                                    <Fab className="fab" aria-label="add">
+                                                        <HiOutlinePlus className="text-3xl font-thin" />
+                                                    </Fab>
+                                                </Link>
+                                            </div>
+                                        </div>
                                     )
                                 }
                             </li>
@@ -214,6 +216,7 @@ const ViewProfile = () => {
                             <Link
                                 className="group flex relative w-fit items-center overflow-hidden rounded bg-primary px-8 py-3 text-white focus:outline-none focus:ring active:bg-primary"
                                 to={`/dashboard/all-appoinments?${role === "doctor" ? `docId=${doctor?._id}` : `userId=${user?._id}`}`}
+                                onClick={() => scrollTo(0, 0)}
                             >
                                 <span className="absolute -end-full transition-all group-hover:end-4">
                                     <svg

@@ -50,6 +50,7 @@ const AddDoctors = () => {
     useEffect(() => {
         if (success === "Doctor created successfully") {
             navigate("/dashboard")
+            scrollTo(0, 0)
         }
     }, [success, navigate]);
 

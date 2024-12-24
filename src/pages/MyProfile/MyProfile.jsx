@@ -84,7 +84,7 @@ const MyProfile = () => {
                 </button>
                 <Link
                   to={"/change-Password"}
-                  type="button"
+                  onClick={() => scrollTo(0, 0)}
                   className="group relative inline-block text-sm font-medium text-indigo-600 focus:outline-none active:text-indigo-500"
                 >
                   <span
@@ -199,6 +199,7 @@ const MyProfile = () => {
                   <Link
                     className="group flex relative w-fit items-center overflow-hidden rounded bg-primary px-8 py-3 text-white focus:outline-none focus:ring active:bg-primary"
                     to={"/my-appointments"}
+                    onClick={() => scrollTo(0, 0)}
                   >
                     <span className="absolute -end-full transition-all group-hover:end-4">
                       <svg
@@ -225,7 +226,7 @@ const MyProfile = () => {
           </div>
         </div>
         <UpdateProfileModal openModal={openUpdateInfoModal} onCloseModal={() => setOpenUpdateInfoModal(false)} myProfileData={myProfile} token={token} role={logged.role} />
-        <UpdateProfilePictureModal openModal={openUpdateProfilePicModal} onCloseModal={() => setOpenUpdateProfilePicModal(false)} token={token} />
+        <UpdateProfilePictureModal role={logged.role} openModal={openUpdateProfilePicModal} onCloseModal={() => setOpenUpdateProfilePicModal(false)} token={token} />
         <DeleteProfileModal openModal={openDeleteProfileModal} onCloseModal={() => setOpenDeleteProfileModal(false)} token={token} />
       </div>
     </>

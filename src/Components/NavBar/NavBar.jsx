@@ -55,7 +55,7 @@ const NavBar = () => {
                             {
                                 (logged.role === "manager" || logged.role === "super-manager") && (
                                     <li>
-                                        <Link to="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
+                                        <Link to="/dashboard" onClick={() => SetshowProfileMenu(false)}  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
                                     </li>
                                 )
                             }

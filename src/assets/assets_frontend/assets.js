@@ -28,6 +28,7 @@ import info_icon from './info_icon.svg'
 import upload_icon from './upload_icon.png'
 import stripe_logo from './stripe_logo.png'
 import razorpay_logo from './razorpay_logo.png'
+import managers_icon from './managers.png'
 import doc1 from './doc1.png'
 import doc2 from './doc2.png'
 import doc3 from './doc3.png'
@@ -83,7 +84,8 @@ export const assets = {
     default_user,
     patient_user,
     not_found,
-    doc1
+    doc1,
+    managers_icon
 }
 
 export const times = [

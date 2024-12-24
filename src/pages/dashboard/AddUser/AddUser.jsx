@@ -48,6 +48,7 @@ const AddUser = () => {
     useEffect(() => {
         if (success === "Manager created successfully") {
             navigate("/dashboard")
+            scrollTo(0, 0)
         }
     }, [success]);
 

@@ -8,7 +8,8 @@ const initialState = {
     success: null,
     appointment: null,
     appointments: [],
-    metaData: {}
+    metaData: {},
+    length: 0
 }
 
 export const addAppointment = createAsyncThunk("appointment/addAppointment", async ({token, appointment}, thunkAPI) => {
@@ -161,7 +162,8 @@ const appointmentSlice = createSlice({
             state.error = null;
             state.success = true;
             state.appointments = [...action.payload.appointments]
-            state.metaData = {...action.payload.metadata}        
+            state.metaData = {...action.payload.metadata}
+            state.length = action.payload.results
         })
         builder.addCase(getAppointments.rejected, (state, action) => {
             state.loading = false;
@@ -222,6 +224,7 @@ const appointmentSlice = createSlice({
             state.success = action.payload.message;
             state.appointments = [...action.payload.appointments]
             state.metaData = {...action.payload.metadata}
+            state.length = action.payload.results
         })
         builder.addCase(getDoctorAppointments.rejected, (state, action) => {
             state.loading = false;
@@ -242,6 +245,7 @@ const appointmentSlice = createSlice({
             state.success = action.payload.message;
             state.appointments = [...action.payload.appointments]
             state.metaData = {...action.payload.metadata}
+            state.length = action.payload.results
         })
         builder.addCase(getUserAppointments.rejected, (state, action) => {
             state.loading = false;

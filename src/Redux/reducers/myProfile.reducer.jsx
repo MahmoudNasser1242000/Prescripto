@@ -51,6 +51,20 @@ export const updateDoctorProfile = createAsyncThunk("myProfile/updateDoctorProfi
         return rejectWithValue(error.response ? error.response.data : error.message)
     }
 })
+export const updateManagerProfile = createAsyncThunk("myProfile/updateManagerProfile", async ({token, body}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const {data} = await axiosInstance.patch(`myProfile/updateManagerProfile`, body, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+            },
+        })        
+        return data
+    } catch (error) {        
+        return rejectWithValue(error.response ? error.response.data : error.message)
+    }
+})
 
 export const deleteProfile = createAsyncThunk("myProfile/deleteProfile", async (token, thunkAPI) => {
     const {rejectWithValue} = thunkAPI
@@ -150,6 +164,25 @@ const myProfileSlice = createSlice({
             toast.success(`${state.success}`);
         })
         builder.addCase(updateDoctorProfile.rejected, (state, action) => {
+            state.loading = false;
+            state.success = null;
+            state.error = action.payload.message;
+            toast.error(`${state.error}`);
+        })
+        //update manager profile
+        builder.addCase(updateManagerProfile.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = null;
+        })
+        builder.addCase(updateManagerProfile.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.success = action.payload.message;
+            state.myProfile = action.payload.doctor;
+            toast.success(`${state.success}`);
+        })
+        builder.addCase(updateManagerProfile.rejected, (state, action) => {
             state.loading = false;
             state.success = null;
             state.error = action.payload.message;

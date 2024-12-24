@@ -18,7 +18,7 @@ const AllApointments = () => {
     const [keyword, setKeyword] = useState(null);
 
     const { token } = useSelector((state) => state.auth);
-    const { loading, appointments, metaData } = useSelector((state) => state.appointment);
+    const { loading, appointments, metaData, length } = useSelector((state) => state.appointment);
     const dispatch = useDispatch();
 
     const getTime = (date) => {
@@ -77,7 +77,7 @@ const AllApointments = () => {
                 </LocalizationProvider>
             </div>
             <h2 className="mt-12 mb-8 text-2xl text-center sm:text-start font-bold">
-                {searchParams.get("docId") ? "Doctor" : searchParams.get("userId") ? "User" : "All"} Appointments ({appointments?.length})
+                {searchParams.get("docId") ? "Doctor" : searchParams.get("userId") ? "User" : "All"} Appointments ({length})
             </h2>
 
             <div className="overflow-x-auto">

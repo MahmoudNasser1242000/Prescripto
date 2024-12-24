@@ -13,7 +13,7 @@ const GetAllUsers = () => {
     const [keyword, setKeyword] = useState("");
 
     const { type } = useParams();
-    const { users, loading, metaData } = useSelector((state) => state.user);
+    const { users, loading, metaData, length } = useSelector((state) => state.user);
     const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
@@ -42,7 +42,7 @@ const GetAllUsers = () => {
                             <span
                                 className="shrink-0 rounded-full bg-gray-100 px-3 py-0.5 text-xs text-gray-700 group-hover:bg-gray-200 group-hover:text-gray-700"
                             >
-                                {users?.length}
+                                {length}
                             </span>
                         </Link>
                     </li>

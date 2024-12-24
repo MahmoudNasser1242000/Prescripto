@@ -20,7 +20,7 @@ const MyAppointments = () => {
   const { token } = useSelector((state) => state.auth);
   const { role, userId, docId } = jwtDecode(token);
 
-  const { loading, appointments, metaData } = useSelector((state) => state.appointment);
+  const { loading, appointments, metaData, length } = useSelector((state) => state.appointment);
   const dispatch = useDispatch();
 
   const getTime = (date) => {
@@ -78,7 +78,7 @@ const MyAppointments = () => {
           </LocalizationProvider>
         </div>
         <h2 className="mt-12 mb-8 text-2xl text-center sm:text-start font-bold">
-          My Appointments
+          My Appointments ({length})
         </h2>
 
         <div className="overflow-x-auto">

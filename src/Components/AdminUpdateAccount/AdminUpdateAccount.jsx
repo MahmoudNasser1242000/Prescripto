@@ -13,7 +13,7 @@ import { updateteUser } from "../../Redux/reducers/users.reducer";
 import { updateteDoctor } from "../../Redux/reducers/doctors.reducer";
 import dayjs from "dayjs";
 
-const AdminUpdateAccount = ({ openModal, onCloseModal, token, role, id, active, activeExpire = null }) => {
+const AdminUpdateAccount = ({ openModal, onCloseModal, token, role, id, active, activeExpire = null }) => {    
     const { loading: doctorLoading, success: doctorSuccess } = useSelector((state) => state.doctor);
     const { loading: userLoading, success: userSuccess } = useSelector((state) => state.user);
     const dispatch = useDispatch();
@@ -56,7 +56,6 @@ const AdminUpdateAccount = ({ openModal, onCloseModal, token, role, id, active, 
     };
 
     useEffect(() => {
-        // Check success and close modal when the update is successful
         if (doctorSuccess === "Doctor updated successfully" || userSuccess === "User updated successfully") {
             onCloseModal();
         }
